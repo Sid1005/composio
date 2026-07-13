@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0",
+  "app_id": "notebooklm",
+  "researched_at": "2026-07-13T13:09:17Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 19,
+    "trace_path": "logs/notebooklm-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "AI-powered research and note-taking tool",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "NotebookLM is an AI research assistant by Google Labs that uses RAG to help users summarize and extract information from their uploaded documents."
+      },
+      "one_liner": {
+        "value": "AI-powered research assistant that uses Gemini to let you chat with, summarize, and generate content from your uploaded documents",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "The product helps users understand content by uploading sources and asking questions, with responses grounded in those sources."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "session_cookie"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s10"
+        ],
+        "notes": "The consumer NotebookLM uses Google account session cookies. The NotebookLM Enterprise API uses OAuth 2.0 via Google Cloud (Bearer tokens from `gcloud auth print-access-token`). Community tools (MCP, notebooklm-py) use browser cookie/session-based auth via Playwright automation."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "sales_gated",
+      "gates": [
+        "paid_plan",
+        "workspace_admin",
+        "sales_contract"
+      ],
+      "signup_friction": "unknown",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "The consumer NotebookLM has no public API. The NotebookLM Enterprise API requires a paid Google Cloud subscription with minimum 15 licenses (~$9/license/month), admin-level setup through Google Cloud console, identity provider configuration, and Cloud NotebookLM Admin role assignment. A 14-day free trial with 5000 licenses exists but requires admin setup. The enterprise sales page requires contacting sales with business email."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "grpc"
+      ],
+      "breadth": "narrow",
+      "summary": {
+        "value": "NotebookLM Enterprise has an official REST/gRPC API (v1alpha, Preview) via the Discovery Engine API. Endpoints cover: notebook CRUD (create, get, list, batch delete), source management (batch create/delete, get), audio overview generation (create/delete), notebook sharing, and deep research source discovery. Critically, there is NO chat/query endpoint \u2014 the core RAG querying functionality is not exposed via API. The consumer NotebookLM (notebooklm.google) has no public API at all. Community tools reverse-engineer the web interface using browser automation.",
+        "evidence_ids": [
+          "s3",
+          "s9",
+          "s10",
+          "s11"
+        ],
+        "notes": "The API is in 'Preview' (Pre-GA). The missing chat/query endpoint is confirmed by a Google Developer forum thread from an enterprise customer who purchased a license."
+      },
+      "api_docs_url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-notebooks"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": "https://github.com/PleasePrompto/notebooklm-mcp",
+      "existing_agent_skills": [
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s12",
+        "s13"
+      ],
+      "notes": "A popular community MCP server exists (notebooklm-mcp by PleasePrompto, 2.8k+ stars) that provides 39 tools for interacting with the consumer NotebookLM via Chrome browser automation (Playwright/Patchright) with cookie-based auth. A Python MCP server also exists (notebooklm-mcp-server on PyPI). Both are community-maintained, not official. There's also Composio's notebooklm-mcp-cli."
+    },
+    "buildability": {
+      "verdict": "technically_possible_but_gated",
+      "main_blocker": "paid_api_entitlement",
+      "rationale": {
+        "value": "A public API exists (NotebookLM Enterprise) but it requires a paid Google Cloud subscription with minimum 15 licenses (~$9/license/month), admin approval, and identity provider setup. More critically, the API surface is narrow \u2014 it lacks the core chat/query endpoint, so you cannot programmatically ask questions against a notebook's content (the primary value of NotebookLM). The API is still in Preview. Community MCP tools exist but use fragile browser automation of the undocumented consumer web API, not the official API. Therefore, while technically possible with significant investment (enterprise subscription + missing chat capability), it is not readily buildable as a self-serve agent toolkit today.",
+        "evidence_ids": [
+          "s5",
+          "s9",
+          "s10",
+          "s11",
+          "s12"
+        ],
+        "notes": "The main blocker is that (1) the official API requires a paid enterprise license (not self-serve), (2) the API lacks the chat/query endpoint making the core NotebookLM functionality unavailable programmatically, and (3) the only way to get full functionality is via reverse-engineered community tools that rely on browser automation and are subject to breakage."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://notebooklm.google",
+      "quote": "NotebookLM exists so you can use your notes more efficiently. Ask about anything. The responses you get will always be grounded in the information you provide.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "Google NotebookLM | AI Research Tool & Thinking Partner",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/overview",
+      "quote": "NotebookLM is an AI-powered research and writing tool that helps you summarize and extract information across dense and complex sources.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "What is NotebookLM Enterprise?",
+      "retrieval_method": "composio_search"
+    },
+    "s3": {
+      "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-notebooks",
+      "quote": "curl -X POST \\ -H \"Authorization:Bearer $(gcloud auth print-access-token)\" \\ -H \"Content-Type: application/json\" \\ \"https://ENDPOINT_LOCATION-discoveryengine.googleapis.com/v1alpha/projects/PROJECT_NUMBER/locations/LOCATION/notebooks\"",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "Create and manage notebooks (API) | NotebookLM Enterprise",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/set-up-notebooklm",
+      "quote": "Supported frameworks: Cloud Identity... Workforce Identity Federation...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "Set up NotebookLM Enterprise",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/set-up-licensing",
+      "quote": "You buy licenses by the subscription. A subscription contains at least 15 licenses and can contain up to 5,000 licenses.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "Get licenses for NotebookLM Enterprise",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://cloud.google.com/resources/notebooklm-enterprise",
+      "quote": "Purchase licenses now... Questions? Contact sales",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "NotebookLM for enterprise | Google Cloud",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://felloai.com/notebooklm-pricing",
+      "quote": "Pricing starts at roughly $9 per license per month with a 15-license minimum",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "NotebookLM Pricing 2026: Free vs Plus vs Pro vs Ultra",
+      "retrieval_method": "composio_search"
+    },
+    "s8": {
+      "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/set-up-licensing",
+      "quote": "The free-trial tier: With this tier, you get a full-featured, 14-day trial subscription of 5000 licenses. The paid tier: You can buy a monthly subscription or a year-long subscription.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "Get licenses for NotebookLM Enterprise",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://docs.cloud.google.com/gemini/enterprise/docs/reference/rpc/google.cloud.notebooklm.v1alpha",
+      "quote": "NotebookService: BatchDeleteNotebooks, CreateNotebook, GetNotebook, ListRecentlyViewedNotebooks, ShareNotebook. SourceService: BatchCreateSources, BatchDeleteSources, GetSource. AudioOverviewService: CreateAudioOverview, DeleteAudioOverview. DiscoverSourcesService.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "Package google.cloud.notebooklm.v1alpha",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://docs.cloud.google.com/gemini/enterprise/notebooklm-enterprise/docs/api-audio-overview",
+      "quote": "Manage audio overview of your notebook (API)... Create an audio overview",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "Manage audio overview of your notebook (API)",
+      "retrieval_method": "composio_search"
+    },
+    "s11": {
+      "url": "https://discuss.google.dev/t/notebooklm-enterprise-api-missing-query-chat-endpoint-for-rag-orchestration/366875",
+      "quote": "According to the official documentation, the available REST API endpoints cover notebook creation, retrieval, listing, sharing, and deletion. However... it does not expose the ingested source text content or offer an interface to interact with the underlying vector index.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "NotebookLM Enterprise API: Missing Query/Chat Endpoint for RAG Orchestration",
+      "retrieval_method": "composio_search"
+    },
+    "s12": {
+      "url": "https://github.com/PleasePrompto/notebooklm-mcp",
+      "quote": "MCP server for Google NotebookLM. It drives a real Chrome via Patchright (stealth + persistent fingerprint) so an agent can chat against a notebook, ingest sources, generate audio overviews, and read DOM-level citations.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "PleasePrompto/notebooklm-mcp",
+      "retrieval_method": "composio_fetch"
+    },
+    "s13": {
+      "url": "https://mcp.directory/servers/notebooklm",
+      "quote": "NotebookLM is a community-built MCP server published by PleasePrompto that provides AI assistants with tools and capabilities via the Model Context Protocol.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T00:00:00Z",
+      "title": "NotebookLM MCP Server \u2014 Install & Setup",
+      "retrieval_method": "composio_search"
+    }
+  },
+  "limitations": [
+    "The NotebookLM Enterprise API is in v1alpha (Preview) and subject to change.",
+    "The exact pricing of NotebookLM Enterprise licenses could not be verified from an official Google Cloud pricing page; the ~$9/license/month figure comes from third-party sources.",
+    "The full list of source types supported via the API (e.g., PDF upload via API) was not fully documented in the fetched pages.",
+    "The consumer NotebookLM's terms of service regarding automated/bot access were not reviewed."
+  ]
+}

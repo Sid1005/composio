@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.0",
+  "app_id": "pitchbook",
+  "researched_at": "2026-07-13T13:07:56Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 14,
+    "trace_path": "logs/pitchbook-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Financial Data / Private Capital Markets Intelligence",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "notes": "PitchBook is a leading provider of private and public capital markets data, covering companies, deals, investors, funds, and people."
+      },
+      "one_liner": {
+        "value": "Private and public capital market data platform providing company profiles, deal tracking, investor intelligence, and fund data for financial professionals.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "custom"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s8"
+        ],
+        "notes": "Uses a custom API key scheme: PB-Token {API_KEY} in the Authorization header. Not OAuth2. The auth is essentially a bearer token-style API key."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "sales_gated",
+      "gates": [
+        "account_signup",
+        "paid_plan",
+        "sales_contract"
+      ],
+      "signup_friction": "company_email_required",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s1",
+        "s2",
+        "s4",
+        "s6",
+        "s7"
+      ],
+      "notes": "The API is a standalone offering requiring a separate contract with PitchBook's Direct Data team. You must contact your account manager to purchase API access/credits. Pricing is not public; it's enterprise-level sales-led. Even the base platform costs $12K-$70K+/year."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest"
+      ],
+      "breadth": "moderate",
+      "summary": {
+        "value": "REST API v2 with documented endpoints for companies, deals, people, investors, funds, and account/credits. Base URL: https://api.pitchbook.com. Authentication via PB-Token header. Each request incurs a credit cost. Postman documentation exists. Endpoints include: companies/{id}, companies/search, deals/{id}, deals/search, people/{id}, people/search, investors/{id}, funds/{id}, account/credits.",
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s8"
+        ]
+      },
+      "api_docs_url": "https://documenter.getpostman.com/view/5190535/TzCV1iRc"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://premium.mcp.pitchbook.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_agent_api"
+      ],
+      "evidence_ids": [
+        "s9",
+        "s10",
+        "s11"
+      ],
+      "notes": "PitchBook maintains an official MCP server at https://premium.mcp.pitchbook.com/mcp with 5 tools (get_company, get_financials, search_companies, search_deals, search_investors). They also have a connector for Writer AI Studio and partnerships with OpenAI, Perplexity, Anthropic, etc. No Composio-specific toolkit found."
+    },
+    "buildability": {
+      "verdict": "technically_possible_but_gated",
+      "main_blocker": "sales_contract",
+      "rationale": {
+        "value": "PitchBook has a well-documented REST API v2 and an official MCP server, so technically it can be built into an agent toolkit. However, access requires a paid enterprise subscription AND a separate API contract negotiated with PitchBook's Direct Data team (sales-led). A developer cannot self-serve API credentials. The API pricing is not public, and you must contact an account manager. This makes it gated behind a sales contract.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s4",
+          "s6",
+          "s7",
+          "s9"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://pitchbook.com/help/PitchBook-api",
+      "quote": "Our API is a separate offering from the PitchBook Platform that requires a standalone contract agreement.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "PitchBook API - PitchBook Help"
+    },
+    "s2": {
+      "url": "https://pitchbook.com/products/direct-access-data",
+      "quote": "Access trusted data on demand with the PitchBook API. Call and retrieve specific data points from our comprehensive universe of market intelligence, paying for what you need, when you need it.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Power financial workflows with PitchBook Direct Data"
+    },
+    "s3": {
+      "url": "https://pitchbook.com/products/direct-access-data/api",
+      "quote": "Call data on all PitchBook entity types including deals, investors, funds, people, limited partners and service providers.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API: Flexibly call down data on demand - PitchBook"
+    },
+    "s4": {
+      "url": "https://dlthub.com/context/source/pitchbook-api",
+      "quote": "Include header Authorization: PB-Token {API_KEY} on every request; ensure your account has purchased API credits. Contact your PitchBook account manager to purchase API access/credits and request an API key or sandbox key.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "PitchBook Python API Docs | dltHub"
+    },
+    "s5": {
+      "url": "https://documenter.getpostman.com/view/5190535/TzCV1iRc",
+      "quote": "To authenticate to the PitchBook API, simply include a header named 'authorization' with the value of 'PB-Token {API_KEY}' with each API request:",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Public API V2 Documentation"
+    },
+    "s6": {
+      "url": "https://www.slidegenius.com/cm-faq-question/what-are-the-typical-costs-associated-with-using-pitchbook",
+      "quote": "PitchBook pricing is not publicly listed and is negotiated on a contract basis... annual subscriptions typically range from approximately $15,000 to $30,000 per user per year... potential costs for API access if you plan to integrate the data into proprietary systems",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Typical Costs of Using PitchBook: Subscription Pricing Explained"
+    },
+    "s7": {
+      "url": "https://www.tryfundable.ai/blog/pitchbook-vs-fundable",
+      "quote": "PitchBook API is available as a paid add-on via sales-led enterprise offering... MCP is included on PitchBook's enterprise plans, which require a sales contract.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "PitchBook vs Fundable"
+    },
+    "s8": {
+      "url": "https://pitchbook.com/help/data-feed-api-crm-direct-data-solutions-q3-2025",
+      "quote": "To start your API connection, you will need to send a request directly to our Direct Data team... Our team will work with you to understand the insights and data you're looking for and help you establish the API connection through an API key or authentication token.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Help: Data Feed, API, and CRM: Direct Data solutions"
+    },
+    "s9": {
+      "url": "https://apigene.ai/mcp/official/pitchbook",
+      "quote": "The official PitchBook MCP server provides AI agents with standardized access to PitchBook's services... This official MCP server is maintained and verified by PitchBook... MCP Endpoint: https://premium.mcp.pitchbook.com/mcp",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "PitchBook MCP Server - Official Setup Guide"
+    },
+    "s10": {
+      "url": "https://www.businesswire.com/news/home/20260312253855/en/PitchBook-Announces-New-Essential-MCP-Integration-with-Perplexity-Expanding-Access-to-AI-Powered-Verifiable-Market-Intelligence",
+      "quote": "PitchBook... today announced a new partnership with Perplexity... Through Perplexity's new PitchBook Essential MCP server, users can now access PitchBook's trusted firmographic intelligence directly within Perplexity's conversational interface.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "PitchBook Announces New Essential MCP Integration with Perplexity"
+    },
+    "s11": {
+      "url": "https://dev.writer.com/connectors/pitchbook",
+      "quote": "Connect WRITER Agent to PitchBook to access private market data and investment analytics. Obtain a PitchBook API key.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "PitchBook connector - Writer AI Studio"
+    }
+  },
+  "limitations": [
+    "The Postman docs (https://documenter.getpostman.com/view/5190535/TzCV1iRc) did not render fully due to being JS-heavy; endpoint details inferred from dltHub documentation. Pricing information is not officially published; sourced from third-party estimates. No Composio-specific PitchBook toolkit was found in search results, but this does not preclude building one."
+  ]
+}

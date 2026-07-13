@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0",
+  "app_id": "gorgias",
+  "researched_at": "2026-07-13T12:31:25Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 22,
+    "trace_path": "logs/gorgias-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer service helpdesk / Conversational AI platform for e-commerce",
+        "evidence_ids": [
+          "s1"
+        ],
+        "notes": "Gorgias positions itself as a 'conversational AI platform for ecommerce' and a 'helpdesk built for ecommerce'."
+      },
+      "one_liner": {
+        "value": "E-commerce helpdesk and conversational AI platform that unifies customer support across email, chat, social, SMS, and phone with order data and AI automation.",
+        "evidence_ids": [
+          "s1"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "basic",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s11"
+        ],
+        "notes": "Private/single-account integrations use HTTP Basic Authentication with an API key (as the password) and email address. Public apps published in the App Store must use OAuth2. The official MCP uses OAuth2 flow."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s2",
+        "s6",
+        "s12"
+      ],
+      "notes": "Anyone can sign up for a 7-day free trial with no credit card required. API credentials are available on all plans including the free trial (with trial limitations on outbound messages). Account owner/admins can generate API keys from settings. No special approval needed for private app API access."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Gorgias has a well-documented public REST API (OpenAPI) covering tickets, messages, customers, macros, rules, integrations, widgets, events, jobs, tags, teams, satisfaction surveys, statistics, custom fields, account settings, files, and search. Also supports webhooks for event-driven integration. MCP server available at mcp.gorgias.com/mcp. Rate limits: 40 req/20s for API key, 80 req/20s for OAuth2.",
+        "evidence_ids": [
+          "s2",
+          "s4",
+          "s5",
+          "s7",
+          "s8",
+          "s13"
+        ],
+        "notes": ""
+      },
+      "api_docs_url": "https://developers.gorgias.com"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.gorgias.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s8",
+        "s9",
+        "s10"
+      ],
+      "notes": "Gorgias has an official MCP server documented at docs.gorgias.com. It's listed as currently in beta. Composio also provides a managed Gorgias MCP integration with 32 tools. A community MCP server exists on GitHub (mattcoatsworth/Gorgias-MCP-Server)."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Gorgias is fully buildable into an AI agent toolkit today. It has a well-documented public REST API with broad coverage of helpdesk operations, official OAuth2 and API key auth options, an official MCP server (in beta), and self-serve free trial access to get API credentials. Composio already has a managed Gorgias toolkit with 32 tools. The only minor caveat is that the MCP is in beta, but the underlying REST API is production-ready.",
+        "evidence_ids": [
+          "s2",
+          "s4",
+          "s5",
+          "s8",
+          "s10"
+        ],
+        "notes": ""
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.gorgias.com",
+      "quote": "The #1 Helpdesk + AI Agent built to drive sales. Turn browsers into buyers and automate routine support from one unified platform trained on your brand.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Gorgias: The Conversational AI platform for Ecommerce"
+    },
+    "s2": {
+      "url": "https://docs.gorgias.com/en-US/rest-api-208286",
+      "quote": "The Gorgias REST API lets you read and write data in your helpdesk programmatically. To authenticate API requests, Gorgias uses HTTP Basic Authentication with three pieces of information: your base API URL, your email address, and an API key.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Access your Gorgias REST API credentials"
+    },
+    "s3": {
+      "url": "https://developers.gorgias.com/docs/private-vs-public-app",
+      "quote": "Public app authentication can be done only via OAuth2 for which you will need to register on our Developer portal.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Private vs. Public App"
+    },
+    "s4": {
+      "url": "https://developers.gorgias.com/llms.txt",
+      "quote": "Full API reference listing: Account, Customers, CustomFields, Events, Files, Integrations, Jobs, Macros, MetricCards, Rules, SatisfactionSurveys, Search, Statistics, Tags, Teams, Tickets, Users.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "gorgias-developers Documentation (llms.txt)"
+    },
+    "s5": {
+      "url": "https://developers.gorgias.com/reference/limitations",
+      "quote": "OAuth2 apps can make 80 requests in a 20 second window - API key integrations can make 40 requests in a 20 second window",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate Limits"
+    },
+    "s6": {
+      "url": "https://www.gorgias.com/pricing",
+      "quote": "Start free trial No credit card required",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Gorgias Pricing"
+    },
+    "s7": {
+      "url": "https://developers.gorgias.com/docs/oauth2-scopes",
+      "quote": "OAuth2 scopes allow to limit your app's access to Gorgias user's account data.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth2 Scopes"
+    },
+    "s8": {
+      "url": "https://docs.gorgias.com/en-US/connect-your-ai-assistant-to-the-gorgias-mcp-6310546",
+      "quote": "The Gorgias Model Context Protocol (MCP) app allows your third-party AI assistant to access your Gorgias data and account",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Connect your AI assistant to the Gorgias MCP"
+    },
+    "s9": {
+      "url": "https://github.com/mattcoatsworth/Gorgias-MCP-Server",
+      "quote": "An MCP server for interacting with the Gorgias helpdesk API. This server provides tools and resources for managing tickets, customers, and other Gorgias functionality.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "mattcoatsworth/Gorgias-MCP-Server"
+    },
+    "s10": {
+      "url": "https://composio.dev/toolkits/gorgias",
+      "quote": "Securely connect your AI agents and chatbots (Claude, ChatGPT, Cursor, etc) with Gorgias MCP or direct API... Tools: 32",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Gorgias - Composio Toolkit"
+    },
+    "s11": {
+      "url": "https://developers.gorgias.com/docs/oauth2-authentication-for-creating-apps-with-gorgias",
+      "quote": "In order to be able to have an approved public app with Gorgias, it is required that the app is using OAuth2 for authentication.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth2 authentication for creating apps with Gorgias"
+    },
+    "s12": {
+      "url": "https://docs.gorgias.com/en-US/create-a-gorgias-helpdesk-82010",
+      "quote": "Your 7-day free trial begins immediately. Once the trial ends, you'll be prompted to choose a plan to keep your helpdesk active.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Create a Gorgias helpdesk"
+    },
+    "s13": {
+      "url": "https://developers.gorgias.com/reference/the-ticket-object.md",
+      "quote": "Full ticket object definition with 30+ properties, plus linked customers, messages, tags, satisfaction surveys.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "The Ticket object"
+    }
+  }
+}

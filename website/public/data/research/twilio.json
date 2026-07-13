@@ -1,0 +1,222 @@
+{
+  "schema_version": "1.0",
+  "app_id": "twilio",
+  "researched_at": "2026-07-13T12:31:13Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 12,
+    "trace_path": "logs/twilio-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Communication / Cloud Communications Platform",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Twilio is a cloud communications platform providing APIs for SMS, Voice, Video, Email, WhatsApp, and more."
+      },
+      "one_liner": {
+        "value": "Cloud communications platform that enables developers to programmatically make and receive phone calls, send and receive text messages, and perform other communication functions using its web service APIs.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Pulled from the Composio toolkit description and Twilio docs."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "basic",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5",
+          "s12"
+        ],
+        "notes": "Twilio supports API keys (used via HTTP Basic auth), Account SID + Auth Token (also Basic auth), and OAuth 2.0 (Client Credentials and Authorization Code grants). API keys are the recommended method for production."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "phone_verification"
+      ],
+      "signup_friction": "phone_verification",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s6",
+        "s7"
+      ],
+      "notes": "Free trial account available without credit card. Sign-up requires email verification and phone number verification. Trial includes free credits. API credentials (Account SID, Auth Token, API keys) are available immediately on the free trial. Upgrade to paid required for some features (e.g., A2P 10DLC registration) but not for basic API access."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks",
+        "cli",
+        "sdk_only"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Twilio has a comprehensive, well-documented public REST API with 1,800+ endpoints across 30+ products, including SMS, Voice, Video, Email, WhatsApp, Verify, Lookup, Conversations, and more. API documentation is extensive with multi-language code examples. Also offers webhooks for event notifications, SDKs in multiple languages, and a CLI tool.",
+        "evidence_ids": [
+          "s2",
+          "s8",
+          "s9"
+        ],
+        "notes": "The Twilio REST API is served over HTTPS at https://api.twilio.com/2010-04-01. Full API reference at https://www.twilio.com/docs/api."
+      },
+      "api_docs_url": "https://www.twilio.com/docs/api"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "mcp.twilio.com/docs",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s10",
+        "s11",
+        "s12"
+      ],
+      "notes": "Twilio has an official MCP server (hosted at mcp.twilio.com/docs) exposing two tools: twilio__search and twilio__retrieve. The MCP server is in Public Beta as of May 2026. Also offers 'Twilio Skills' for AI coding agents. Composio has a basic Twilio toolkit (1 tool, not managed)."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Twilio is fully buildable as an agent toolkit today. It offers a broad, well-documented public REST API, self-serve free trial access with immediate API credentials, multiple authentication methods (API keys + OAuth 2.0), and an official MCP server (mcp.twilio.com/docs) for AI agent integration. The only minor friction is phone verification during sign-up, but this is standard and does not block development. The API surface is extremely broad (1,800+ endpoints) with SDKs in all major languages.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s4",
+          "s6",
+          "s7",
+          "s10",
+          "s11"
+        ],
+        "notes": "All criteria satisfied: public API, self-serve access, multiple auth options, official MCP server, extensive documentation."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.composio.dev/toolkits/twilio",
+      "quote": "Twilio allows software developers to programmatically make and receive phone calls, send and receive text messages, and perform other communication functions using its web service APIs.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Twilio - Composio Toolkit",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://www.twilio.com/docs/api",
+      "quote": "Twilio APIs give you flexibility, global reach, and reliable deliverability to connect with customers anywhere.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Docs: API Reference, Tutorials, and Integration | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://www.twilio.com/docs/iam/api-keys",
+      "quote": "API keys are the preferred way to authenticate with Twilio's REST APIs.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API keys overview | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://www.twilio.com/docs/iam/api",
+      "quote": "To authenticate requests to the Twilio APIs, Twilio supports HTTP Basic authentication. Use your API key as the username and your API key secret as the password.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Our API: the basics | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://www.twilio.com/docs/iam/oauth-apps/overview",
+      "quote": "OAuth 2.0 is an industry-standard authorization protocol that lets applications securely access Twilio APIs on your behalf, without sharing your Account SID and Auth Token or other long-lived API keys.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth apps | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://www.twilio.com/en-us/pricing",
+      "quote": "Start for free. Then pay as you go. Sign up for a free trial\u2014no credit card required",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Twilio Pricing | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://www.twilio.com/docs/usage/tutorials/how-to-use-your-free-trial-account",
+      "quote": "You can sign up for a Twilio free trial account without a credit card. After you sign up, explore the solutions for your use case in the Twilio Console. ... The sign-up process includes the following steps: Verify your email address. Verify your personal phone number.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get started with your Twilio free trial account | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://www.twilio.com/en-us/blog/developers/introducing-twilio-mcp-skills",
+      "quote": "Twilio has over 1,800 API endpoints and more than 30 products.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introducing the Twilio MCP Server and Skills | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://www.twilio.com/docs/iam/api",
+      "quote": "The Twilio REST API allows you to query metadata about your account, phone numbers, calls, text messages, and recordings. You can also do some fancy things like make outbound phone calls and send text messages.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Our API: the basics | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://www.twilio.com/en-us/blog/developers/introducing-twilio-mcp-skills",
+      "quote": "We're launching the Twilio MCP server and Twilio Skills in Public Beta. ... Our MCP server, hosted at mcp.twilio.com/docs, exposes two tools: twilio__search and twilio__retrieve.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introducing the Twilio MCP Server and Skills | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://www.twilio.com/en-us/blog/introducing-twilio-alpha-mcp-server",
+      "quote": "Today, we're equally excited to introduce the Twilio Alpha MCP server.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Use the Twilio Alpha MCP Server to Automate Development | Twilio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s12": {
+      "url": "https://www.twilio.com/en-us/changelog/oauth-apis-ga",
+      "quote": "OAuth for Twilio APIs is now in GA. Twilio Communications APIs now support OAuth 2.0.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth for Twilio APIs is now in GA | Twilio",
+      "retrieval_method": "composio_fetch"
+    }
+  },
+  "limitations": [
+    "The Composio Twilio toolkit only has 1 tool and is not a managed app, but this is not a blocker since Twilio has its own official MCP server.",
+    "Some advanced features (A2P 10DLC registration, certain regulatory requirements) require a paid account, but core API access is available on the free trial."
+  ]
+}

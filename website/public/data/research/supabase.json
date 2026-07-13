@@ -1,0 +1,202 @@
+{
+  "schema_version": "1.0",
+  "app_id": "supabase",
+  "researched_at": "2026-07-13T12:55:44Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 12,
+    "trace_path": "logs/supabase-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Backend-as-a-Service / Database & Auth Platform",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "notes": "Supabase is an open-source Firebase alternative providing PostgreSQL database, authentication, real-time APIs, storage, and edge functions as a managed service."
+      },
+      "one_liner": {
+        "value": "Open-source backend-as-a-service providing a managed PostgreSQL database, authentication, real-time subscriptions, file storage, and edge functions.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "personal_access_token",
+          "oauth2",
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s4"
+        ],
+        "notes": "The Management API supports Personal Access Tokens (PAT) and OAuth2. The Data/Client APIs use API keys (publishable/secret keys or legacy anon/service_role JWTs)."
+      },
+      "primary_for_agent_toolkit": "personal_access_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s6"
+      ],
+      "notes": "Anyone can sign up with GitHub or email/password. Free tier includes generous limits (500MB database, 50k MAUs, etc.). No company email, phone verification, or waitlist required. No paid plan needed for API access. Some advanced features (SOC2, HIPAA, SSO) require Team/Enterprise plans but the core API is fully usable on Free."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql",
+        "webhooks",
+        "event_streaming"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Supabase exposes a comprehensive Management REST API (organizations, projects, database, auth, storage, edge functions, secrets, etc.) documented via OpenAPI spec. It also provides client-facing APIs: PostgREST (auto-generated REST API from your database schema), a GraphQL extension (pg_graphql), WebSocket real-time API, Storage S3-compatible API, Auth API, and Edge Functions API. The API surface is very broad, covering the full lifecycle of Supabase projects.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s7",
+          "s8"
+        ],
+        "notes": ""
+      },
+      "api_docs_url": "https://supabase.com/docs/reference/api/introduction"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.supabase.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api"
+      ],
+      "evidence_ids": [
+        "s9",
+        "s10",
+        "s11"
+      ],
+      "notes": "Supabase has an official MCP server (github.com/supabase/mcp) with 20+ tools covering account management, database operations, edge functions, storage, and more. It supports OAuth-based auth, project scoping, read-only mode, and feature groups. Also has official client SDKs (JS/TS, Python, Dart, Go, etc.) and a CLI."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Supabase is fully buildable as an agent toolkit today. It has a well-documented public REST Management API, multiple auth methods (PAT, OAuth2, API keys), a self-serve free tier with no gates, and an official MCP server already available. The platform's APIs are comprehensive, covering project management, database operations, authentication, storage, and edge functions. An agent toolkit can use the Management API directly or leverage the existing official MCP server.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s9",
+          "s10",
+          "s11"
+        ],
+        "notes": "The only nuance is that some advanced features (SOC2, HIPAA, SSO, custom domains) require paid plans, but the core functionality needed for most agent workflows is available on the Free tier."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://supabase.com/docs/reference/api/introduction",
+      "quote": "Management API Reference... All API requests require an access token to be included in the Authorization header: `Authorization Bearer <access_token>`. There are two ways to generate an access token: Personal access token (PAT)... OAuth2...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Management API Reference | Supabase Docs"
+    },
+    "s2": {
+      "url": "https://supabase.com/docs/guides/getting-started/api-keys",
+      "quote": "There are 4 types of API keys that you can use with Supabase: Publishable key (`sb_publishable_...`), Secret keys (`sb_secret_...`), `anon` (JWT), `service_role` (JWT).",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Understanding API keys | Supabase Docs"
+    },
+    "s3": {
+      "url": "https://supabase.com/docs/guides/getting-started/architecture",
+      "quote": "Supabase is open source... we use Postgres rather than a NoSQL store.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Architecture | Supabase Docs"
+    },
+    "s4": {
+      "url": "https://supabase.com/docs/guides/integrations/build-a-supabase-oauth-integration",
+      "quote": "Build a Supabase Integration using OAuth2 and the Management API... Using OAuth2.0 you can retrieve an access and refresh token that grant your application full access to the Management API on behalf of the user.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Build a Supabase Integration"
+    },
+    "s5": {
+      "url": "https://supabase.com/dashboard/sign-up",
+      "quote": "Create a new account... Continue with GitHub... Email... Password...",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Supabase Sign Up"
+    },
+    "s6": {
+      "url": "https://supabase.com/pricing",
+      "quote": "Free - from $0/month... Unlimited API requests... 50,000 monthly active users... 500 MB database size...",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing & Fees | Supabase"
+    },
+    "s7": {
+      "url": "https://supabase.com/docs/guides/getting-started/architecture",
+      "quote": "PostgREST (API)... A standalone web server that turns your Postgres database directly into a RESTful API. We use this with our `pg_graphql` extension to provide a GraphQL API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Architecture | Supabase Docs"
+    },
+    "s8": {
+      "url": "https://supabase.com/docs/reference/api/introduction",
+      "quote": "OpenAPI Docs / OpenAPI Spec",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Management API Reference"
+    },
+    "s9": {
+      "url": "https://github.com/supabase/mcp",
+      "quote": "Supabase MCP Server... Connect your Supabase projects to Cursor, Claude, Windsurf, and other AI assistants.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "supabase/mcp"
+    },
+    "s10": {
+      "url": "https://supabase.com/features/mcp-server",
+      "quote": "The MCP Server bridges the gap between AI tools and your Supabase projects... Access over 20 tools for database design, data querying, and project management.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MCP Server | Supabase Features"
+    },
+    "s11": {
+      "url": "https://supabase.com/blog/mcp-server",
+      "quote": "We are launching an official Supabase MCP server. You can use this server to connect your favorite AI tools (such as Cursor or Claude) directly with Supabase.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Supabase MCP Server"
+    }
+  },
+  "limitations": [
+    "The official MCP server GitHub URL is github.com/supabase/mcp (not mcp-server-supabase as the npm package name might suggest).",
+    "Some advanced features (SOC2, HIPAA, SSO for dashboard) are only available on Team/Enterprise plans, but these are not needed for basic agent integration.",
+    "The MCP server uses OAuth by default (dynamic client registration) but PAT is also supported for CI/CD workflows."
+  ]
+}

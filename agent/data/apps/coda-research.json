@@ -1,0 +1,206 @@
+{
+  "schema_version": "1.0",
+  "app_id": "coda",
+  "researched_at": "2026-07-13T14:27:40Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 20,
+    "trace_path": "logs/coda-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Collaborative Document / Workspace Platform",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Coda (now rebranded as Superhuman Docs) is a collaborative document platform that combines docs, spreadsheets, and app-like building blocks. It is now part of the Superhuman product suite."
+      },
+      "one_liner": {
+        "value": "A collaborative document workspace that blends docs, spreadsheets, and apps with AI-powered features for team collaboration.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s8",
+          "s11"
+        ],
+        "notes": "The REST API uses Bearer token (API key) authentication where users generate API tokens from their Account Settings. The Superhuman Docs MCP supports OAuth2 with PKCE (recommended) and Personal Access Tokens. The REST API itself does NOT support OAuth2 for third-party apps (confirmed by Coda staff in community thread)."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s1",
+        "s5",
+        "s7",
+        "s8"
+      ],
+      "notes": "The API is available to all users free of charge in both free and paid workspaces. Anyone can sign up for a free Coda account and generate an API token from Account Settings -> API settings. No paid plan is required for API access. The Free plan includes API usage."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "The Superhuman Docs API (formerly Coda API) is a documented public REST API at https://coda.io/apis/v1. It covers docs (list, create, delete, update), pages (list, create, update, delete, export content), tables/views (list, get), columns, rows (read, insert, upsert, update, delete), formulas, controls, folders, permissions, publishing, analytics, automations, and account info. Also supports webhooks. Rate limits: 100 reads/6s, 10 writes/6s, 5 content writes/10s. OpenAPI/Swagger spec available.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s6"
+        ]
+      },
+      "api_docs_url": "https://coda.io/developers"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://docs.superhuman.com/apis/mcp (also https://coda.io/apis/mcp)",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s9",
+        "s10",
+        "s11",
+        "s12"
+      ],
+      "notes": "Superhuman Docs has an official MCP server (formerly Coda MCP) available in public beta. The endpoint is at https://docs.superhuman.com/apis/mcp. Supports OAuth2 with PKCE and Personal Access Tokens. Also a community MCP server exists at https://github.com/orellazri/coda-mcp. The Packs SDK also exists for building extensions."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Coda/Superhuman Docs is fully buildable as an agent toolkit today. It has a well-documented, broad public REST API with self-serve free API token access. Additionally, Superhuman has released an official MCP server (in public beta) specifically designed for AI agent integration, supporting both OAuth2 and token-based auth. The API covers all core document operations (docs, pages, tables, rows, columns, formulas, controls) making it suitable for agentic workflows.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s9",
+          "s11"
+        ],
+        "notes": "The only caveat is that the REST API uses API keys (not OAuth2), so agent toolkits using the REST API directly would need users to provide/manage API tokens. However, the official MCP server now solves this with OAuth2 support."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://coda.io",
+      "quote": "Coda brings teams and tools together for a more organized work day.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Coda: Your all-in-one collaborative workspace."
+    },
+    "s2": {
+      "url": "https://help.superhuman.com/hc/en-us/articles/46210093285773-What-s-changing-Coda-becomes-Superhuman-Docs",
+      "quote": "Coda is now Superhuman Docs \u2014 the product you know is still here, just under a new name.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "What's changing: Coda becomes Superhuman Docs"
+    },
+    "s3": {
+      "url": "https://coda.io/developers",
+      "quote": "The Superhuman Docs API is a RESTful API... Authentication: Bearer token... We make the Superhuman Docs API available to all of our users free of charge, in both free and paid workspaces.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Superhuman Docs API (v1) Reference Documentation"
+    },
+    "s4": {
+      "url": "https://connect.superhuman.com/t/accessing-coda-api-from-a-3rd-party-software/47539",
+      "quote": "The Coda API uses API tokens for authentication, which users can create on their account page... We don't support OAuth2 currently.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Accessing Coda API from a 3rd-party software"
+    },
+    "s5": {
+      "url": "https://coda.io/pricing",
+      "quote": "Free: \u20ac0... includes Collaborative docs, Connected tables, views, and forms, Formulas and automations... MCP: Limited trial",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Superhuman Docs | Pricing & Plans"
+    },
+    "s6": {
+      "url": "https://coda.io/@oleg/getting-started-guide-coda-api",
+      "quote": "The Coda API enables you to read and write data to your Coda doc using code.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Getting Started Guide: Coda API"
+    },
+    "s7": {
+      "url": "https://www.stitchflow.com/user-management/coda/api",
+      "quote": "Auth method: API Key (Bearer token in Authorization header)... Log in to Coda and navigate to your Account Settings. Go to the 'API settings' section. Click 'Generate API token'.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Coda User Management API Guide"
+    },
+    "s8": {
+      "url": "https://dlthub.com/context/source/coda-docs-migration",
+      "quote": "The API uses Bearer token authentication. Include an Authorization header: Authorization: Bearer <your API token>.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Coda Python API Docs | dltHub"
+    },
+    "s9": {
+      "url": "https://connect.superhuman.com/t/superhuman-docs-mcp-is-now-available-in-public-beta/60331",
+      "quote": "Superhuman Docs MCP (Model Context Protocol) is now available in public beta... connect Coda directly to tools like: ChatGPT, Claude, Cursor, Codex through a simple OAuth connection.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Superhuman Docs MCP is now available in public beta!"
+    },
+    "s10": {
+      "url": "https://coda.io/resources/guides/getting_started_with_coda_mcp",
+      "quote": "Superhuman Docs runs an MCP server built on the open Model Context Protocol standard, giving AI clients tools to work directly in your docs.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Getting started with Superhuman Docs MCP"
+    },
+    "s11": {
+      "url": "https://help.superhuman.com/hc/en-us/articles/46210118248205-Security-recommendations-for-the-Coda-MCP",
+      "quote": "Official MCP endpoint: https://docs.superhuman.com/apis/mcp... Prior to the launch of the Superhuman Docs MCP, we released a Coda MCP hosted on coda.io at https://coda.io/apis/mcp. This Coda MCP is still officially supported.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Security recommendations for the Docs MCP"
+    },
+    "s12": {
+      "url": "https://mcpservers.org/servers/orellazri/coda-mcp",
+      "quote": "This MCP server is not developed or maintained by Coda; it's a community-built project. Interact with the Coda API to manage documents and pages, including creating, reading, updating, and deleting.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Coda MCP Server | Awesome MCP Servers"
+    }
+  },
+  "limitations": [
+    "The REST API does not support OAuth2 for third-party app integration (only API tokens); OAuth2 is only available through the official MCP server.",
+    "The MCP server is currently in public beta.",
+    "Some enterprise features like SCIM provisioning require the Enterprise plan.",
+    "Create doc endpoint requires the token owner to be at least a Doc Maker (not just an Editor) in the workspace."
+  ]
+}

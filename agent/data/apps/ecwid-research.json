@@ -1,0 +1,208 @@
+{
+  "schema_version": "1.0",
+  "app_id": "ecwid",
+  "researched_at": "2026-07-13T12:47:15Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 27,
+    "trace_path": "logs/ecwid-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "E-commerce / Online Store Builder",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Ecwid by Lightspeed is a cloud commerce platform for adding online stores to existing websites."
+      },
+      "one_liner": {
+        "value": "Ecwid is a cloud-based e-commerce platform that lets you add an online store to any website, sell across multiple channels (web, social, marketplaces), and manage inventory, orders, and payments from a single dashboard.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "bearer_token"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s8"
+        ],
+        "notes": "Ecwid uses OAuth 2.0 (authorization code flow) for public apps. For custom/private apps (single-store), developers can use non-expiring access tokens (secret_token and public_token) directly as Bearer tokens without going through OAuth."
+      },
+      "primary_for_agent_toolkit": "bearer_token"
+    },
+    "access": {
+      "credential_access": "self_serve_paid",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s4",
+        "s5",
+        "s6"
+      ],
+      "notes": "API access requires a store on a paid plan (Starter at $5/month cheapest). However, Ecwid offers a free upgrade to a paid plan for developers building integrations or customizations \u2014 they must email support to request it. No admin approval beyond store ownership."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Ecwid provides a comprehensive REST API covering products, orders, customers, categories, discounts, shipping, payments, store profile, and more. Also supports webhooks for event-driven integration. Rate limit is 600 requests per minute per token. API docs are at docs.ecwid.com with a full reference. There is also a JavaScript SDK (ecwid-js-sdk) on GitHub.",
+        "evidence_ids": [
+          "s3",
+          "s7",
+          "s9",
+          "s10",
+          "s11"
+        ]
+      },
+      "api_docs_url": "https://docs.ecwid.com/api-reference"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": "https://viasocket.com/mcp/ecwid-by-lightspeed",
+      "existing_agent_skills": [
+        "official_sdk"
+      ],
+      "evidence_ids": [
+        "s12",
+        "s13"
+      ],
+      "notes": "A community MCP server exists via viaSocket providing 12 Ecwid actions. No official Ecwid MCP server found. Ecwid has an official JavaScript SDK (ecwid-js-sdk on GitHub). No composio toolkit found."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Ecwid has a well-documented, broad REST API with simple bearer-token authentication. API access requires a paid plan (Starter at $5/month), but developers can request a free upgrade for development. A community MCP server already exists via viaSocket with 12 actions. The API covers all core e-commerce operations (products, orders, customers, discounts, etc.). An agent toolkit could be built today using the REST API with bearer token auth.",
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5",
+          "s12"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://ecwid.com",
+      "quote": "#1 Ecommerce Shopping Cart & Online Store - Try Ecwid!",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Ecwid Homepage"
+    },
+    "s2": {
+      "url": "https://www.ecwid.com/pricing",
+      "quote": "Choose the perfect plan to support your business from its first steps to the big leagues. Starter - $5/month, Venture - $35/month, Business - $65/month, Unlimited - $149/month.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Ecwid Pricing"
+    },
+    "s3": {
+      "url": "https://docs.ecwid.com/api-reference",
+      "quote": "Ecwid REST API allows you to access and manage any store data, payment and shipping methods, and storefront settings. We use OAuth 2.0 authorization simplified for single-store customizations, JSON-formatted data, and a clear structure.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "REST API Overview"
+    },
+    "s4": {
+      "url": "https://docs.ecwid.com/get-started/set-up-your-dev-environment-in-ecwid",
+      "quote": "Gaining API access requires you to have a store and a platform where you can configure permissions and generate access tokens. Only stores on paid plans can access API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Set up your dev environment in Ecwid"
+    },
+    "s5": {
+      "url": "https://docs.ecwid.com/get-started/set-up-your-dev-environment-in-ecwid",
+      "quote": "Ecwid provides a free upgrade to a paid plan if you: Work on a store customization project for your paid store or one of our clients. Want to build an integration for your working store in a safe environment... Email us to get a free plan upgrade for your test store.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Set up your dev environment in Ecwid"
+    },
+    "s6": {
+      "url": "https://docs.ecwid.com/get-started/make-your-first-api-request",
+      "quote": "All requests to Ecwid REST API require an access token. Ecwid uses OAuth 2.0 to provide secure access to the store data for public apps. If you customize your own store, however, you can skip OAuth and easily get an access token for your store.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Make your first API request"
+    },
+    "s7": {
+      "url": "https://docs.ecwid.com/api-reference/rest-api/products",
+      "quote": "Products - Search products, Get product, Update product, Create product, Delete product...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Products API Reference"
+    },
+    "s8": {
+      "url": "https://docs.ecwid.com/changelog/march-2025/march-20/oauth-for-public-apps-get-request-type-changed-to-post",
+      "quote": "oAuth mechanism for public apps got enhanced security: now the request that exchanges temporary code for the access token requires POST request type with params send as request body.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth for public apps: GET request type changed to POST"
+    },
+    "s9": {
+      "url": "https://docs.ecwid.com/api-reference/rest-api/orders",
+      "quote": "Orders - Search orders, Get order, Create order, Update order, Delete order...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Orders API Reference"
+    },
+    "s10": {
+      "url": "https://docs.ecwid.com/api-reference/rest-api/customers",
+      "quote": "Customers - Search customers, Get customer, Update customer, Create customer, Delete customer...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Customers API Reference"
+    },
+    "s11": {
+      "url": "https://docs.ecwid.com/develop-apps/app-settings",
+      "quote": "Access tokens allow you to authorize REST API requests for the specific app in the specific store. Access tokens also do not expire, so once you get them for your custom app, save and use these tokens on your side for as long as you need.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "App settings"
+    },
+    "s12": {
+      "url": "https://viasocket.com/mcp/ecwid-by-lightspeed",
+      "quote": "MCP Server for Ecwid. Connect Ecwid actions with AI tools like ChatGPT, Claude, and Cursor using the viaSocket MCP Server.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Ecwid MCP | viaSocket"
+    },
+    "s13": {
+      "url": "https://github.com/Ecwid/ecwid-js-sdk",
+      "quote": "Ecwid Ecommerce SDK is a lightweight JavaScript library which does not require Ecwid widget for interacting with Ecwid API to manage online store data.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Ecwid/ecwid-js-sdk"
+    }
+  },
+  "limitations": [
+    "The exact OAuth 2.0 flow details (grant types, scopes) were not fully explored beyond the authorization code grant type mentioned in the changelog.",
+    "The free tier elimination in early 2025 was noted from a secondary source (checkthat.ai) but the official Ecwid pricing page no longer shows a free plan, which aligns.",
+    "I was unable to confirm if the viaSocket MCP server is officially endorsed by Ecwid or purely community-built."
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0",
+  "app_id": "waterfall-io",
+  "researched_at": "2026-07-13T12:56:39Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 20,
+    "trace_path": "logs/waterfall-io-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "B2B Data Enrichment / Contact & Company Data API",
+        "evidence_ids": [
+          "s1",
+          "s4"
+        ],
+        "notes": "Waterfall.io is a B2B data enrichment platform that aggregates 30+ data vendors into a single API for contact and company enrichment, email verification, phone finding, and prospect search."
+      },
+      "one_liner": {
+        "value": "Waterfall.io aggregates 30+ data vendors into a single REST API for B2B contact and company enrichment, email verification, and phone number finding.",
+        "evidence_ids": [
+          "s1",
+          "s4"
+        ],
+        "notes": "The website and API docs describe it as a unified B2B data API powered by 30+ vendors."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s2",
+          "s3"
+        ],
+        "notes": "All requests are authenticated using x-api-key header. The auth docs explicitly state: 'All requests are authenticated using x-api-key.' Some examples also show x-waterfall-api-key but the primary doc uses x-api-key."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "sales_gated",
+      "gates": [
+        "sales_contract",
+        "paid_plan"
+      ],
+      "signup_friction": "invite_required",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "There is no self-serve signup flow. The only CTA on the website is 'Book a Call' or 'Chat with our founders'. The FAQ says they offer a prepaid model and you can 'top up your Waterfall account' after talking to them. API key management is described as an 'enterprise feature' requiring contacting your account manager. The /book-a-call page and general website both direct to sales conversation before any API access. No 'Sign Up', 'Get Started for Free', or API key self-service flow was found anywhere on the site."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Well-documented public REST API at docs.waterfall.io with 12+ endpoints covering: Prospector (async contact search), Search Contact (sync), Search Company (sync), Contact Enrichment (async), Phone Enrichment (async), Company Enrichment (async), Company Reveal (sync, beta), Company Titles (sync, beta), Job Change Detection (sync), Email Verification (sync), Webhook JWKS (sync), Account Reporting (sync), and API Key Management (sync). OpenAPI 3.1 specification available for download. Webhook support via signed deliveries (Ed25519 keys). Rate limiting with standard headers.",
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s9"
+        ],
+        "notes": "The API docs are comprehensive with an OpenAPI spec, error docs, rate limit docs, and specific endpoint docs for each feature."
+      },
+      "api_docs_url": "https://docs.waterfall.io/v1/introduction"
+    },
+    "agent_interface": {
+      "mcp": "none_found",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [],
+      "evidence_ids": [
+        "s10"
+      ],
+      "notes": "No official or community MCP server was found for Waterfall.io after extensive search. No Composio toolkit integration was found either. There are no known agent skill packages or SDK wrappers for AI agent use."
+    },
+    "buildability": {
+      "verdict": "buildable_with_access",
+      "main_blocker": "paid_api_entitlement",
+      "rationale": {
+        "value": "Waterfall.io has a well-documented, broad REST API with straightforward API-key authentication and an OpenAPI spec, making it technically straightforward to build an agent toolkit from. However, access to API credentials is entirely sales-gated: there is no self-serve signup, no free tier, and no way to obtain an API key without booking a call with the Waterfall team and becoming a paying customer. The API key management feature itself requires an 'enterprise' account and contacting an account manager. Once you have access as a customer, the API is mature enough to wrap into an agent toolkit (e.g., an MCP server). The main blocker is therefore the paid/sales-gated entitlement to get credentials.",
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s4",
+          "s5",
+          "s6",
+          "s7",
+          "s8"
+        ],
+        "notes": "The public API docs are complete and the auth mechanism is simple (API key). The barrier is purely access/procurement, not technical feasibility."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.waterfall.io",
+      "quote": "Waterfall\u2122 aggregates 30+ different data vendors so that you can maximize contact, email and mobile number coverage without signing multiple data vendors or long-term contracts.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Waterfall.io homepage"
+    },
+    "s2": {
+      "url": "https://docs.waterfall.io/v1/authentication",
+      "quote": "All requests are authenticated using `x-api-key`.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - Waterfall.io API Documentation"
+    },
+    "s3": {
+      "url": "https://docs.waterfall.io/v1/introduction",
+      "quote": "The Waterfall API is available at `https://api.waterfall.io`. All requests require an API key in the `x-api-key` header.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introduction - Waterfall.io API Documentation"
+    },
+    "s4": {
+      "url": "https://docs.waterfall.io/llms.txt",
+      "quote": "API reference for Waterfall.io \u2014 find, enrich, and verify contacts and companies.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Waterfall.io API Documentation - llms.txt"
+    },
+    "s5": {
+      "url": "https://www.waterfall.io/book-a-call",
+      "quote": "We offer a prepaid model, where you can top up your Waterfall account, and each successful match reduces your balance. ... For customers with large volumes, we can also offer monthly invoices...",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Book a demo | Waterfall"
+    },
+    "s6": {
+      "url": "https://docs.waterfall.io/v1/api-keys-overview.md",
+      "quote": "API key management is an enterprise feature. Contact your account manager to get access.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Keys Management - Waterfall.io API Documentation"
+    },
+    "s7": {
+      "url": "https://www.waterfall.io/book-a-call",
+      "quote": "If you aren't ready for a Zoom call, but still want to learn more or ask specific questions, just use our chat. It's connected our founder directly...",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Book a demo | Waterfall"
+    },
+    "s8": {
+      "url": "https://www.waterfall.io/book-a-call",
+      "quote": "Can I develop products using Waterfall data? We are very selective in partnering with platform customers, focusing on strategic alignment and responsible data use.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Book a demo | Waterfall"
+    },
+    "s9": {
+      "url": "https://docs.waterfall.io/v1/openapi-spec.md",
+      "quote": "The full OpenAPI 3.1 specification for the Waterfall API is available for download. Use it to generate client SDKs, import into Postman, or explore the schema.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Open API Specification - Waterfall.io API Documentation"
+    },
+    "s10": {
+      "url": "https://docs.waterfall.io/v1/rate-limit",
+      "quote": "All endpoints are rate-limited, except Account endpoints.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate limit - Waterfall.io API Documentation"
+    }
+  },
+  "limitations": [
+    "No official or community MCP server was found for Waterfall.io. No Composio toolkit integration found. The OpenAPI spec file itself (api_specs.yaml) could not be directly fetched but its existence is confirmed. No evidence of any self-serve API key provisioning flow was found - the site exclusively directs to 'Book a Call' or chat."
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0",
+  "app_id": "bright-data",
+  "researched_at": "2026-07-13T12:52:26Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 16,
+    "trace_path": "logs/bright-data-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Web Data Infrastructure / Proxy & Scraping Platform",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "notes": "Bright Data is a comprehensive web data platform offering proxy networks (residential, datacenter, ISP, mobile), web scraping APIs (Web Unlocker, SERP, Scraper APIs), datasets marketplace, and AI-native MCP server for agentic web access."
+      },
+      "one_liner": {
+        "value": "Web data infrastructure platform providing proxy networks, scraping APIs, datasets, and an MCP server for AI agents to access public web data in real-time.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "notes": "From docs: 'All-in-one solution for public web access' and product descriptions across multiple pages."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "custom"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5"
+        ],
+        "notes": "Two methods: (1) API Access using an API key as a Bearer token in the Authorization header, (2) Native Access using proxy username:password combo. Both billed at same rate."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "company_email"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Free tier: 5,000 credits/month, no credit card required, auto-applied to all new accounts. However, residential proxy access requires KYC (company email, business registration, potentially ID). For MCP/Rapid mode, no KYC needed. Free tier covers Web Unlocker API, SERP API, Web Scraper API, Scraper Studio. Proxy products/Browser API get $2 one-time trial credit."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks",
+        "sdk_only"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Comprehensive REST API at https://api.brightdata.com covering Web Unlocker API, SERP API, Web Scraper API (250+ pre-built scrapers), Crawl API, Datasets API, Scraper Studio, Proxy management, and more. Official Python SDK (brightdata-sdk) and npm package (@brightdata/mcp). OpenAPI spec available. The MCP server exposes 60+ tools for web search, scraping, structured data extraction from ecommerce/social platforms, browser automation.",
+        "evidence_ids": [
+          "s1",
+          "s5",
+          "s9",
+          "s10",
+          "s11"
+        ],
+        "notes": "API docs at docs.brightdata.com/api-reference. Broad set of endpoints for scraping, data feeds, proxy management, and AI agent interfaces."
+      },
+      "api_docs_url": "https://docs.brightdata.com/api-reference"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://github.com/brightdata-com/brightdata-mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s9",
+        "s10",
+        "s11",
+        "s12"
+      ],
+      "notes": "Official MCP server (brightdata-mcp) with 60+ tools, MIT license on GitHub, npm package @brightdata/mcp. Available on Composio as 'Bright Data MCP' toolkit. Also has official Python SDK."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Bright Data is fully buildable into an AI agent toolkit today. It has a documented public REST API with Bearer token auth, a generous free tier (5,000 requests/month, no credit card required), an official MCP server with 60+ tools, and official SDKs (Python, JS). The only caveat is that residential proxy access requires KYC (company email), but the MCP/API free tier works without that. The MCP server is already designed for AI agent integration and works with Claude, Cursor, LangChain, etc.",
+        "evidence_ids": [
+          "s6",
+          "s7",
+          "s8",
+          "s9",
+          "s10",
+          "s11"
+        ],
+        "notes": "All key requirements met: public API, self-serve free tier, API key auth, official MCP server, SDKs. No material blocker."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.brightdata.com/api-reference/authentication",
+      "quote": "Bright Data provides two primary methods for authentication: 1. API Access - Authenticate and interact with the Bright Data platform using an API key/token. 2. Native Access - Authenticate and interact with the Bright Data platform using proxy protocol username and password.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - Bright Data Docs"
+    },
+    "s2": {
+      "url": "https://brightdata.com/pricing",
+      "quote": "Bright Data's Products Pricing - Designed to meet enterprise companies' unique needs and challenges",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Top-Tier Proxies & Scraping APIs Pricing"
+    },
+    "s3": {
+      "url": "https://docs.brightdata.com/ai/mcp-server/overview",
+      "quote": "Use the Bright Data MCP server to give AI agents real-time access to public web data with 5,000 free requests per month and zero infrastructure setup.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MCP server overview - Bright Data Docs"
+    },
+    "s4": {
+      "url": "https://docs.brightdata.com/api-reference/authentication",
+      "quote": "The important part of this request is the Authorization header: 'Authorization: Bearer <token>' This <token> is your API key, which is required for every API request.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - Bright Data Docs"
+    },
+    "s5": {
+      "url": "https://docs.brightdata.com/api-reference/rest-api",
+      "quote": "openapi: 3.0.1\ninfo:\n  title: Brightdata API\n  description: >-\n    Integrate Bright Data APIs to your pipeline and secure high-end scraping\n    precision\n  version: 1.0.0\nservers:\n  - url: https://api.brightdata.com\nsecurity:\n  - bearerAuth: []",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Web Unlocker API - Bright Data Docs"
+    },
+    "s6": {
+      "url": "https://docs.brightdata.com/general/account/billing-and-pricing/free-tier",
+      "quote": "Every new Bright Data account gets 5,000 free credits per month across Web Unlocker API, SERP API, Web Scraper API and Scraper Studio. No credit card required.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Free tier - Bright Data Docs"
+    },
+    "s7": {
+      "url": "https://docs.brightdata.com/general/account/billing-and-pricing/free-tier",
+      "quote": "The free tier is available to all new accounts and is applied automatically at signup.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Free tier - Bright Data Docs"
+    },
+    "s8": {
+      "url": "https://brightdata.com/trustcenter/kyc-faq-residential-proxy-network",
+      "quote": "Our KYC process is a mandatory step for all new customers who wish to join our residential proxy network or gain special access rights. ... Bright Data accepts KYC applications from registered businesses with a company domain.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Bright Data KYC Process FAQs"
+    },
+    "s9": {
+      "url": "https://docs.brightdata.com/ai/mcp-server/tools",
+      "quote": "Reference for the Bright Data MCP server tools (60+ tools): web search, scraping, structured data and platform extractors for ecommerce and social workflows.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Tools - Bright Data Docs"
+    },
+    "s10": {
+      "url": "https://github.com/brightdata-com/brightdata-mcp",
+      "quote": "A powerful Model Context Protocol (MCP) server that provides an all-in-one solution for public web access. ... Stars: 2490 ... License: MIT License",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "brightdata/brightdata-mcp"
+    },
+    "s11": {
+      "url": "https://composio.dev/toolkits/brightdata_mcp",
+      "quote": "Securely connect your AI agents and chatbots (Claude, ChatGPT, Cursor, etc) with Bright Data MCP MCP or direct API to scrape websites, extract structured data.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Bright Data MCP MCP Integration for AI Agents | Composio"
+    },
+    "s12": {
+      "url": "https://docs.brightdata.com/api-reference/rest-api",
+      "quote": "# Install: pip install brightdata-sdk\nfrom brightdata import BrightDataClient",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Web Unlocker API - Bright Data Docs (Python SDK)"
+    }
+  },
+  "limitations": [
+    "Could not fetch the sign-up page (https://brightdata.com/sign-up) - returned 404. However, the free tier docs clearly state 'no credit card required' and auto-applied to new accounts. Residential proxy access has a KYC gate requiring company email/business registration, but the MCP/API free tier works without this."
+  ]
+}

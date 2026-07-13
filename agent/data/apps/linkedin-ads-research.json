@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "app_id": "linkedin-ads",
+  "researched_at": "2026-07-13T12:36:38Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 14,
+    "trace_path": "logs/linkedin-ads-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Advertising & Marketing",
+        "evidence_ids": [
+          "s1",
+          "s7"
+        ],
+        "notes": "LinkedIn Ads is LinkedIn's advertising platform (part of the Marketing Solutions suite) that lets businesses create, manage, and measure paid ad campaigns targeting professional audiences."
+      },
+      "one_liner": {
+        "value": "LinkedIn's online advertising platform for creating, managing, targeting, and measuring paid ad campaigns to reach professional audiences.",
+        "evidence_ids": [
+          "s7"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3"
+        ],
+        "notes": "LinkedIn API exclusively uses OAuth 2.0. Two flows: Member Authorization (3-legged OAuth code flow) for acting on behalf of a member, and Application Authorization (2-legged client credentials) for non-member-specific APIs. Marketing/Advertising APIs require the 3-legged flow with scopes like rw_ads."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "admin_gated",
+      "gates": [
+        "account_signup",
+        "company_email",
+        "workspace_admin",
+        "paid_plan",
+        "app_review",
+        "sales_contract"
+      ],
+      "signup_friction": "company_email_required",
+      "paid_plan_required_for_api": "plan_dependent",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s4",
+        "s5",
+        "s6",
+        "s10",
+        "s11",
+        "s12"
+      ],
+      "notes": "To get Advertising API access: (1) Must have a LinkedIn Company Page; (2) Create a developer app in the LinkedIn Developer Portal; (3) Apply for the Advertising API product under the Products tab; (4) LinkedIn manually reviews the application (can take days to weeks); (5) Development tier is self-serve but limited; (6) Standard tier requires a formal upgrade request with a demo video. Basic OAuth/Share permissions are self-serve, but the full Ads API is gated behind review. There is also a requirement to associate a verified company page."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "LinkedIn offers a documented, versioned REST Marketing API (base URL: https://api.linkedin.com/rest) covering campaign management, ad accounts, targeting, analytics/reporting, lead generation, audience insights, matched audiences, conversions, events, and community management. The API requires a LinkedIn-Version header. There are also webhooks for some events like lead sync. The API surface is broad, covering the full advertising lifecycle.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s5"
+        ]
+      },
+      "api_docs_url": "https://learn.microsoft.com/en-us/linkedin/marketing/"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": "https://github.com/danielpopamd/linkedin-ads-mcp",
+      "existing_agent_skills": [
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s8",
+        "s9"
+      ],
+      "notes": "No official MCP server from LinkedIn. Several community MCP servers exist: danielpopamd/linkedin-ads-mcp (GitHub, MIT license), Two Minute Reports LinkedIn Ads MCP, CData LinkedIn Ads MCP Server. Composio has a managed LinkedIn Ads toolkit with 28 tools and OAuth2 support."
+    },
+    "buildability": {
+      "verdict": "buildable_with_access",
+      "main_blocker": "paid_api_entitlement",
+      "rationale": {
+        "value": "The LinkedIn Marketing API is well-documented, RESTful, and functionally broad enough to build a comprehensive agent toolkit. However, accessing the Advertising API requires submitting an application through the Developer Portal, undergoing LinkedIn's manual review process (which can take weeks), being an approved Marketing Developer Platform partner, and having a LinkedIn Company Page. The API itself is free to use once approved, but the access gate (app review/partner approval) is the main blocker. Basic OAuth/Share permissions are self-serve, but the full ads functionality requires approval. A developer can get Development tier today by applying, but must be approved. For Standard tier, additional review is needed. So it's 'buildable with access' \u2014 technically possible, but access is gated.",
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s6",
+          "s10",
+          "s11",
+          "s12"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://learn.microsoft.com/en-us/linkedin/marketing/",
+      "quote": "The LinkedIn Marketing Platform helps businesses grow by building technology to reach, engage, and convert professional audiences at scale. The platform offers APIs to create LinkedIn marketing campaigns, to report campaign performance, to manage leads, and to grow a company Page.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "LinkedIn Marketing API Program"
+    },
+    "s2": {
+      "url": "https://learn.microsoft.com/en-us/linkedin/marketing/integrations/ads/getting-started?view=li-lms-2026-06",
+      "quote": "Marketing APIs require the rw_ads scope. Other APIs require additional permission scopes which are documented in topic-specific pages.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Build an Ad Campaign - LinkedIn Marketing API"
+    },
+    "s3": {
+      "url": "https://learn.microsoft.com/en-us/linkedin/shared/authentication/authentication",
+      "quote": "The LinkedIn API uses OAuth 2.0 for member (user) authorization and API authentication.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authenticating with OAuth 2.0 Overview - LinkedIn"
+    },
+    "s4": {
+      "url": "https://learn.microsoft.com/en-us/linkedin/shared/authentication/getting-access",
+      "quote": "The LinkedIn API uses OAuth 2.0 for user authorization and API authentication. Applications must be authorized and authenticated before they can fetch data from LinkedIn or get access to member data. This page summarizes the available permissions and partner programs available for accessing LinkedIn APIs. Most permissions and partner programs require explicit approval from LinkedIn. Open Permissions are the only permissions that are available to all developers without special approval.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Getting Access to LinkedIn APIs"
+    },
+    "s5": {
+      "url": "https://learn.microsoft.com/en-us/linkedin/marketing/integrations/marketing-tiers?view=li-lms-2026-06",
+      "quote": "LinkedIn has two tiers of access to our Advertising API: Development and Standard. Access to the Advertising API is reserved for applications building supported use cases... Visit your app's Product tab in the Developer Portal to apply for the Advertising API product.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "LinkedIn Marketing API Program Access Tiers"
+    },
+    "s6": {
+      "url": "https://learn.microsoft.com/en-us/linkedin/marketing/quick-start?view=li-lms-2026-06",
+      "quote": "Apply for API access... Create a LinkedIn Page. Create a developer application in the Developer Portal.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Quick Start - LinkedIn Marketing API"
+    },
+    "s7": {
+      "url": "https://business.linkedin.com/marketing-solutions",
+      "quote": "LinkedIn Ads is an online advertising platform that helps businesses reach professional audiences, promote products and services, generate leads, and drive business growth through targeted advertising campaigns.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Marketing & Advertising on LinkedIn | LinkedIn Ads"
+    },
+    "s8": {
+      "url": "https://github.com/danielpopamd/linkedin-ads-mcp",
+      "quote": "An MCP (Model Context Protocol) server that enables Claude AI to access and analyze your LinkedIn Ads data.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "danielpopamd/linkedin-ads-mcp"
+    },
+    "s9": {
+      "url": "https://composio.dev/toolkits/linkedin_ads",
+      "quote": "Securely connect your AI agents and chatbots (Claude, ChatGPT, Cursor, etc) with Linkedin Ads MCP or direct API to manage campaigns, review ad performance, analyze spend, and publish organization social content through natural language.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Linkedin Ads MCP Integration for AI Agents | Composio"
+    },
+    "s10": {
+      "url": "https://developers.frontegg.com/agen-for-work/connectors/marketplace/linkedin-ads",
+      "quote": "LinkedIn reviews all Advertising API access requests manually. Review typically takes several business days. LinkedIn sends an email notification when a decision is made.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "LinkedIn Ads integration - Getting started"
+    },
+    "s11": {
+      "url": "https://sociavault.com/blog/linkedin-api-free-2026",
+      "quote": "Basic OAuth / Share: Self-service, Free. Marketing Developer Platform: Partner agreement, Custom (not public). Applying for LinkedIn API access involves... Wait \u2014 typically 4\u201312 weeks for a response.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Is the LinkedIn API Free? (The Honest Answer for 2026)"
+    },
+    "s12": {
+      "url": "https://www.getphyllo.com/post/linkedin-api-ultimate-guide-on-linkedin-api-integration",
+      "quote": "To get LinkedIn API access: (1) Go to the LinkedIn Developer Portal... (2) Create an app \u2014 you'll need a verified company LinkedIn page to proceed... (5) If applying for MDP or Partner access, submit a use-case description \u2014 LinkedIn manually reviews and approves these, which can take several weeks.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "LinkedIn API Integration Guide 2026"
+    }
+  },
+  "limitations": [
+    "Could not find explicit evidence of a free self-serve tier for the Advertising API \u2014 the Marketing Developer Platform requires approval. The Development tier is 'open to qualified developers' but still requires applying and being approved.",
+    "The exact approval timeline varies (sources cite 2-12 weeks) and is not officially published by LinkedIn.",
+    "Webhook support may exist for some endpoints (Lead Sync) but is not comprehensively documented for all APIs."
+  ]
+}

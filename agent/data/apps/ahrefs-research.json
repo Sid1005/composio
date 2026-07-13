@@ -1,0 +1,231 @@
+{
+  "schema_version": "1.0",
+  "app_id": "ahrefs",
+  "researched_at": "2026-07-13T12:50:37Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 12,
+    "trace_path": "logs/ahrefs-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "SEO and Marketing Analytics Platform",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s15"
+        ],
+        "notes": "Ahrefs is a comprehensive SEO and marketing analytics platform for keyword research, backlink analysis, rank tracking, site audits, and brand visibility monitoring across search and AI."
+      },
+      "one_liner": {
+        "value": "SEO and marketing analytics platform providing keyword research, backlink analysis, rank tracking, site audits, and brand visibility monitoring tools.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s15"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s8",
+          "s9"
+        ],
+        "notes": "API key (Bearer token in Authorization header) is used for direct API v3 access. OAuth2 is used for Ahrefs Connect (third-party integration program). The MCP server also uses OAuth-based authorization."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_paid",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s1",
+        "s2",
+        "s3",
+        "s11",
+        "s12"
+      ],
+      "notes": "API access is available on eligible paid plans starting from Lite ($129/mo). Free test queries are available for development without consuming API units. API keys can be self-served by workspace owners/admins on paid plans. There is no free trial for paid plans, but free limited access (Ahrefs Free) exists for Site Explorer & Site Audit. For Ahrefs Connect (OAuth), developers need an Enterprise plan ($1,499/mo) to activate in production, but not for development."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Ahrefs has a well-documented public REST API (v3) covering Site Explorer (backlinks, organic/paid search, pages), Keywords Explorer, SERP Overview, Rank Tracker, Site Audit, Brand Radar, Social Media Management, Batch Analysis, and Management endpoints. Rate limit is 60 req/min. Official MCP server available. Ahrefs Connect program provides OAuth-based integration for third-party apps.",
+        "evidence_ids": [
+          "s1",
+          "s3",
+          "s5",
+          "s6",
+          "s7",
+          "s15"
+        ]
+      },
+      "api_docs_url": "https://docs.ahrefs.com"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://api.ahrefs.com/mcp/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s7",
+        "s13",
+        "s14"
+      ],
+      "notes": "Ahrefs provides an official hosted MCP server at https://api.ahrefs.com/mcp/mcp supporting Streamable HTTP. It requires a Lite plan or higher. Composio has an Ahrefs MCP server and toolkit integration. The MCP server is intended for interactive AI clients (ChatGPT, Claude) and is not a general-purpose programmatic API."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "paid_api_entitlement",
+      "rationale": {
+        "value": "Ahrefs has a robust public REST API (v3) with broad functionality for SEO data access. An official MCP server exists, and Composio already has an Ahrefs toolkit. The primary blocker is that API access requires a paid plan (Lite $129/mo or higher), though free test queries are available for development. For an agent toolkit, this is buildable today with a paid subscription, which is a standard entitlement requirement rather than a technical blocker.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s5",
+          "s6",
+          "s7",
+          "s13"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.ahrefs.com/en/api/docs/introduction",
+      "quote": "With Ahrefs API, you can use data from your Ahrefs workspace to create custom integrations and automations... Ahrefs API is available on eligible paid plans... To send requests to Ahrefs API, you'll need an API key.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introduction | Ahrefs for Developers"
+    },
+    "s2": {
+      "url": "https://docs.ahrefs.com/en/api/docs/api-keys-creation-and-management",
+      "quote": "You'll need an API key to send requests via Ahrefs API v3. Provide it in the Authorization header when making requests: Authorization: Bearer YOUR_API_KEY.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API keys creation and management | Ahrefs for Developers"
+    },
+    "s3": {
+      "url": "https://docs.ahrefs.com/en/api/docs/introduction",
+      "quote": "All requests besides free test queries and the Rank Tracker, Management, Public and some other endpoints consume API units... Ahrefs API is limited to 60 requests per minute by default.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introduction | Ahrefs for Developers"
+    },
+    "s4": {
+      "url": "https://docs.ahrefs.com/en/ahrefs-connect/docs/oauth-guide",
+      "quote": "Your app must obtain an API access token for that user. Exchange the code for an access_token by sending a POST request to https://ahrefs.com/oauth/token.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth guide | Ahrefs for Developers"
+    },
+    "s5": {
+      "url": "https://docs.ahrefs.com/en/mcp/docs/introduction",
+      "quote": "Ahrefs provides a hosted MCP server that allows users with a Lite plan or higher to connect their Ahrefs account to supported AI tools... Streamable HTTP (recommended): https://api.ahrefs.com/mcp/mcp",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "What is Ahrefs MCP | Ahrefs for Developers"
+    },
+    "s6": {
+      "url": "https://mcpservers.org/remote-mcp-servers/ahrefs",
+      "quote": "Ahrefs uses OAuth: the first time you connect, your MCP client opens a browser window to sign in and authorize access... The Ahrefs remote MCP server is a hosted Model Context Protocol endpoint at https://api.ahrefs.com/mcp/mcp.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Ahrefs Official Remote MCP Server \u2014 Setup Guide"
+    },
+    "s7": {
+      "url": "https://help.ahrefs.com/en/articles/13913559-getting-started-with-ahrefs-mcp",
+      "quote": "The Ahrefs MCP server allows you to connect Ahrefs' API to your AI tool of choice (ChatGPT, Claude, Copilot, etc.)... API units are shared across Ahrefs MCP, Ahrefs Connect, and direct Ahrefs API v3 usage.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Getting started with Ahrefs MCP | Help Center - Ahrefs"
+    },
+    "s8": {
+      "url": "https://docs.ahrefs.com/en/ahrefs-connect/docs/introduction",
+      "quote": "Ahrefs Connect is our integration program that lets third-party products access Ahrefs API data on behalf of Ahrefs users. Users connect their Ahrefs account via OAuth.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introduction | Ahrefs for Developers"
+    },
+    "s9": {
+      "url": "https://docs.ahrefs.com/en/ahrefs-connect/docs/how-it-works",
+      "quote": "If you are building a new integration (not part of the legacy program), you will need an Ahrefs Enterprise plan to activate your integration in production.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How it works | Ahrefs for Developers"
+    },
+    "s10": {
+      "url": "https://docs.ahrefs.com/en/ahrefs-connect/docs/how-it-works",
+      "quote": "Submit the application form with: A description of your product, A link to your website, Details on how you plan to use Ahrefs data in your app. Our Enterprise team will confirm if your product is eligible.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How it works | Ahrefs for Developers"
+    },
+    "s11": {
+      "url": "https://ahrefs.com/pricing",
+      "quote": "API access / MCP Server included in Lite ($129/mo), Standard ($249/mo), Advanced ($449/mo), and Enterprise ($1,499/mo) plans.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Plans & Pricing - Ahrefs"
+    },
+    "s12": {
+      "url": "https://ahrefs.com/pricing",
+      "quote": "Do you offer discounts or free trials? We never run discounts. But if you're a website owner, you can sign up for Ahrefs Free to get free limited access to Site Explorer & Site Audit.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Plans & Pricing - Ahrefs"
+    },
+    "s13": {
+      "url": "https://composio.dev/toolkits/ahrefs/framework/mastra-ai",
+      "quote": "Connect your AI to 1,000+ apps with secure auth and delegated access. Managed MCP servers and tool routing for your agents. Ahrefs is an SEO and marketing platform for site audits, keyword research, and competitor insights.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Ahrefs MCP Integration with Mastra AI | Composio"
+    },
+    "s14": {
+      "url": "https://docs.ahrefs.com",
+      "quote": "Connect your Ahrefs data to AI assistants and agents to enhance their answers with real marketing insights.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Ahrefs for Developers"
+    },
+    "s15": {
+      "url": "https://docs.ahrefs.com/en/api/reference/site-explorer",
+      "quote": "Site Explorer. Fetch data from Site Explorer reports. Base URL https://api.ahrefs.com/v3/site-explorer. Overview, Backlinks profile, Organic search, Paid search, Pages, Outgoing links.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Site Explorer | Ahrefs for Developers"
+    }
+  }
+}

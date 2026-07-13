@@ -1,0 +1,202 @@
+{
+  "schema_version": "1.0",
+  "app_id": "cloudflare",
+  "researched_at": "2026-07-13T12:55:12Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 13,
+    "trace_path": "logs/cloudflare-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Cloud Infrastructure & Edge Computing / CDN / Security",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Cloudflare is best categorized as a connectivity cloud platform that provides CDN, DDoS protection, DNS, serverless compute (Workers), object storage (R2), AI inference, and many other services through a unified API."
+      },
+      "one_liner": {
+        "value": "Cloudflare provides a unified edge-cloud platform for security, performance, and serverless compute including CDN, DNS, DDoS protection, Workers, storage, and AI inference via a single REST API.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "bearer_token",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "Cloudflare supports multiple auth methods: (1) API Token using Authorization: Bearer header (recommended, scoped), (2) API Key + Email via X-Auth-Key/X-Auth-Email headers (legacy), (3) OAuth 2.0 Authorization Code flow for third-party apps. The recommended method for programmatic agent integration is API Token (Bearer token)."
+      },
+      "primary_for_agent_toolkit": "bearer_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s6",
+        "s7"
+      ],
+      "notes": "Anyone can sign up for a free Cloudflare account without a credit card and create API tokens. The free plan includes Workers (100k req/day), Pages (500 builds/mo), D1, Turnstile, etc. Some specific services (Zero Trust, R2) may eventually require a credit card on file, but the core API and API token creation are available on the free plan with no payment method required."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Cloudflare offers a comprehensive, well-documented REST API (v4) at https://api.cloudflare.com/client/v4/ with over 2,500 endpoints covering all services: DNS, zones, load balancers, cache, SSL, Workers, R2, D1, AI, analytics, and more. Also offers a GraphQL Analytics API. Official SDKs available for TypeScript, Go, Python, and Terraform. Rate limit is 1,200 requests per 5 minutes per user on free tier.",
+        "evidence_ids": [
+          "s8",
+          "s9",
+          "s10"
+        ]
+      },
+      "api_docs_url": "https://developers.cloudflare.com/api/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://github.com/cloudflare/mcp-server-cloudflare",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s11",
+        "s12"
+      ],
+      "notes": "Cloudflare has an official MCP server repository (cloudflare/mcp-server-cloudflare) with 3.9K+ stars, offering multiple domain-specific MCP servers (documentation, workers bindings, workers builds, observability, browser rendering, etc.) plus a Code Mode MCP server covering the entire 2,500+ endpoint API. Cloudflare also publishes 'agent skills' for various AI tools and has a dedicated 'Docs for agents' page with MCP setup guides."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Cloudflare is fully buildable as an agent toolkit today. It has a comprehensive public REST API with 2,500+ endpoints, self-serve free credentials (API tokens) with no payment required, official MCP servers already published and maintained by Cloudflare, SDKs in multiple languages, and dedicated documentation for AI agent integration. The API rate limits (1,200 req/5min) are reasonable for an agent toolkit. No paid plan, admin approval, or sales gate is required to get started.",
+        "evidence_ids": [
+          "s11",
+          "s12",
+          "s8",
+          "s7"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developers.cloudflare.com/fundamentals/api/",
+      "quote": "Interact with Cloudflare services programmatically using the REST and GraphQL APIs.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Cloudflare's API"
+    },
+    "s2": {
+      "url": "https://www.cloudflare.com/plans/free/",
+      "quote": "Our mission is to build a better Internet. We believe every website should have free access to foundational security and performance.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Free Plan Overview"
+    },
+    "s3": {
+      "url": "https://developers.cloudflare.com/fundamentals/api/get-started/",
+      "quote": "Using the Cloudflare API requires authentication so that Cloudflare knows who is making requests and what permissions you have. Create an API token to grant access to the API to perform actions.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get started with Cloudflare API"
+    },
+    "s4": {
+      "url": "https://developers.cloudflare.com/fundamentals/api/how-to/make-api-calls/",
+      "quote": "Once you create your API token, all API requests are authorized in the same way. Cloudflare uses the RFC standard Authorization: Bearer <token> interface.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Make API calls"
+    },
+    "s5": {
+      "url": "https://developers.cloudflare.com/fundamentals/oauth/create-an-oauth-client/",
+      "quote": "Cloudflare OAuth clients support the OAuth 2.0 Authorization Code flow.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Create your OAuth client"
+    },
+    "s6": {
+      "url": "https://developers.cloudflare.com/fundamentals/api/get-started/create-token/",
+      "quote": "New API tokens use the cfut_ prefixed scannable format... With this you have successfully created an API token and can start working with the Cloudflare API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Create API token"
+    },
+    "s7": {
+      "url": "https://www.cloudflare.com/plans/free/",
+      "quote": "Sign Up Free",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Free Plan Overview - Sign Up Free"
+    },
+    "s8": {
+      "url": "https://developers.cloudflare.com/fundamentals/api/reference/limits/",
+      "quote": "The global rate limit for the Cloudflare API is 1,200 requests per five minute period per user",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Rate limits"
+    },
+    "s9": {
+      "url": "https://developers.cloudflare.com/api/",
+      "quote": "API Reference - Accounts, Organizations, Tenants, Origin CA Certificates, IPs, Memberships, User, Zones, Load Balancers, Cache, SSL, DNS, ...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Cloudflare API Reference"
+    },
+    "s10": {
+      "url": "https://developers.cloudflare.com/fundamentals/api/how-to/make-api-calls/",
+      "quote": "Every Cloudflare API element is fixed to a version number. The latest version is Version 4. The stable base URL for all Version 4 HTTPS endpoints is: https://api.cloudflare.com/client/v4/",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Make API calls - API version"
+    },
+    "s11": {
+      "url": "https://github.com/cloudflare/mcp-server-cloudflare",
+      "quote": "Cloudflare MCP Server - Model Context Protocol (MCP) is a new, standardized protocol for managing context between large language models (LLMs) and external systems. In this repository, you can find several MCP servers allowing you to connect to Cloudflare's service from an MCP client.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "cloudflare/mcp-server-cloudflare"
+    },
+    "s12": {
+      "url": "https://developers.cloudflare.com/docs-for-agents/",
+      "quote": "Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works. ... Cloudflare API MCP server: A Code Mode server that covers the entire Cloudflare API (over 2,500 endpoints).",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Docs for agents"
+    }
+  },
+  "limitations": [
+    "Some Cloudflare services (Zero Trust, R2) may require a credit card even on the free tier, but core API and API token creation do not. The exact list of services requiring payment verification is not centrally documented.",
+    "The GraphQL Analytics API has its own rate limits separate from the REST API limits.",
+    "OAuth 2.0 is limited to Authorization Code flow only; Client Credentials grant is not supported for third-party clients."
+  ]
+}

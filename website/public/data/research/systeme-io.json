@@ -1,0 +1,193 @@
+{
+  "schema_version": "1.0",
+  "app_id": "systeme-io",
+  "researched_at": "2026-07-13T12:42:11Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 21,
+    "trace_path": "logs/systeme-io-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "All-in-one marketing and business platform (Sales funnels, email marketing, online courses, affiliate management)",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Systeme.io combines sales funnel builder, email marketing, website builder, online courses, affiliate management, marketing automation, community builder, and more."
+      },
+      "one_liner": {
+        "value": "All-in-one business platform for building sales funnels, email marketing, online courses, webinars, affiliate programs, and marketing automation.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s6",
+          "s7",
+          "s10"
+        ],
+        "notes": "The primary auth method is an API key passed via the X-API-Key header. For the MCP server, an MCP key is used via X-MCP-Key header or mcpKey query parameter. OAuth is on the roadmap but not yet available (mentioned in MCP docs)."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s4",
+        "s11",
+        "s12"
+      ],
+      "notes": "API is available on the free plan (2,000 contacts). No credit card required. Rate limits vary by plan: Free 30 req/min, Startup 60, Webinar 120, Unlimited unlimited. Developer can sign up for free and immediately generate API keys from account settings."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "moderate",
+      "summary": {
+        "value": "Documented public REST API at api.systeme.io/api covering contacts, tags, contact fields, funnels, newsletters, communities, courses, enrollments, subscriptions, webhooks, and page editor. Auth via X-API-Key header. Cursor-based pagination, merge-patch support. Rate limiting per plan. Also has an official MCP server (mcp.systeme.io/mcp). Documentation available via llms.txt index for AI agents.",
+        "evidence_ids": [
+          "s5",
+          "s6",
+          "s7",
+          "s10"
+        ],
+        "notes": "API reference hosted on ReadMe at developer.systeme.io. Endpoints are documented but no public OpenAPI/Swagger spec was found. The llms.txt provides machine-readable index of all docs."
+      },
+      "api_docs_url": "https://developer.systeme.io/reference/api.md"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "mcp.systeme.io/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s8",
+        "s9",
+        "s10"
+      ],
+      "notes": "Systeme.io provides an official MCP server documented at developer.systeme.io/docs/mcp-server. MCP keys generated in Settings. No Composio-specific toolkit found but the REST API and MCP server are directly usable. There's also a community MCP server on GitHub (mcpservers.org listing)."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Systeme.io has a well-documented public REST API with API-key auth that is available on the free plan with no credit card required. The API covers contacts, tags, funnels, newsletters, courses, subscriptions, and more. An official MCP server already exists for AI agent integration. The main limitations are: no OAuth (on roadmap), no official OpenAPI spec, and MCP keys expire after 90 days. However, these are not blockers for building an agent toolkit today. The API is fully functional and accessible to any developer who signs up.",
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s6",
+          "s7",
+          "s8",
+          "s9",
+          "s10",
+          "s11",
+          "s12"
+        ],
+        "notes": ""
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://systeme.io",
+      "quote": "Your platform for sales funnels email marketing online courses selling online blogging sales funnels",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s2": {
+      "url": "https://systeme.io/pricing",
+      "quote": "systeme.io has four plans based primarily on contact limits. Free: 2,000 contacts, 3 sales funnels, 1 course, all features.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s3": {
+      "url": "https://help.systeme.io/article/2329-how-to-use-systeme-io-public-api",
+      "quote": "Our public API feature is now available... Our API exposes a carefully selected set of features, enabling developers to interact with our platform transparently and efficiently.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s4": {
+      "url": "https://help.systeme.io/article/2323-how-to-create-a-public-api-key-on-systeme-io",
+      "quote": "API keys are unique identifiers that authenticate requests to our Public API. You can have a maximum of three API keys at any given time.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s5": {
+      "url": "https://developer.systeme.io/reference/api.md",
+      "quote": "To authenticate with the Systeme.io Public API, your only option right now is to attach your API key to the X-API-Key header of each request.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s6": {
+      "url": "https://developer.systeme.io/llms.txt",
+      "quote": "# Systeme Public API Documentation",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s7": {
+      "url": "https://developer.systeme.io/docs",
+      "quote": "const API_KEY = 'your_secret_api_key'; ... $client->request('POST', 'contacts', ...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s8": {
+      "url": "https://help.systeme.io/article/9489-how-to-use-systeme-ios-mcp",
+      "quote": "The new MCP server feature gives users, partners, and developers a powerful new way to interact with systeme.io using AI tools.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s9": {
+      "url": "https://developer.systeme.io/docs/mcp-server.md",
+      "quote": "Welcome to the Systeme.io MCP Server overview. The Model Context Protocol (MCP) is an open standard designed to connect AI models with external data and tools.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s10": {
+      "url": "https://developer.systeme.io/reference",
+      "quote": "For AI agents: visit https://developer.systeme.io/llms.txt for an index of all pages formatted in Markdown and endpoints in OpenAPI.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s11": {
+      "url": "https://www.linkedin.com/posts/getsystemeio_weve-changed-the-public-api-rate-limits-activity-7158120305213771777-LpDP",
+      "quote": "The rate limit (requests per minute) for each plan is as follows: Free plan: 30, Startup plan: 60, Webinar plan: 120, Unlimited plan: unlimited",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s12": {
+      "url": "https://systeme.io/pricing",
+      "quote": "Free: 2,000 contacts, 3 sales funnels, 1 course, all features. The free plan never expires and does not require a credit card.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    }
+  }
+}

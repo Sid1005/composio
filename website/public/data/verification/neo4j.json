@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "app_id": "neo4j",
+  "initial_research_path": "data/apps/neo4j-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "partially_confirmed",
+    "checked_at": "2026-07-13T12:59:46Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Pricing page header reads 'Graph database pricing plans', lists 'Graph Database' and 'Graph Analytics' as products, describes Neo4j AuraDB as a graph database. Footer lists 'Graph Database' under PRODUCTS.",
+        "source_url": "https://neo4j.com/pricing/",
+        "screenshot_path": "data/screenshots/neo4j-1.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Aura API docs confirm OAuth2 with client credentials and Bearer token. Query API docs confirm Basic auth (username:password) and Bearer token. GraphQL docs confirm API key (x-api-key header) and JWT/Bearer token. All four claimed methods (oauth2, basic, bearer_token, api_key) are documented.",
+        "source_url": "https://neo4j.com/docs/aura/api/authentication",
+        "screenshot_path": "data/screenshots/neo4j-2.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page shows AuraDB Free at $0 with 'No credit card or other payment method required'. Aura API auth page states 'All tiers can create Aura API credentials'. Free tier gives immediate access to API credentials without payment.",
+        "source_url": "https://neo4j.com/pricing/",
+        "screenshot_path": "data/screenshots/neo4j-1.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "partially_confirmed",
+        "evidence": "Rendered docs confirm Aura API (REST, v1, base URL api.neo4j.io), Query API (REST, supersedes deprecated HTTP API), and GraphQL Library (GraphQL with API key/JWT). Rate limits documented (25/min free, 125/min paid). However, 'webhooks' and 'Bolt binary protocol' are not evidenced in these particular rendered pages, so breadth claim is partially supported.",
+        "source_url": "https://neo4j.com/docs/aura/api/overview",
+        "screenshot_path": "data/screenshots/neo4j-5.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "inconclusive",
+        "evidence": "Pricing page footer lists 'Model context protocol (MCP)' under SOLUTIONS as a link, confirming Neo4j has MCP-related content. However, the actual MCP documentation page (https://neo4j.com/docs/mcp/current/) was not provided in rendered content, so I cannot verify whether it is an 'official' MCP server, the claimed endpoint URL, or the details of existing agent skills.",
+        "source_url": "https://neo4j.com/pricing/",
+        "screenshot_path": "data/screenshots/neo4j-1.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "partially_confirmed",
+        "evidence": "Free self-serve tier confirmed (no credit card). API credentials available to all tiers. Multiple well-documented REST/GraphQL APIs confirmed. However, MCP server claim cannot be fully verified from rendered pages, and some API breadth details (webhooks, Bolt) are not evidenced. Overall, the core verdict is supported but with minor gaps.",
+        "source_url": "https://neo4j.com/pricing/",
+        "screenshot_path": "data/screenshots/neo4j-1.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/neo4j-1.png",
+      "data/screenshots/neo4j-2.png",
+      "data/screenshots/neo4j-3.png",
+      "data/screenshots/neo4j-4.png",
+      "data/screenshots/neo4j-5.png",
+      "data/screenshots/neo4j-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": [
+    {
+      "field": "api_surface.public_api_and_breadth",
+      "initial_value": "Protocols include 'webhooks'. Breadth claimed as 'broad' with full summary.",
+      "final_value": "REST and GraphQL confirmed. Webhooks not evidenced in any of the rendered pages (pricing, Aura API overview, Query API, GraphQL docs). The evidence is strong for REST+GraphQL but incomplete for webhooks and Bolt protocol.",
+      "caught_by": "browser_verification",
+      "reason": "The rendered page set does not include any documentation page for webhooks or Bolt protocol. While REST (Aura API, Query API) and GraphQL are well documented in the rendered pages, webhooks are not mentioned. The claim may be correct but cannot be verified from the provided rendered content.",
+      "evidence": "No mention of 'webhooks' found in any of the rendered pages: pricing page, Aura API overview/authentication, Query API intro/authentication, or GraphQL API usage docs.",
+      "corrected_at": "2026-07-13T12:59:46Z"
+    },
+    {
+      "field": "agent_interface.mcp",
+      "initial_value": "MCP is 'official' with endpoint 'https://neo4j.com/docs/mcp/current/' and 'existing_agent_skills' list.",
+      "final_value": "MCP is listed as a solution in the footer of the pricing page, confirming Neo4j has some MCP offering. But the actual MCP documentation page was not provided, so the 'official' designation and specific endpoint/agent skills cannot be verified.",
+      "caught_by": "browser_verification",
+      "reason": "The rendered page set does not include the MCP documentation page itself. The only mention is a footer link on the pricing page under SOLUTIONS > Model context protocol (MCP). Without the MCP docs page rendered, I cannot confirm whether the MCP server is official vs community, the endpoint URL, or the agent skills list.",
+      "evidence": "Pricing page footer shows 'Model context protocol (MCP)' under SOLUTIONS section as a clickable link.",
+      "corrected_at": "2026-07-13T12:59:46Z"
+    }
+  ]
+}

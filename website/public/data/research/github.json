@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.0",
+  "app_id": "github",
+  "researched_at": "2026-07-13T12:53:23Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 10,
+    "trace_path": "logs/github-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Developer Tools / Code Collaboration / Version Control",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "GitHub is a web-based platform providing version control (Git), code hosting, project management, and CI/CD capabilities."
+      },
+      "one_liner": {
+        "value": "GitHub is a web-based platform for version control, code hosting, and collaborative software development, enabling teams to host and review code, manage projects, and build software together.",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "personal_access_token",
+          "oauth2",
+          "bearer_token",
+          "custom"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s6"
+        ],
+        "notes": "GitHub supports multiple auth methods: Personal Access Tokens (fine-grained and classic) sent as Bearer tokens in Authorization header, OAuth2 (web application flow and device flow), GitHub App installation tokens, and the built-in GITHUB_TOKEN for Actions. The REST API also accepts 'Authorization: token' or 'Authorization: Bearer'."
+      },
+      "primary_for_agent_toolkit": "personal_access_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s7",
+        "s8",
+        "s9"
+      ],
+      "notes": "GitHub Free plan ($0) allows unlimited public/private repositories and full API access. Anyone with a free GitHub account can generate personal access tokens (fine-grained or classic). There is no paid plan requirement to use the REST or GraphQL API. Organization-level restrictions may apply for tokens accessing org resources, but for personal use on public repos or personal repos, no admin approval is needed."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "GitHub has an extensive, well-documented public REST API (hundreds of endpoints covering repos, issues, PRs, Actions, code scanning, secrets, etc.) and a GraphQL API. Both are versioned, have rate limits (60/hour unauthenticated, 5000/hour authenticated), and are fully documented with OpenAPI descriptions. The REST API reference is at docs.github.com/en/rest and GraphQL at docs.github.com/en/graphql.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s10"
+        ]
+      },
+      "api_docs_url": "https://docs.github.com/en/rest"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://github.com/github/github-mcp-server",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api"
+      ],
+      "evidence_ids": [
+        "s11",
+        "s12"
+      ],
+      "notes": "GitHub released an official MCP server (github/github-mcp-server, 31K+ stars, MIT license) written in Go. It provides tools for repository management, issue/PR automation, CI/CD workflow intelligence, code analysis, and team collaboration. A remote MCP server is also hosted by GitHub at api.githubcopilot.com/mcp/. The server supports both OAuth and PAT authentication. Additionally, GitHub has official Octokit SDKs for multiple languages."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "GitHub is fully buildable as an agent toolkit today. It has a broad, well-documented public REST API and GraphQL API, multiple authentication methods (PAT, OAuth2) that are self-serve free, and an official MCP server (github/github-mcp-server) maintained by GitHub itself. The API covers all core GitHub features: repositories, issues, pull requests, Actions, code scanning, releases, discussions, etc. There are no material blockers for integrating GitHub into an AI agent toolkit.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s7",
+          "s11"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.github.com/en/rest/overview",
+      "quote": "GitHub REST API documentation\nCreate integrations, retrieve data, and automate your workflows with the GitHub REST API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "GitHub REST API documentation",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://docs.github.com/en/graphql",
+      "quote": "To create integrations, retrieve data, and automate your workflows, use the GitHub GraphQL API. The GitHub GraphQL API offers more precise and flexible queries than the GitHub REST API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "GitHub GraphQL API documentation",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://github.com/pricing",
+      "quote": "GitHub Free ($0/month): Unlimited public/private repositories, 2,000 CI/CD minutes/month, 500MB of Packages storage",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing \u00b7 Plans for every developer \u00b7 GitHub",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api",
+      "quote": "You can authenticate your request by sending the token in the Authorization header... You can create a personal access token, generate a token with a GitHub App, or use the built-in GITHUB_TOKEN in a GitHub Actions workflow.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authenticating to the REST API",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps",
+      "quote": "GitHub's OAuth implementation supports the standard authorization code grant type and the OAuth 2.0 Device Authorization Grant for apps that don't have access to a web browser.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authorizing OAuth apps",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://docs.github.com/en/rest/authentication",
+      "quote": "Endpoints available for GitHub App installation access tokens... Endpoints available for GitHub App user access tokens... Endpoints available for fine-grained personal access tokens",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authenticating to the REST API - GitHub Docs",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://github.com/pricing",
+      "quote": "Free: $0 USD per month. Unlimited public/private repositories. Host open source projects in public GitHub repositories.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing \u00b7 Plans for every developer \u00b7 GitHub",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens",
+      "quote": "GitHub recommends that you use fine-grained personal access tokens instead, which you can restrict to specific repositories.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Managing your personal access tokens",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://docs.github.com/en/rest/overview/rate-limits-for-the-rest-api",
+      "quote": "You can use a personal access token to make API requests... The primary rate limit for unauthenticated requests is 60 requests per hour... authenticated... 5,000 requests per hour.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate limits for the REST API",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://docs.github.com/en/rest/overview/rate-limits-for-the-rest-api",
+      "quote": "GitHub limits the number of REST API requests that you can make within a specific amount of time.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate limits for the REST API",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://github.com/github/github-mcp-server",
+      "quote": "GitHub's official MCP Server... The GitHub MCP Server connects AI tools directly to GitHub's platform. This gives AI agents, assistants, and chatbots the ability to read repositories and code files, manage issues and PRs, analyze code, and automate workflows.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "github/github-mcp-server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s12": {
+      "url": "https://github.com/github/github-mcp-server/blob/main/README.md",
+      "quote": "The remote GitHub MCP Server is hosted by GitHub and provides the easiest method for getting up and running.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "README.md - github/github-mcp-server",
+      "retrieval_method": "composio_fetch"
+    }
+  },
+  "limitations": [
+    "No issues found \u2013 GitHub is well-documented, has a free self-serve tier with API access, and an official MCP server."
+  ]
+}

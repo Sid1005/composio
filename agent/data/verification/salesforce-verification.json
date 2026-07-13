@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "salesforce",
+  "initial_research_path": "data/apps/salesforce-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:31:24Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Rendered pages are from official Salesforce developer domain (developer.salesforce.com). The 2025 blog post describes 'Salesforce Developer Edition' as 'a free, full-featured Salesforce environment' for building apps and agents, consistent with a CRM platform. The 2026 blog post references 'Salesforce org', 'metadata', 'sObject API', all of which are CRM concepts.",
+        "source_url": "https://developer.salesforce.com/blogs/2025/03/introducing-the-new-salesforce-developer-edition-now-with-agentforce-and-data-cloud",
+        "screenshot_path": "data/screenshots/salesforce-4.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Rendered pages include quickstart_oauth.htm and intro_using_oauth.htm (Chatter API OAuth) on the official docs site. The 2026 blog post explicitly mentions 'OAuth 2.0 (per user)' as the authentication method for Hosted MCP Servers, confirming OAuth 2.0 as a primary auth method.",
+        "source_url": "https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/quickstart_oauth.htm",
+        "screenshot_path": "data/screenshots/salesforce-2.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "The 2025 blog post states: 'The Salesforce Developer Edition is a free, full-featured Salesforce environment' and 'doesn't expire as long as you keep using it' with a 'Sign up for your free Developer Edition' CTA. The 2026 blog post confirms: 'It's free, doesn't expire as long as you log in regularly'. No mention of credit card, paid plan, or admin approval.",
+        "source_url": "https://developer.salesforce.com/blogs/2025/03/introducing-the-new-salesforce-developer-edition-now-with-agentforce-and-data-cloud",
+        "screenshot_path": "data/screenshots/salesforce-4.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Official REST API docs exist at the provided URL (intro_what_is_rest_api.htm). The 2026 blog post references 'sObject API access, invocable actions, flows' for Hosted MCP and '60+ dev tools (metadata, Apex testing, LWC)' for DX MCP, confirming broad, well-documented public APIs.",
+        "source_url": "https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm",
+        "screenshot_path": "data/screenshots/salesforce-1.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "The 2026 blog post is entirely about MCP: 'Salesforce Hosted MCP Servers' and 'DX MCP Server' are described in detail. It states 'MCP (Model Context Protocol) is an open standard created by Anthropic' and provides a comparison table of the two official MCP servers. The blog confirms MCP is included in the free Developer Edition.",
+        "source_url": "https://developer.salesforce.com/blogs/2026/04/new-developer-edition-agentforce-vibes-claude-mcp",
+        "screenshot_path": "data/screenshots/salesforce-6.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "All of the above evidence \u2014 free self-serve Developer Edition, official OAuth 2.0 authentication, comprehensive public REST API, and official MCP server support (both hosted and DX MCP) \u2014 confirms that Salesforce is buildable as an agent toolkit today with no material blockers.",
+        "source_url": "https://developer.salesforce.com/blogs/2026/04/new-developer-edition-agentforce-vibes-claude-mcp",
+        "screenshot_path": "data/screenshots/salesforce-6.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/salesforce-1.png",
+      "data/screenshots/salesforce-2.png",
+      "data/screenshots/salesforce-3.png",
+      "data/screenshots/salesforce-4.png",
+      "data/screenshots/salesforce-5.png",
+      "data/screenshots/salesforce-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

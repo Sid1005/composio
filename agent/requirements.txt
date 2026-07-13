@@ -1,0 +1,5 @@
+composio==0.17.1
+composio-openai==0.17.1
+openai==2.45.0
+python-dotenv==1.2.2
+jsonschema==4.26.0

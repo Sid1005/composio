@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0",
+  "app_id": "intercom",
+  "researched_at": "2026-07-13T12:26:59Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 15,
+    "trace_path": "logs/intercom-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer Communications / Customer Service Platform",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s8"
+        ],
+        "notes": "Intercom is an AI-first customer service platform providing live chat, messaging, ticketing, help center, and AI automation (Fin AI Agent)."
+      },
+      "one_liner": {
+        "value": "AI-powered customer communications platform for support, engagement, and ticketing with messaging, a help center, and automation.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s8"
+        ],
+        "notes": "Intercom's main product includes the Messenger, Inbox (shared inbox/ticketing), Help Center, and Fin AI Agent."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "bearer_token",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ],
+        "notes": "Two methods: (1) Access Token (bearer token in Authorization header) for private apps accessing your own workspace data. (2) OAuth2 for public apps accessing third-party workspaces. Both ultimately use Authorization: Bearer <token> header."
+      },
+      "primary_for_agent_toolkit": "bearer_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s7",
+        "s9"
+      ],
+      "notes": "Anyone can sign up for a free developer workspace at app.intercom.com/a/developer-signup. No credit card required. Development workspaces are free and give full API access (with some limitations vs paid workspaces). Private apps can be built without any review. Public apps require OAuth setup and app review before listing in the App Store."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks",
+        "event_streaming"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Intercom has a well-documented, versioned REST API covering contacts, conversations, messages, tickets, companies, tags, segments, events, articles, help centers, admins, teams, data attributes, notes, and more. An official OpenAPI spec is available on GitHub. The API supports webhooks and has SDKs for Ruby, Node.js, Python, etc. Rate limits are generous (10,000 calls/min per app, 25,000/min per workspace).",
+        "evidence_ids": [
+          "s6",
+          "s10",
+          "s11",
+          "s12"
+        ],
+        "notes": "The REST API is broad - MindCloud lists 31 published actions. The OpenAPI spec covers versions 2.7+. Official SDKs exist for Ruby, Node.js, Python, Java, Go, and .NET."
+      },
+      "api_docs_url": "https://developers.intercom.com/docs/references/introduction/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.intercom.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s13",
+        "s14",
+        "s15"
+      ],
+      "notes": "Intercom hosts an official MCP server at mcp.intercom.com providing 13 tools for interacting with the Intercom API (search, fetch, search_conversations, etc.). The MCP server supports both Streamable HTTP and SSE connections. Official GitHub repo: github.com/intercom/intercom-mcp-server. Also available via Composio toolkit."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Intercom can be built into an agent toolkit today. The platform offers: (1) a free self-serve developer workspace with full API access, (2) a well-documented broad REST API with OpenAPI spec, (3) an official hosted MCP server with 13 tools, (4) both bearer token and OAuth2 auth, (5) generous rate limits (10k/min). No material blockers exist. The only minor caveat is that the MCP server is currently only supported in US-hosted workspaces.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s6",
+          "s13",
+          "s14",
+          "s15"
+        ],
+        "notes": "The combination of free developer access, comprehensive REST API, and official MCP server makes Intercom immediately buildable as an agent toolkit. The US-only MCP server limitation is a minor regional constraint but doesn't block the REST API approach."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.intercom.com/pricing",
+      "quote": "Get Fin and Intercom for a single, fully integrated customer service platform",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Intercom Pricing | Plans for every team size"
+    },
+    "s2": {
+      "url": "https://developers.intercom.com/docs",
+      "quote": "The Intercom Developer Platform is a suite of SDKs and APIs for building apps that connect with Intercom.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Overview | Intercom and Fin Developer Platform"
+    },
+    "s3": {
+      "url": "https://developers.intercom.com/docs/build-an-integration/learn-more/authentication",
+      "quote": "To access the Intercom API, you have two authentication options depending on whether your app is public or private. An Access Token is for if you're using the API to access data in your own Intercom workspace... OAuth is for if you're building a public app that accesses other people's Intercom data.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication | Intercom and Fin Developer Platform"
+    },
+    "s4": {
+      "url": "https://developers.intercom.com/docs/build-an-integration/learn-more/authentication",
+      "quote": "provide it as an `Authorization:Bearer` header in your requests",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication | Intercom and Fin Developer Platform"
+    },
+    "s5": {
+      "url": "https://developers.intercom.com/docs",
+      "quote": "To develop a public app you will need to use a development workspace: sign up here to create your free account.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Overview | Intercom and Fin Developer Platform"
+    },
+    "s6": {
+      "url": "https://github.com/intercom/Intercom-OpenAPI",
+      "quote": "An OpenAPI description for Intercom's REST API... provides programmatic access to Intercom's platform, including endpoints for messages, conversations, contacts, companies, and automation.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "intercom/Intercom-OpenAPI"
+    },
+    "s7": {
+      "url": "https://www.intercom.com/help/en/articles/9071694-intercom-developer-faqs",
+      "quote": "You can create a new developer workspace for developing apps. Developer workspaces are free and intended for development purposes only.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Intercom developer FAQs | Intercom Help"
+    },
+    "s8": {
+      "url": "https://www.intercom.com/pricing",
+      "quote": "All plans include access to Intercom and Fin AI Agent.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Intercom Pricing | Plans for every team size"
+    },
+    "s9": {
+      "url": "https://developers.intercom.com/docs/build-an-integration/getting-started",
+      "quote": "Development workspaces are free and intended for development purposes only. You can create as many development workspaces as you would like.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Set up a Workspace | Intercom and Fin Developer Platform"
+    },
+    "s10": {
+      "url": "https://developers.intercom.com/docs/references/rest-api/errors/rate-limiting",
+      "quote": "Private apps have a default rate limit of 10,000 API calls per minute per app and 25,000 API calls per minute per workspace.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate Limiting | Intercom and Fin Developer Platform"
+    },
+    "s11": {
+      "url": "https://developers.intercom.com/docs/build-an-integration/learn-more/rest-apis",
+      "quote": "The API uses common approaches... API data is JSON encoded with UTF-8.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "About our REST API | Intercom and Fin Developer Platform"
+    },
+    "s12": {
+      "url": "https://mindcloud.co/docs/universal/rest/intercom/latest",
+      "quote": "All 31 published actions for this Intercom version. Each page documents the endpoint, arguments, and response controls.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Intercom API Documentation (MindCloud)"
+    },
+    "s13": {
+      "url": "https://developers.intercom.com/docs/guides/mcp",
+      "quote": "Intercom hosts a remote MCP server that follows the authenticated remote MCP specification... The Intercom MCP Server provides 13 tools for interacting with the Intercom API.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Model Context Protocol (MCP) | Intercom and Fin Developer Platform"
+    },
+    "s14": {
+      "url": "https://github.com/intercom/intercom-mcp-server",
+      "quote": "Intercom MCP Server documentation",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "intercom/intercom-mcp-server"
+    },
+    "s15": {
+      "url": "https://composio.dev/toolkits/intercom",
+      "quote": "Intercom MCP for AI Agents. Securely connect your AI agents... with Intercom MCP or direct API to send messages, fetch conversations, update contacts, and automate support workflows.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Intercom MCP Integration for AI Agents - Composio"
+    }
+  },
+  "limitations": [
+    "The Intercom MCP server is currently only supported in US-hosted workspaces - this is a regional limitation for the MCP endpoint but does not affect direct REST API access.",
+    "The exact list of REST API endpoints was not fully enumerated in this research, but the OpenAPI spec and third-party integrations confirm a broad API surface with 31+ actions.",
+    "Some advanced features (e.g., HIPAA support, SSO) require the Expert plan, but basic API access is available on free developer workspaces."
+  ]
+}

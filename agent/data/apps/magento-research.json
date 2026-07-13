@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "app_id": "magento",
+  "researched_at": "2026-07-13T13:22:58Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 21,
+    "trace_path": "logs/magento-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "E-commerce Platform",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s5"
+        ],
+        "notes": "Magento (now Adobe Commerce) is a PHP-based open-source e-commerce platform for building online stores and managing omnichannel commerce operations."
+      },
+      "one_liner": {
+        "value": "Magento (Adobe Commerce) is an open-source e-commerce platform providing product catalog, order management, customer management, and checkout capabilities via REST, GraphQL, and SOAP APIs.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s5",
+          "s9"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "bearer_token",
+          "session_cookie",
+          "custom"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s8",
+          "s9"
+        ],
+        "notes": "Adobe Commerce/Magento supports: (1) OAuth 1.0a for third-party integrations \u2013 note this is OAuth 1.0a not OAuth 2; (2) Bearer token (token-based) for admin/customer mobile app access; (3) Session-based for JavaScript widgets; (4) Adobe IMS OAuth 2 for Adobe Commerce as a Cloud Service (SaaS). For the self-hosted editions (Open Source and Adobe Commerce on-prem/cloud), the primary methods are OAuth 1.0a and bearer token. The IMS OAuth 2 is for the SaaS edition only."
+      },
+      "primary_for_agent_toolkit": "bearer_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s2",
+        "s5",
+        "s6",
+        "s10"
+      ],
+      "notes": "Magento Open Source is free, open-source software (OSL 3.0) that anyone can download, install, and use. The REST/GraphQL API is built into the platform with no separate API key needed \u2013 API credentials (token or OAuth) are generated within the installed instance by the store admin. Adobe Commerce (enterprise) requires a paid license starting ~$22K/year, but the open-source edition is fully self-serve and free. No developer portal or API key application is needed \u2013 you install the software and configure API access via the Admin panel."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql",
+        "soap",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Adobe Commerce and Magento Open Source expose a comprehensive set of REST, GraphQL, and SOAP APIs covering products, categories, customers, carts, checkout, orders, inventory, sales rules, CMS content, store configuration, taxes, shipping, and payments. The REST API reference at developer.adobe.com documents all available endpoints with parameters, request/response examples, and authentication requirements. Adobe Commerce also supports webhooks and event-driven integrations via App Builder.",
+        "evidence_ids": [
+          "s1",
+          "4",
+          "s5",
+          "s8",
+          "s9"
+        ]
+      },
+      "api_docs_url": "https://developer.adobe.com/commerce/webapi/rest/reference/"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": "https://github.com/Codexpect/adobe-commerce-mcp",
+      "existing_agent_skills": [
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s7",
+        "s11"
+      ],
+      "notes": "Multiple community MCP servers exist: (1) 'Adobe Commerce / Magento MCP' by Codexpect on GitHub/Glama.ai \u2013 a community MCP that integrates with the Magento REST API using OAuth credentials; (2) 'Freento MCP Server' available on Adobe Commerce Marketplace; (3) 'Adobe Commerce Dev MCP Server' on GitHub for API schema search/validation. No official Adobe-published MCP server was found, but there are well-maintained community options."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Magento (Adobe Commerce) is buildable as an agent toolkit today. The open-source edition (Magento Open Source) is free to download and self-host, with a fully documented, broad REST/GraphQL API. Authentication can use simple bearer tokens (admin/customer) or OAuth 1.0a for third-party integrations. Multiple community MCP servers already exist demonstrating feasibility. The main consideration is that the developer needs to have access to a running Magento instance (self-hosted) with admin credentials to generate API tokens. The API is well-documented, and the breadth of endpoints (products, orders, customers, cart, checkout, inventory, etc.) makes it suitable for agent toolkits.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s5",
+          "s7",
+          "s8",
+          "s9",
+          "s11"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developer.adobe.com/commerce/webapi/rest/",
+      "quote": "Adobe Commerce on Cloud, Adobe Commerce on-premises, and Magento Open Source all use the same REST API framework. The REST API documentation describes the REST APIs that are available in these versions of Adobe Commerce and Magento Open Source.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "REST API Overview"
+    },
+    "s2": {
+      "url": "https://github.com/magento/magento2",
+      "quote": "Welcome to the Magento Open Source project! Magento Open Source software delivers basic eCommerce capabilities to build a unique online store from the ground up.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Magento Open Source GitHub Repository"
+    },
+    "s3": {
+      "url": "https://developer.adobe.com/commerce/webapi/rest/authentication/",
+      "quote": "Adobe Commerce as a Cloud Service REST API authentication is handled through Adobe's Identity Management System (IMS) through standardized OAuth 2 protocols.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication in Adobe Commerce as a Cloud Service"
+    },
+    "s4": {
+      "url": "https://developer.adobe.com/commerce/webapi/get-started/authentication/",
+      "quote": "Adobe Commerce REST APIs support multiple authentication methods, including: Third-party applications authenticate with OAuth 1.0a. Mobile applications authenticate using tokens. Administrators and customers are authenticated with login credentials.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - PaaS"
+    },
+    "s5": {
+      "url": "https://business.adobe.com/products/commerce/magento/open-source.html",
+      "quote": "With Magento Open Source, you'll have the essential tools to create and manage a thriving digital storefront.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Start Using Magento Open Source"
+    },
+    "s6": {
+      "url": "https://github.com/magento/magento2",
+      "quote": "License: Open Software License 3.0 (OSL-3.0)",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Magento Open Source License"
+    },
+    "s7": {
+      "url": "https://glama.ai/mcp/servers/Codexpect/adobe-commerce-mcp",
+      "quote": "A Model Context Protocol (MCP) tool for integrating with the Magento REST API. No direct SQL or server access required.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Adobe Commerce / Magento MCP by Codexpect"
+    },
+    "s8": {
+      "url": "https://developer.adobe.com/commerce/webapi/rest/reference/",
+      "quote": "This comprehensive reference provides detailed documentation for all available REST API endpoints in Adobe Commerce and Magento Open Source.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "REST API Reference"
+    },
+    "s9": {
+      "url": "https://developer.adobe.com/commerce/webapi/get-started/authentication/",
+      "quote": "Token based (Bearer Authentication) \u2013 This method is a good choice for authenticating customers and Admin users in third-party applications that need to make authorized API calls to the store.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - Token Based"
+    },
+    "s10": {
+      "url": "https://business.adobe.com/products/magento/magento-commerce.html",
+      "quote": "Adobe Commerce (Magento): B2B & B2C Enterprise Solutions | Adobe",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Adobe Commerce Product Page"
+    },
+    "s11": {
+      "url": "https://commercemarketplace.adobe.com/freento-module-mcp.html",
+      "quote": "MCP Server \u2013 Compatible with Adobe Commerce (cloud), Adobe Commerce (on-prem), Magento Open Source",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Freento MCP Server on Adobe Commerce Marketplace"
+    }
+  },
+  "limitations": [
+    "The OAuth 1.0a implementation is non-standard (not OAuth 2), which may complicate integration with modern OAuth 2 clients.",
+    "Adobe Commerce (the paid enterprise edition) requires a paid license and is sales-gated, but Magento Open Source is free and self-serve.",
+    "The SaaS edition (Adobe Commerce as a Cloud Service) uses a different API surface and IMS OAuth 2 auth, which differs from the on-prem/Open Source REST API."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "linear",
+  "initial_research_path": "data/apps/linear-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:27:24Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "The developers homepage and GraphQL API docs describe Linear as a modern issue tracking and project planning tool for software teams, consistent with the 'Project Management / Issue Tracking' category.",
+        "source_url": "https://linear.app/developers/graphql",
+        "screenshot_path": "data/screenshots/linear-1.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "The GraphQL API docs explicitly state: 'The Linear API supports personal API keys and OAuth2 authentication.' Both methods are confirmed.",
+        "source_url": "https://linear.app/developers/graphql",
+        "screenshot_path": "data/screenshots/linear-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "The pricing page shows 'API and webhook access' and 'MCP access' both checkmarked on the Free plan ($0). Docs confirm API keys can be self-generated from Settings > Account > Security & Access. No paid plan required for API.",
+        "source_url": "https://linear.app/pricing",
+        "screenshot_path": "data/screenshots/linear-3.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Docs confirm a public GraphQL API at https://api.linear.app/graphql with full CRUD for issues, projects, cycles, teams, users, etc. Webhooks, TypeScript SDK, filtering, pagination, introspection all documented. Rate limit page confirms 2,500 req/h (API key), 5,000 (OAuth), 600 (unauthenticated).",
+        "source_url": "https://linear.app/developers/graphql",
+        "screenshot_path": "data/screenshots/linear-1.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "partially_confirmed",
+        "evidence": "The pricing page shows 'MCP access' as a checkmarked feature on the Free plan (and all paid plans), confirming MCP exists as an offering. However, the specific endpoint URL (https://mcp.linear.app/mcp) and 'official' designation could not be verified from the rendered pages provided.",
+        "source_url": "https://linear.app/pricing",
+        "screenshot_path": "data/screenshots/linear-3.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "Public GraphQL API, self-serve API keys on free plan, OAuth2, webhooks, TypeScript SDK, and MCP access are all confirmed. No material blockers observed. The verdict 'buildable_today' is supported.",
+        "source_url": "https://linear.app/developers/graphql",
+        "screenshot_path": "data/screenshots/linear-1.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/linear-1.png",
+      "data/screenshots/linear-2.png",
+      "data/screenshots/linear-3.png",
+      "data/screenshots/linear-4.png",
+      "data/screenshots/linear-5.png",
+      "data/screenshots/linear-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

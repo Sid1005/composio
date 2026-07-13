@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "app_id": "harvest",
+  "researched_at": "2026-07-13T13:02:15Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 16,
+    "trace_path": "logs/harvest-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Time Tracking & Invoicing",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Harvest helps professional teams track time, bill clients, optimize team time, and measure performance."
+      },
+      "one_liner": {
+        "value": "Time tracking and invoicing platform for teams and freelancers to log billable hours, manage projects, and streamline payments.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "personal_access_token",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ],
+        "notes": "V2 API supports Personal Access Tokens (Bearer) and full OAuth2 (Authorization Code & Implicit Grant). Personal Access Tokens are recommended for individual scripts/agents; OAuth2 for apps used by others."
+      },
+      "primary_for_agent_toolkit": "personal_access_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s3",
+        "s5",
+        "s6"
+      ],
+      "notes": "Anyone can sign up for a free Harvest account (1 seat, 2 projects, no credit card required). From the Developers section of Harvest ID, users can create Personal Access Tokens or OAuth2 apps without any paid plan or admin approval."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Harvest V2 REST API provides endpoints for Clients, Client Contacts, Company, Invoices (including messages, payments, item categories), Estimates (messages, item categories), Expenses (categories), Tasks, Time Entries, Projects (user assignments, task assignments), Roles, Users (teammates, billable rates, cost rates, project assignments), and Reports (expense, uninvoiced, time, project budget). Base URL: https://api.harvestapp.com/v2/. Rate limit: 100 req/15s (general), 100 req/15min (reports).",
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s7"
+        ],
+        "notes": "Well-documented REST API with broad coverage of the Harvest platform's features."
+      },
+      "api_docs_url": "https://help.getharvest.com/api-v2"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s8",
+        "s9",
+        "s10",
+        "s11"
+      ],
+      "notes": "Multiple community MCP servers exist (taiste/harvest-mcp-server with 33 stars, mcpflow/mcp-server-harvest-time-tracking, ianaleck/harvest-mcp-server). Composio also includes Harvest as a toolkit with 57 tools. No official MCP server from Harvest."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Harvest has a well-documented public REST API (v2) with broad coverage of time tracking, invoicing, projects, and reporting. Authentication via Personal Access Tokens is straightforward for agent integrations. Credentials are self-serve from a free account with no paid plan or admin approval gates. Multiple community MCP servers already exist, and Composio includes Harvest in its toolkit. There is no material blocker to building an agent toolkit today.",
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s7",
+          "s5",
+          "s8"
+        ],
+        "notes": "Fully buildable. The only minor friction is the Free plan's limitation (1 seat, 2 projects), but that does not prevent API access."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.getharvest.com/",
+      "quote": "Harvest helps professional teams track time, bill clients, optimize team time, and measure performance with confidence.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Time Tracking Software With Invoicing | Harvest",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://www.getharvest.com/pricing",
+      "quote": "Free plan: $0 forever, 1 seat, 2 projects, time tracking, invoicing, expense tracking. Teams plan starts at $9/seat/month. Enterprise starts at $14/seat/month.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing | Harvest",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://help.getharvest.com/api-v2/authentication-api/authentication/authentication",
+      "quote": "The V2 API requires an access token to authenticate requests. There are two options available to you: A Personal Access Token... Implementing a full OAuth2 Authentication flow...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication \u2013 Harvest API V2 Documentation",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://help.getharvest.com/api-v2/introduction/overview/general",
+      "quote": "The Harvest V2 API is a REST API that allows you to interact with your Harvest account programmatically. You can track time, log expenses, create projects, and more.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Overview \u2013 Harvest API V2 Documentation",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://www.getharvest.com/pricing",
+      "quote": "Get started on any plan with a free trial. No credit card required. Free plan: $0 forever.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing | Harvest",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://help.getharvest.com/api-v2/authentication-api/authentication/authentication",
+      "quote": "The API can be accessed by creating a Personal Access Token from the Developers section of Harvest ID.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication \u2013 Harvest API V2 Documentation",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://help.getharvest.com/api-v2",
+      "quote": "Harvest API V2 Documentation \u2014 Clients API, Company Settings, Invoices API, Estimates API, Expenses API, Tasks API, Timesheets API, Projects API, Roles API, Users API, Reports API",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Harvest API V2 Documentation",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://github.com/taiste/harvest-mcp-server",
+      "quote": "This MCP (Model Context Protocol) server provides integration with the Harvest time tracking and project management API.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "taiste/harvest-mcp-server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://github.com/mcpflow/mcp-server-harvest-time-tracking",
+      "quote": "A Model Context Protocol (MCP) server implementation for Harvest, enabling seamless integration with MCP clients.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "mcpflow/mcp-server-harvest-time-tracking",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://composio.dev/toolkits/harvest",
+      "quote": "Harvest is a time-tracking and invoicing platform for teams and freelancers. 57 Tools. Oauth2.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Harvest MCP Integration for AI Agents | Composio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://mcpservers.org/servers/ianaleck/harvest-mcp-server",
+      "quote": "Unofficial Model Context Protocol (MCP) server for seamless integration with the Harvest time tracking API",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "harvest-mcp-server Server | Awesome MCP Servers",
+      "retrieval_method": "composio_fetch"
+    }
+  },
+  "limitations": [
+    "Note: There is a separate 'Harvest API' from Greenhouse (greenhouse.io) which is a different product. This research covers Harvest by getharvest.com (time tracking).",
+    "The free plan limits to 1 seat and 2 projects, which may constrain testing but does not block API credential creation."
+  ]
+}

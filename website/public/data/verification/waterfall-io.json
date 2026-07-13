@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "waterfall-io",
+  "initial_research_path": "data/apps/waterfall-io-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:57:35Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "The rendered introduction page describes Waterfall as 'find and enrich contacts, prospect by title and company, verify emails, and more'. The endpoint list includes Prospector, Contact Enrichment, Company Enrichment, Phone Enrichment, Email Verification, Search Contact/Company, etc. This clearly matches 'B2B Data Enrichment / Contact & Company Data API'.",
+        "source_url": "https://docs.waterfall.io/v1/introduction",
+        "screenshot_path": "data/screenshots/waterfall-io-2.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "The authentication page explicitly states: 'All requests are authenticated using x-api-key.' and shows example 'x-api-key: <your-api-key>'.",
+        "source_url": "https://docs.waterfall.io/v1/authentication",
+        "screenshot_path": "data/screenshots/waterfall-io-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "partially_confirmed",
+        "evidence": "The API Keys Management page states: 'API key management is an enterprise feature. Contact your account manager to get access.' The docs sidebar includes 'Get API & Sales Support' linking to a booking page. No self-serve signup or free-tier flow is documented. However, the main marketing site was not rendered, so absence of self-serve signup cannot be fully confirmed from docs alone \u2014 the docs support a sales-gated model but don't cover the full signup journey.",
+        "source_url": "https://docs.waterfall.io/v1/api-keys-overview.md",
+        "screenshot_path": "data/screenshots/waterfall-io-4.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "The rendered introduction page lists 13 endpoint categories (Prospector, Search Contact, Search Company, Contact Enrichment, Phone Enrichment, Company Enrichment, Company Reveal, Company Titles, Job Change Detection, Email Verification, Webhook JWKS, Account Reporting, API Key Management) with async/sync variants. An OpenAPI 3.1 spec is available for download. Rate limiting, webhooks (Ed25519 signed), and error docs are all present.",
+        "source_url": "https://docs.waterfall.io/v1/introduction",
+        "screenshot_path": "data/screenshots/waterfall-io-2.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "No mention of MCP, AI agent toolkits, or agent SDKs appears anywhere in the rendered documentation pages. The docs are standard API reference material with no MCP server reference.",
+        "source_url": "https://docs.waterfall.io/v1/introduction",
+        "screenshot_path": "data/screenshots/waterfall-io-2.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "The rendered docs confirm a well-documented REST API with simple API-key auth and downloadable OpenAPI spec \u2014 technically straightforward to wrap into an agent toolkit. Access is gated: API key management is an 'enterprise feature' requiring account manager contact, and the sidebar directs to 'Get API & Sales Support' (a booking page). This supports the 'buildable_with_access' verdict with paid/sales-gated entitlement as the main blocker.",
+        "source_url": "https://docs.waterfall.io/v1/introduction",
+        "screenshot_path": "data/screenshots/waterfall-io-2.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/waterfall-io-1.png",
+      "data/screenshots/waterfall-io-2.png",
+      "data/screenshots/waterfall-io-3.png",
+      "data/screenshots/waterfall-io-4.png",
+      "data/screenshots/waterfall-io-5.png",
+      "data/screenshots/waterfall-io-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

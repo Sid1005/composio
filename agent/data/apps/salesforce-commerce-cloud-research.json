@@ -1,0 +1,229 @@
+{
+  "schema_version": "1.0",
+  "app_id": "salesforce-commerce-cloud",
+  "researched_at": "2026-07-13T12:45:15Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 19,
+    "trace_path": "logs/salesforce-commerce-cloud-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Enterprise E-commerce Platform",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Salesforce Commerce Cloud (now branded as Agentforce Commerce) is an enterprise-grade digital commerce platform supporting B2C and B2B storefronts, order management, and headless commerce. It was originally known as Demandware before being acquired by Salesforce."
+      },
+      "one_liner": {
+        "value": "Enterprise cloud-based e-commerce platform providing B2C and B2B digital storefronts, order management, and headless commerce capabilities.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "bearer_token"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ],
+        "notes": "SCAPI uses OAuth 2.0/2.1. Shopper APIs use SLAS (Shopper Login and API Access Service) with OAuth 2.1 bearer tokens. Admin APIs use Account Manager OAuth 2.0 bearer tokens. Both produce JWT access tokens sent as Bearer auth headers."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "sales_gated",
+      "gates": [
+        "account_signup",
+        "paid_plan",
+        "partner_approval"
+      ],
+      "signup_friction": "invite_required",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s7",
+        "s8",
+        "s9"
+      ],
+      "notes": "Commerce Cloud is an enterprise product with 'Contact for pricing' on all editions. There is no self-serve free developer sandbox for B2C Commerce. To get API access, you must be a paying customer (with an instance) or an ISV partner. The SCAPI docs say 'For B2C Commerce customers, the API is available at no extra cost' but you need a B2C instance first. Creating API clients requires Account Administrator role in Account Manager. A public demo sandbox exists for quick-start testing but requires you to have already created SLAS credentials through a B2C instance."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Salesforce Commerce Cloud exposes two main REST API families: the modern SCAPI (Salesforce Commerce API) and the legacy OCAPI (Open Commerce API). SCAPI includes Shopper APIs (products, baskets, checkout, search) and Admin APIs (products, orders, inventory, pricing, promotions, customers, content). A GraphQL API is also available. The API surface covers virtually all commerce operations.",
+        "evidence_ids": [
+          "s10",
+          "s11",
+          "s12"
+        ]
+      },
+      "api_docs_url": "https://developer.salesforce.com/docs/commerce/commerce-api/overview"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://github.com/salesforcecommercecloud/b2c-developer-tooling/tree/main/packages/b2c-dx-mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api"
+      ],
+      "evidence_ids": [
+        "s13",
+        "s14",
+        "s15"
+      ],
+      "notes": "Salesforce provides an official B2C DX MCP Server (@salesforce/b2c-dx-mcp) as part of the B2C Developer Tooling project. It's Generally Available and provides tools for SCAPI, cartridge deployment, storefront development, and diagnostics. Additionally, there are community MCP servers (commercecloud-mcp-server, sfcc-dev-mcp)."
+    },
+    "buildability": {
+      "verdict": "technically_possible_but_gated",
+      "main_blocker": "paid_api_entitlement",
+      "rationale": {
+        "value": "Salesforce Commerce Cloud has a well-documented public REST API (SCAPI) and an official MCP server, making it technically feasible to build an agent toolkit. However, the platform itself is an enterprise product requiring a paid subscription or partner agreement to access a B2C Commerce instance. API credentials (SLAS clients, Account Manager API clients) can only be created by users with an existing B2C Commerce instance and the appropriate admin roles. There is no self-serve free tier. This access gating is the primary blocker for building a generic, publicly available agent toolkit.",
+        "evidence_ids": [
+          "s5",
+          "s6",
+          "s7",
+          "s8",
+          "s9",
+          "s16"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.salesforce.com/commerce/cloud",
+      "quote": "Commerce Cloud, now known as Agentforce Commerce, is a robust, digital commerce platform designed to support every stage of the ecommerce process and exceed customer expectations, whether your business model is B2C or B2B",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "What Is Commerce Cloud?"
+    },
+    "s2": {
+      "url": "https://www.salesforce.com/commerce/pricing",
+      "quote": "Commerce Cloud B2C Premium - Contact for pricing",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Commerce Cloud Pricing and Editions"
+    },
+    "s3": {
+      "url": "https://developer.salesforce.com/docs/commerce/commerce-api/guide/authorization.html",
+      "quote": "Both the Admin and Shopper APIs are authorized using an access token in the form of a JSON Web Token (JWT). The JWT access tokens for both SCAPI Admin APIs and Shopper APIs are included in your API requests as an HTTP header that follows the Bearer authentication scheme.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authorization | SCAPI"
+    },
+    "s4": {
+      "url": "https://developer.salesforce.com/docs/commerce/commerce-api/guide/scapi-get-started.html",
+      "quote": "SCAPI consists of two API types... Authentication: Shopper APIs - SLAS (OAuth 2.1) | Admin APIs - Account Manager",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get Started with the B2C Commerce API"
+    },
+    "s5": {
+      "url": "https://developer.salesforce.com/docs/commerce/commerce-api/guide/scapi-get-started.html",
+      "quote": "For B2C Commerce customers, the API is available at no extra cost.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get Started with the B2C Commerce API"
+    },
+    "s6": {
+      "url": "https://developer.salesforce.com/docs/commerce/commerce-api/guide/authorization-for-shopper-apis.html",
+      "quote": "To do this task, you need: Your AM token, The Account Administrator role in Account Manager.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authorization for Shopper APIs"
+    },
+    "s7": {
+      "url": "https://rhino-inquisitor.com/how-to-get-a-salesforce-b2c-commerce-cloud-sandbox",
+      "quote": "To obtain a trial sandbox please reach out to either your Commerce Cloud Account Executive (customers) or your Partner Manager (partners).",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How to get a Salesforce B2C Commerce Cloud Sandbox"
+    },
+    "s8": {
+      "url": "https://trailhead.salesforce.com/trailblazer-community/feed/0D5KX00000anKD90AM",
+      "quote": "Unless you are an ISV partner under the 'B2C Commerce' Partner Category, I don't think it will be possible to access a B2C commerce cloud sandbox org",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How to Get Free Developer Access to Salesforce B2C Commerce"
+    },
+    "s9": {
+      "url": "https://github.com/SalesforceCommerceCloud/sfcc-ci",
+      "quote": "Ensure you have a valid Commerce Cloud API key (client ID) set up. If you don't have a API key, you can create one using the Account Manager. Management of API keys is done in Account Manager > API Client and requires Account Administrator or API Administrator role.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "sfcc-ci README"
+    },
+    "s10": {
+      "url": "https://developer.salesforce.com/docs/commerce/commerce-api/overview",
+      "quote": "The B2C Commerce API (SCAPI) is a set of RESTful APIs for building storefronts, merchant tools, and integrations on the B2C Commerce platform.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "B2C Commerce API Overview"
+    },
+    "s11": {
+      "url": "https://developer.salesforce.com/docs/commerce/commerce-api/references",
+      "quote": "B2C Commerce API (SCAPI) Specifications",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "SCAPI Specifications"
+    },
+    "s12": {
+      "url": "https://github.com/api-evangelist/salesforce-commerce-cloud/blob/main/apis.yml",
+      "quote": "Salesforce Commerce Cloud (formerly Demandware) is an enterprise commerce platform supporting B2C and B2B storefronts... Commerce Cloud exposes two REST API products: the legacy Open Commerce API (OCAPI) and the modern Salesforce Commerce API (SCAPI)",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "api-evangelist/salesforce-commerce-cloud"
+    },
+    "s13": {
+      "url": "https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/mcp-dx-intro.html",
+      "quote": "Use the B2C DX Model Context Protocol (MCP), which is part of the B2C Developer Toolkit, to enhance your development workflow by connecting an AI assistant... The B2C DX MCP server is a unified MCP that is the starting point for various development tools and storefronts.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Build B2C Storefronts Faster with the B2C DX MCP Server"
+    },
+    "s14": {
+      "url": "https://github.com/salesforcecommercecloud/b2c-developer-tooling",
+      "quote": "B2C DX MCP Server \u2014 a Model Context Protocol server that complements the skills with project-aware tools for MCP-first clients.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "SalesforceCommerceCloud/b2c-developer-tooling"
+    },
+    "s15": {
+      "url": "https://developer.salesforce.com/docs/commerce/commerce-solutions/guide/b2c-developer-tooling.html",
+      "quote": "B2C DX MCP Server \u2014 a Model Context Protocol server that complements the skills with project-aware tools for MCP-first clients.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "B2C CLI, MCP and Tooling SDK"
+    },
+    "s16": {
+      "url": "https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-developer-sandboxes.html",
+      "quote": "To access an on-demand sandbox, you must purchase sandbox credits, enable appropriate permissions and users, and configure a client API ID.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "On-Demand Sandboxes"
+    }
+  }
+}

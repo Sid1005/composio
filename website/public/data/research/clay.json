@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.0",
+  "app_id": "clay",
+  "researched_at": "2026-07-13T12:55:46Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 17,
+    "trace_path": "logs/clay-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Go-to-Market (GTM) Data Enrichment and Workflow Automation",
+        "evidence_ids": [
+          "s1",
+          "s6",
+          "s8"
+        ],
+        "notes": "Clay is a B2B GTM platform for data enrichment, prospecting, workflow automation, and orchestration. It aggregates data from 150+ providers, enables AI-powered research, and automates outbound workflows."
+      },
+      "one_liner": {
+        "value": "Clay is a go-to-market data platform that lets teams enrich, research, and orchestrate prospect data with 150+ providers and AI-powered workflows, now accessible via a public REST API, CLI, and MCP.",
+        "evidence_ids": [
+          "s1",
+          "s6",
+          "s8"
+        ],
+        "notes": "Based on the clay.com product page and developer docs."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s10",
+          "s12"
+        ],
+        "notes": "The Public API uses a personal API key passed in the 'clay-api-key' header. The CLI and MCP server authenticate via OAuth-like session login ('clay login') which opens a browser to authorize."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s4",
+        "s5",
+        "s7",
+        "s9",
+        "s10"
+      ],
+      "notes": "Clay offers a free plan with 100 data credits and 500 actions/month. API keys can be generated from Settings \u2192 Account \u2192 API keys on the free plan. A 14-day free trial with 1,000 credits is also available. The Public API is available on all plans including Free. However, some premium features (e.g., Tables API) are Enterprise-only. No admin approval required for self-serve plans."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "moderate",
+      "summary": {
+        "value": "Clay has a documented Public REST API at api.clay.com/public/v0 with endpoints for searches (filter-based company/people search), routines (run Clay-managed functions), tables (structured queries - Enterprise only), and webhooks. The API surface covers finding records, enriching data, and orchestrating workflows. Authentication is via API key. OpenAPI spec available. The API is relatively new (beta as of July 2026 launch) and has moderate breadth - not all Clay UI features are exposed via API yet (e.g., table creation, full workflow building).",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s10",
+          "s12"
+        ]
+      },
+      "api_docs_url": "https://developers.clay.com"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://developers.clay.com/concepts/mcp",
+      "existing_agent_skills": [
+        "official_cli",
+        "official_agent_api"
+      ],
+      "evidence_ids": [
+        "s2",
+        "s11",
+        "s13"
+      ],
+      "notes": "Clay has an official MCP server bundled with the Clay CLI (agent plugin) for coding agents like Claude Code, Codex, and Cursor. It also has a 'Clay MCP' connector for ChatGPT, Claude, and Codex that exposes 150+ data providers and workflows. The GitHub repo clay-inc/clay-mcp is for a DIFFERENT product (clay.earth/Mesh personal CRM), not clay.com's MCP. Note: No Composio toolkit found for clay.com."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Clay is buildable as an agent toolkit today. It has a well-documented public REST API with API key auth, a free tier that allows developers to get started without payment, an official MCP server bundled with the CLI, and a comprehensive developer portal. The API is still in beta and some features (like Tables) are Enterprise-gated, but the core search, enrichment, and routine execution capabilities are available on free/launch plans. The primary consideration is credit consumption (data credits and actions), but the free plan provides enough credits for testing and small-scale integration.",
+        "evidence_ids": [
+          "s1",
+          "s3",
+          "s4",
+          "s10",
+          "s12"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developers.clay.com",
+      "quote": "Use Clay from agents, terminals, backend services, internal tools, and custom apps. Use the developer platform to search Clay's GTM data, run reusable Clay logic, and read table data programmatically.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Overview - Clay docs"
+    },
+    "s2": {
+      "url": "https://developers.clay.com/llms.txt",
+      "quote": "Developer documentation for using Clay from agents, CLIs, APIs, and internal systems.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Llms"
+    },
+    "s3": {
+      "url": "https://developers.clay.com/public-api/authentication",
+      "quote": "Every request to the Clay Public API must include a Clay API key in the clay-api-key header. API keys are tied to a Clay user and workspace access. Create one under Settings \u2192 Account \u2192 API keys (beta).",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - Clay docs"
+    },
+    "s4": {
+      "url": "https://www.clay.com/pricing",
+      "quote": "Free: $0/month, Includes 500 actions/mo, 100 data credits/mo. Launch: $167/mo, Starts at 15,000 actions/mo. Growth: $495/mo.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Compare plans, features & costs | Clay.com"
+    },
+    "s5": {
+      "url": "https://www.clay.com/faq",
+      "quote": "Clay offers a 14-day free trial with 1,000 data credits, giving you access to webhooks, CRM integrations, email sequencers, and HTTP API capabilities.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "FAQ | Clay.com"
+    },
+    "s6": {
+      "url": "https://www.clay.com/guides/clay-mcp",
+      "quote": "Clay's MCP server uses it to expose 150+ data providers, AI research agents, and your team's prebuilt workflows inside ChatGPT, Claude, and Codex.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "What Is Clay MCP? Using Clay in Claude and AI Assistants"
+    },
+    "s7": {
+      "url": "https://university.clay.com/docs/plans-and-billing",
+      "quote": "Clay offers a 14-day free trial with 1,000 data credits.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Plans & billing - Clay Docs"
+    },
+    "s8": {
+      "url": "https://community.clay.com/x/announcements/k5z0r83ueyty/introducing-clays-api-and-cli-build-and-run-workfl",
+      "quote": "Introducing Clay's API and CLI: You can now build directly from your terminal. Run the Agent Plugin in Claude Code, Codex, or Cursor to search Clay data, run Functions, and create, edit, and trigger Workflows. Available for everyone, on new and legacy plans. Developer docs: developers.clay.com",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introducing Clay's API and CLI: Build and Run Workflows Directly from Your Terminal"
+    },
+    "s9": {
+      "url": "https://university.clay.com/docs/guide-find-clay-api-key",
+      "quote": "A Clay API key is required for all Clay-native integrations. To get started, you'll need a Clay account and your API key. In the top bar, click your account name and select Settings. Under Account, locate API key.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Find your Clay API key - Clay Docs"
+    },
+    "s10": {
+      "url": "https://developers.clay.com/quickstart",
+      "quote": "Requests authenticate with a Clay API key in the clay-api-key header. You can create an API key two ways: Ask your agent to generate one for you after installing the agent plugin. Create one yourself in Clay under Settings \u2192 Account \u2192 API keys (beta).",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Quickstart - Clay docs"
+    },
+    "s11": {
+      "url": "https://developers.clay.com/concepts/mcp",
+      "quote": "The Clay plugin has two halves: the Clay CLI for scripting and ephemeral operations, and a local MCP server that exposes Clay's tools to a coding-agent host such as Claude Code, Codex, or Cursor.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MCP server - Clay docs"
+    },
+    "s12": {
+      "url": "https://developers.clay.com/api-reference",
+      "quote": "openapi: 3.1.0 info: title: Clay Public API version: '0' servers: - url: https://api.clay.com/public/v0 security: - ClayApiKey: []",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get the authenticated user - Clay docs"
+    },
+    "s13": {
+      "url": "https://github.com/clay-inc/clay-mcp",
+      "quote": "A simple Model Context Protocol (MCP) server for Clay. (Note: This is for clay.earth/Mesh personal CRM, NOT clay.com)",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "mesh/clay-mcp"
+    }
+  },
+  "limitations": [
+    "The GitHub MCP server at clay-inc/clay-mcp is for clay.earth (now Mesh - a personal CRM), which is a different company/product from clay.com (GTM platform). I've clarified this.",
+    "The clay.com Public API is still in beta ('API keys (beta)' in the UI).",
+    "Tables API is enterprise-only, which limits full programmatic access to all Clay features."
+  ]
+}

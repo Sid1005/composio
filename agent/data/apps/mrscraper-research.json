@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0",
+  "app_id": "mrscraper",
+  "researched_at": "2026-07-13T12:52:01Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 21,
+    "trace_path": "logs/mrscraper-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Web Scraping / Data Extraction",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "AI-powered web scraping platform with rotating residential proxies, stealth browser, and natural language data extraction."
+      },
+      "one_liner": {
+        "value": "AI-powered web scraping platform that turns any website into structured data with rotating proxies and browser automation.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "From the homepage: 'AI-powered web scraper that effortlessly extracts valuable data from any site' and 'Turn messy web pages into clean, ready-to-use data.'"
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ],
+        "notes": "The API uses a custom API token passed via the 'x-api-token' HTTP header. The docs call it 'API token authentication'. Some analytics endpoints use query-parameter auth instead. This is effectively an API key."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s6"
+      ],
+      "notes": "Free plan includes 100 API tokens/month, no credit card required. Developers can sign up at mrscraper.com and get API credentials immediately. Paid plans ($49/mo Standard, $199/mo Pro) exist for higher usage but are not required for basic API access."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "moderate",
+      "summary": {
+        "value": "Comprehensive REST API documented at docs.mrscraper.com. Covers V3 Platform (create/rerun scrapers), E-commerce scrapers (Amazon, eBay, Shopee, etc.), Travel scrapers (flights, hotels), PDP Cache (structured product data), Analytics (usage stats), Sync endpoints, Google SERP scraping, and result retrieval with pagination. Also supports webhooks, scheduling, and an API Playground. Official Python SDK (MIT) on GitHub at mrscraper-com/sdk-python.",
+        "evidence_ids": [
+          "s2",
+          "s4",
+          "s7",
+          "s8"
+        ],
+        "notes": "API base URL: https://api.app.mrscraper.com. Returns JSON. Has official Python SDK package 'mrscraper-sdk' on PyPI."
+      },
+      "api_docs_url": "https://docs.mrscraper.com/docs/api/overview"
+    },
+    "agent_interface": {
+      "mcp": "none_found",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli"
+      ],
+      "evidence_ids": [
+        "s8",
+        "s9",
+        "s10"
+      ],
+      "notes": "No official MCP server found for MrScraper. Community MCP integrations exist via Zapier MCP (zapier.com/mcp/mrscraper) and viaSocket MCP (viasocket.com/mcp/mrscraper) but no standalone MCP server. Official Python SDK is available. The SDK provides async Python methods for all major API operations."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "MrScraper has a documented public REST API with API-key auth, a generous free tier (100 tokens/month no credit card), an official Python SDK on PyPI (MIT license), and webhook support. The API covers the full lifecycle: creating scrapers, running them, fetching results, analytics, and vertical-specific endpoints (e-commerce, travel). No MCP server exists yet, but the SDK provides a clean interface that can be wrapped into an agent toolkit. No major gate or approval is needed to get started.",
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s4",
+          "s5",
+          "s7",
+          "s8"
+        ],
+        "notes": "Main limitation: no official MCP server (Zapier and viaSocket offer community MCP wrappers). The API token auth model is straightforward for agent integration. Free tier is sufficient for testing."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://mrscraper.com",
+      "quote": "AI-powered web scraper that effortlessly extracts valuable data from any site.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper Homepage"
+    },
+    "s2": {
+      "url": "https://docs.mrscraper.com/docs/getting-started/overview",
+      "quote": "Welcome to the MrScraper Documentation! Discover how our powerful scraping platform can transform the way you extract data. ... AI Scraper - Automatically extract data with natural language instructions \u2014 no coding required.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper Documentation Overview"
+    },
+    "s3": {
+      "url": "https://docs.mrscraper.com/docs/api/authentication",
+      "quote": "The MrScraper API uses API token authentication to secure all endpoints. Every API request must include a valid API token in the request headers to access the API. ... x-api-token: MRSCRAPER_API_TOKEN",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper Authentication Documentation"
+    },
+    "s4": {
+      "url": "https://docs.mrscraper.com/docs/api/overview",
+      "quote": "The MrScraper API provides a powerful and flexible way to programmatically scrape web pages and retrieve structured data. Built on REST principles... All API requests should be made to: https://api.app.mrscraper.com",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper API Overview"
+    },
+    "s5": {
+      "url": "https://mrscraper.com/pricing",
+      "quote": "Scraper Free - $0 /month - API Tokens 1,000 token - Concurrent requests 10",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper Pricing Page"
+    },
+    "s6": {
+      "url": "https://docs.mrscraper.com/docs/getting-started/billing",
+      "quote": "The Free plan includes 100 tokens per month with no credit card required. Tokens reset at the beginning of each month.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper Billing Documentation"
+    },
+    "s7": {
+      "url": "https://docs.mrscraper.com/docs/features/activating-api",
+      "quote": "MrScraper lets you run any scraper you've created directly through an API endpoint. This is useful when you want to automate scraping, integrate it into your application, or test requests in tools like Postman.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper Scraper API Documentation"
+    },
+    "s8": {
+      "url": "https://github.com/mrscraper-com/sdk-python",
+      "quote": "A Simple Python SDK for the MrScraper web-scraping API. Supports async / await usage. ... pip install mrscraper-sdk",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper Python SDK on GitHub"
+    },
+    "s9": {
+      "url": "https://zapier.com/mcp/mrscraper",
+      "quote": "MrScraper MCP Server - MCP AI | Zapier - Use MrScraperMCP to take action in your AI tools",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper MCP via Zapier"
+    },
+    "s10": {
+      "url": "https://viasocket.com/mcp/mrscraper",
+      "quote": "MCP Server for mrscraper - Connect mrscraper actions with AI tools like ChatGPT, Claude, and Cursor using the viaSocket MCP Server.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MrScraper MCP via viaSocket"
+    }
+  }
+}

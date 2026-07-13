@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "systeme-io",
+  "initial_research_path": "data/apps/systeme-io-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:42:50Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Pricing page describes platform as covering sales funnels, email marketing, online courses, communities, affiliate marketing, etc. Header says 'All-in-one business platform'. Plan comparison table includes funnels, emails, courses, communities, affiliates.",
+        "source_url": "https://systeme.io/pricing",
+        "screenshot_path": "data/screenshots/systeme-io-1.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "API docs state: 'To authenticate with the Systeme.io Public API, your only option right now is to attach your API key to the X-API-Key header of each request.'",
+        "source_url": "https://developer.systeme.io/reference/api.md",
+        "screenshot_path": "data/screenshots/systeme-io-2.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page shows Free plan at $0 with 'No credit card required'. API requests per minute listed on Free plan (30 req/min), confirming API access without payment.",
+        "source_url": "https://systeme.io/pricing",
+        "screenshot_path": "data/screenshots/systeme-io-1.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "API reference shows documented REST endpoints for Community, Contact, ContactField, Funnels, Mailing/Newsletter, Page Editor, Subscription, School/Courses/Enrollments, Tag, Webhook. Cursor-based pagination, merge-patch support, rate limiting documented.",
+        "source_url": "https://developer.systeme.io/reference",
+        "screenshot_path": "data/screenshots/systeme-io-5.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "MCP Server docs page confirms official MCP server: 'The Systeme.io MCP server is in its initial release.' Docs describe authentication via X-MCP-Key header or mcpKey query parameter, and supported operations (contacts, tags, newsletters).",
+        "source_url": "https://developer.systeme.io/docs/mcp-server.md",
+        "screenshot_path": "data/screenshots/systeme-io-6.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "All above factors align: free self-serve plan with API access, well-documented REST API, official MCP server, no credit-card required, rate limits documented per plan. No material blockers present in rendered pages.",
+        "source_url": "https://developer.systeme.io/reference/api.md",
+        "screenshot_path": "data/screenshots/systeme-io-2.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/systeme-io-1.png",
+      "data/screenshots/systeme-io-2.png",
+      "data/screenshots/systeme-io-3.png",
+      "data/screenshots/systeme-io-4.png",
+      "data/screenshots/systeme-io-5.png",
+      "data/screenshots/systeme-io-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

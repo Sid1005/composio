@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0",
+  "app_id": "bigcommerce",
+  "researched_at": "2026-07-13T12:47:50Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 18,
+    "trace_path": "logs/bigcommerce-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "E-commerce Platform",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "BigCommerce is a SaaS e-commerce platform providing hosted online store capabilities."
+      },
+      "one_liner": {
+        "value": "BigCommerce is a SaaS e-commerce platform that provides REST and GraphQL APIs for managing online stores including products, orders, customers, and more.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "api_key",
+          "bearer_token"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "Primary auth is OAuth2 (authorization code grant flow) for app-level integration. Store-level API accounts use X-Auth-Token (access token) header. GraphQL Storefront API uses Bearer Token with JWT. Legacy Basic auth exists for Tax Provider API but is not recommended for programmatic agent integration."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s1",
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Developers can sign up for a free 15-day trial store (sandbox) and create API credentials from the store control panel without any paid plan. No company email or phone verification required. The free trial gives full access to test APIs. Production API access works on any paid plan but testing can be done entirely on the free trial."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "BigCommerce offers a comprehensive suite of APIs: REST Management APIs for managing products, orders, customers, catalog, shipping, pricing, and store settings; REST Storefront API for cart and checkout; GraphQL APIs (Storefront, Admin, Account, B2B); Webhooks for event-driven integrations; Customer Login API; Current Customer API; and Payments API. The API surface is very broad, covering essentially all e-commerce operations.",
+        "evidence_ids": [
+          "s2",
+          "s9",
+          "s10"
+        ],
+        "notes": ""
+      },
+      "api_docs_url": "https://docs.bigcommerce.com"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://docs.bigcommerce.com/developer/api-reference/mcp/storefront/b2c",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s11",
+        "s12",
+        "s13"
+      ],
+      "notes": "BigCommerce has an official MCP server (Beta) launched April 28, 2026, for B2C storefront interaction (guest shopping flows). Multiple third-party MCP servers exist from StackOne (120 actions), Apideck, CData, and community-built servers on GitHub. The official docs page also mentions MCP integration at docs.bigcommerce.com/_mcp/server."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "BigCommerce has a well-documented public REST and GraphQL API, offers self-serve free trial access with no paywall or admin approval needed for testing, uses standard OAuth2 authentication, and already has both an official MCP server (beta) and several community MCP servers available. An AI agent toolkit can be built today using the REST/GraphQL APIs directly via OAuth2 or API tokens, or by leveraging the official MCP server.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s6",
+          "s11",
+          "s12"
+        ],
+        "notes": "The official MCP server is currently focused on B2C storefront guest shopping flows but more capabilities are coming. For full admin/store management operations, the REST/GraphQL APIs can be used directly."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.bigcommerce.com",
+      "quote": "Use REST and GraphQL APIs to manage products, orders, customers, and store settings programmatically. Get started in 3 steps: Create a sandbox store, Generate API credentials, Make your first API call.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "BigCommerce Developers"
+    },
+    "s2": {
+      "url": "https://docs.bigcommerce.com/developer/api-reference/about-our-apis",
+      "quote": "BigCommerce's Store Management and Payment APIs allow you to manage transactions, modify store data, and act as store administrator. BigCommerce has several APIs that let you manage store data, authenticate customers, make client-side queries for product information, and more.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "About Our APIs"
+    },
+    "s3": {
+      "url": "https://docs.bigcommerce.com/developer/docs/overview/api-fundamentals/api-accounts",
+      "quote": "BigCommerce offers three types of OAuth-based API accounts to developers who wish to use BigCommerce's REST APIs: store-level credentials, app-level credentials, and account-level credentials.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Accounts"
+    },
+    "s4": {
+      "url": "https://docs.bigcommerce.com/developer/docs/integrations/apps/guide/auth",
+      "quote": "BigCommerce uses a modified version of the OAuth2 authorization code grant... Your app must expose a callback endpoint...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Single-Click App OAuth Flow"
+    },
+    "s5": {
+      "url": "https://docs.bigcommerce.com/developer/docs/overview/api-fundamentals/api-accounts",
+      "quote": "The `X-Auth-Token` header uses access tokens to authenticate requests.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Accounts - X-Auth-Token"
+    },
+    "s6": {
+      "url": "https://docs.bigcommerce.com",
+      "quote": "Sign up for a free BigCommerce trial store to test API calls and build integrations without affecting live data.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "BigCommerce Developers - Get Started"
+    },
+    "s7": {
+      "url": "https://www.bigcommerce.com/pricing/",
+      "quote": "Start with a free trial. Scale when you're ready. Core: $29/mo, Growth: $79/mo, Scale: $299/mo, Performance: Custom pricing starting at $1,499/mo.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "BigCommerce Pricing"
+    },
+    "s8": {
+      "url": "https://docs.bigcommerce.com/developer/docs/overview/api-fundamentals/rate-limits",
+      "quote": "Other sandboxes (Dev/Partner/Employee): by resource. Pro: 60k per hour (450 / 30sec). Plus & Standard: 20k per hour (150 / 30sec).",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Rate Limits"
+    },
+    "s9": {
+      "url": "https://docs.bigcommerce.com/developer/api-reference/about-our-apis",
+      "quote": "REST Store Management APIs... REST Storefront API... GraphQL Storefront API... Customer Login API... Current Customer API... Payments API...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Available APIs"
+    },
+    "s10": {
+      "url": "https://docs.bigcommerce.com/developer/changelog/2026/5/7",
+      "quote": "The BigCommerce MCP server lets AI agents \u2014 like Claude, Cursor, and Warp \u2014 interact with a BigCommerce storefront using purpose-built commerce tools, available since April 28, 2026.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "May 7, 2026 Changelog - BigCommerce MCP Server (Beta)"
+    },
+    "s11": {
+      "url": "https://docs.bigcommerce.com/developer/changelog/2026/5/7",
+      "quote": "BigCommerce MCP Server (Beta) - B2C Storefront server \u2014 guest shopping flow with tools to search the catalog, fetch product details, manage a cart, and generate a checkout URL. Enable the server under Settings \u2192 Early access in the control panel.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "BigCommerce MCP Server Details"
+    },
+    "s12": {
+      "url": "https://www.stackone.com/connectors/bigcommerce/mcp",
+      "quote": "A BigCommerce MCP server lets AI agents read and write BigCommerce data through the Model Context Protocol. StackOne's BigCommerce MCP server ships with 120 pre-built actions.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "BigCommerce MCP Server for AI Agents (120 Actions)"
+    },
+    "s13": {
+      "url": "https://github.com/isaacgounton/bigcommerce-api-mcp",
+      "quote": "BigCommerce MCP Server - A comprehensive Model Context Protocol (MCP) server for BigCommerce REST API integration.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "isaacgounton/bigcommerce-api-mcp"
+    }
+  },
+  "limitations": [
+    "The official MCP server is currently in Beta and focused on B2C storefront guest shopping flows (B2B and customer_login features are coming soon).",
+    "Rate limits vary by plan (20k/hour for Standard/Plus, 60k/hour for Pro, custom for Enterprise).",
+    "Some API endpoints require specific API account types (store-level vs app-level vs account-level) which may affect integration design."
+  ]
+}

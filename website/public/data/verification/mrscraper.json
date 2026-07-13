@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "app_id": "mrscraper",
+  "initial_research_path": "data/apps/mrscraper-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "partially_confirmed",
+    "checked_at": "2026-07-13T12:53:13Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "The rendered docs overview describes 'AI-powered web scraper' and 'data extraction', and the pricing page says 'visual web scraper to extract data from websites'. Consistent with 'Web Scraping / Data Extraction'.",
+        "source_url": "https://docs.mrscraper.com/docs/getting-started/overview",
+        "screenshot_path": "data/screenshots/mrscraper-3.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "The authentication docs page explicitly states 'The MrScraper API uses API token authentication' via the 'x-api-token' header, with analytics endpoints using query-parameter auth. Matches pass-1's ['api_key'] claim.",
+        "source_url": "https://docs.mrscraper.com/docs/api/authentication",
+        "screenshot_path": "data/screenshots/mrscraper-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page shows 'Scraper Free $0/month' with API tokens. Billing docs state 'Free plan includes 100 tokens per month with no credit card required.' Self-serve free access confirmed.",
+        "source_url": "https://mrscraper.com/pricing",
+        "screenshot_path": "data/screenshots/mrscraper-2.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "API Overview docs confirm REST API at api.app.mrscraper.com with JSON, authentication, pagination, error handling. Sidebar shows extensive endpoints: V3 Platform, Marketplace (Shopee, Tiktok, Lazada, etc.), Travel (Agoda, Booking.com, etc.), PDP Cache, Analytics. Python SDK, Webhooks, and CLI documented.",
+        "source_url": "https://docs.mrscraper.com/docs/api/overview",
+        "screenshot_path": "data/screenshots/mrscraper-4.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "contradicted",
+        "evidence": "Rendered docs sidebar on multiple pages (overview, billing) lists 'MCP Server' as a navigation item under 'Getting Started'. This directly contradicts pass-1's claim that no official MCP server was found ('none_found').",
+        "source_url": "https://docs.mrscraper.com/docs/getting-started/overview",
+        "screenshot_path": "data/screenshots/mrscraper-3.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "All core evidence for buildability is intact: public REST API, API-key auth, free tier (no CC required), Python SDK, webhooks, extensive docs. The presence of MCP docs actually strengthens the verdict.",
+        "source_url": "https://docs.mrscraper.com/docs/api/overview",
+        "screenshot_path": "data/screenshots/mrscraper-4.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/mrscraper-1.png",
+      "data/screenshots/mrscraper-2.png",
+      "data/screenshots/mrscraper-3.png",
+      "data/screenshots/mrscraper-4.png",
+      "data/screenshots/mrscraper-5.png",
+      "data/screenshots/mrscraper-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": [
+    {
+      "field": "agent_interface.mcp",
+      "initial_value": "none_found",
+      "final_value": "documented_in_official_docs",
+      "caught_by": "browser_verification",
+      "reason": "Pass-1 claimed no official MCP server was found, but the rendered docs sidebar clearly includes 'MCP Server' as a navigation item under 'Getting Started' on multiple pages (overview, billing). This indicates that official MCP documentation exists, contradicting the 'none_found' claim.",
+      "evidence": "The sidebar of https://docs.mrscraper.com/docs/getting-started/overview (and billing page) lists: Overview, Quickstart, Playground, Token Plan, CLI, MCP Server, Migrating from Platform v2 to v3, Billing. The presence of a dedicated 'MCP Server' page in the official docs contradicts pass-1's assertion that no official MCP server exists.",
+      "corrected_at": "2026-07-13T12:53:13Z"
+    }
+  ]
+}

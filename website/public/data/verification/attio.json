@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "attio",
+  "initial_research_path": "data/apps/attio-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:26:06Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Docs overview page states 'Attio is a revolutionary CRM platform'. Pricing page positions it as a CRM. Category 'CRM (Customer Relationship Management)' is accurate.",
+        "source_url": "https://docs.attio.com/docs/overview",
+        "screenshot_path": "data/screenshots/attio-5.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Auth docs describe three methods: OAuth 2.0 flow, API key generation, and HTTP Basic Authentication (username=token, password blank). All use Bearer token in Authorization header.",
+        "source_url": "https://docs.attio.com/rest-api/guides/authentication",
+        "screenshot_path": "data/screenshots/attio-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page shows Free plan at $0 with 'API and webhook access' and 'MCP server' checkmarks. 'Start for free, no credit card required.' No paid plan required. Self-serve signup available.",
+        "source_url": "https://attio.com/pricing",
+        "screenshot_path": "data/screenshots/attio-2.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "REST API docs page states 'Attio provides a public REST API which exchanges JSON over HTTPS.' Docs cover authentication, rate limits, filtering/sorting, pagination, webhooks, OAuth, attribute types, extensive endpoint reference (Core, Standard objects, SCIM 2.0, OAuth 2.0), and 11+ webhook event types.",
+        "source_url": "https://docs.attio.com/rest-api",
+        "screenshot_path": "data/screenshots/attio-3.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "Docs overview page lists 'MCP' as one of four parts of the Attio Developer Platform: 'Manage Attio via AI. Connect Claude, ChatGPT...'. Pricing page shows 'MCP server' checkmark on Free plan. Dedicated MCP navigation section exists in docs.",
+        "source_url": "https://docs.attio.com/docs/overview",
+        "screenshot_path": "data/screenshots/attio-5.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "All criteria met: public REST API with comprehensive docs, OAuth 2.0 + API key + Basic auth, free self-serve tier with API/webhook/MCP access, official MCP server, and App SDK. No material blockers observed.",
+        "source_url": "https://docs.attio.com/rest-api",
+        "screenshot_path": "data/screenshots/attio-3.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/attio-1.png",
+      "data/screenshots/attio-2.png",
+      "data/screenshots/attio-3.png",
+      "data/screenshots/attio-4.png",
+      "data/screenshots/attio-5.png",
+      "data/screenshots/attio-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

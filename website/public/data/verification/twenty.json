@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "twenty",
+  "initial_research_path": "data/apps/twenty-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:29:11Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Pricing page header states 'Trust the n\u00b01 CRM' and positions Twenty as open-source CRM. Intro docs describe it as a CRM platform for building custom solutions.",
+        "source_url": "https://twenty.com/pricing",
+        "screenshot_path": "data/screenshots/twenty-2.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "OAuth docs page explicitly documents both API Keys (Settings \u2192 API & Webhooks) and OAuth 2.0 (authorization code + PKCE and client credentials flows), including a comparison table.",
+        "source_url": "https://docs.twenty.com/developers/extend/oauth",
+        "screenshot_path": "data/screenshots/twenty-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page shows 'Start your free trial today without credit card.' API access is listed as 'Yes' on both Pro ($9/user/mo) and Organization ($19/user/mo) plans. Self-hosting is free (open-source).",
+        "source_url": "https://twenty.com/pricing",
+        "screenshot_path": "data/screenshots/twenty-2.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "API docs page documents REST (/rest/) and GraphQL (/graphql/) APIs for CRUD, Metadata API (/rest/metadata/ and /metadata/) for schema management, batch operations up to 60 records, webhooks (sidebar), and rate limits (100/min on API docs page; pricing page shows 50/min Pro, 100/min Org).",
+        "source_url": "https://docs.twenty.com/developers/extend/api",
+        "screenshot_path": "data/screenshots/twenty-3.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "Pricing page under 'Developers' section explicitly lists 'MCP server \u2014 Yes' for both Pro and Organization plans with checkmarks.",
+        "source_url": "https://twenty.com/pricing",
+        "screenshot_path": "data/screenshots/twenty-2.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "All prerequisites confirmed: public REST/GraphQL API (docs), self-serve free trial without credit card (pricing), API key and OAuth authentication (oauth docs), MCP server available (pricing). No material blockers observed.",
+        "source_url": "https://docs.twenty.com/developers/extend/api",
+        "screenshot_path": "data/screenshots/twenty-3.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/twenty-1.png",
+      "data/screenshots/twenty-2.png",
+      "data/screenshots/twenty-3.png",
+      "data/screenshots/twenty-4.png",
+      "data/screenshots/twenty-5.png",
+      "data/screenshots/twenty-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

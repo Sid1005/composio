@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "plain",
+  "initial_research_path": "data/apps/plain-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:33:24Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Homepage states 'Plain is AI support infrastructure that enables B2B teams to build anything'. Docs and pricing confirm AI-first customer support platform for B2B.",
+        "source_url": "https://plain.com",
+        "screenshot_path": "data/screenshots/plain-6.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Auth docs show API key via Bearer token (Authorization: Bearer plainApiKey_xxx). MCP docs show OAuth 2.0 with PKCE for MCP server authentication.",
+        "source_url": "https://www.plain.com/docs/graphql/authentication",
+        "screenshot_path": "data/screenshots/plain-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page shows 'Start today, no credit card required', '7 day free trial', Foundation plan $35/mo with API/Webhooks/Events checkmarks. Self-serve signup.",
+        "source_url": "https://plain.com/pricing",
+        "screenshot_path": "data/screenshots/plain-2.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Docs intro confirms full GraphQL API at core-api.uk.plain.com/graphql/v1 with downloadable schema, 'no limitations' vs UI. Docs index shows customers, threads, companies, tenants, labels, messaging, webhooks, help center, and more. Webhooks section exists.",
+        "source_url": "https://www.plain.com/docs/graphql/introduction",
+        "screenshot_path": "data/screenshots/plain-3.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "Official help article states 'Plain MCP server at https://mcp.plain.com/mcp' with 30 tools across threads, customers, tenants, help center, workspace. Uses OAuth. Setup guides for ChatGPT, Cursor, Claude.ai, Claude Code.",
+        "source_url": "https://help.plain.com/article/mcp-server",
+        "screenshot_path": "data/screenshots/plain-5.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "Public GraphQL API with full schema, official MCP server with 30 tools, self-serve API key access (free trial, no credit card), Foundation plan $35/mo with API included. All evidence supports buildable_today.",
+        "source_url": "https://plain.com/pricing",
+        "screenshot_path": "data/screenshots/plain-2.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/plain-1.png",
+      "data/screenshots/plain-2.png",
+      "data/screenshots/plain-3.png",
+      "data/screenshots/plain-4.png",
+      "data/screenshots/plain-5.png",
+      "data/screenshots/plain-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

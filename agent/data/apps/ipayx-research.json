@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "app_id": "ipayx",
+  "researched_at": "2026-07-13T13:07:30Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 25,
+    "trace_path": "logs/ipayx-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Payment Processing / Electronic Billing",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "iPayX (Internet Payment Exchange, Inc.) was founded in 1999 as an electronic billing and payment (EBP) technology provider serving healthcare, utilities, and municipal governments. The company was acquired by BillingTree in late 2017."
+      },
+      "one_liner": {
+        "value": "iPayX provided electronic billing and payment SaaS solutions for healthcare providers, utilities, and municipal governments; acquired by BillingTree in 2017/2018. The domain ipayx.io is currently inaccessible (403 Forbidden).",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "unknown"
+        ],
+        "evidence_ids": [
+          "s1"
+        ],
+        "notes": "No authentication methods could be confirmed. The website ipayx.io returns 403 Forbidden. The original company's API documentation, if any existed, is no longer publicly accessible."
+      },
+      "primary_for_agent_toolkit": "unknown"
+    },
+    "access": {
+      "credential_access": "unknown",
+      "gates": [],
+      "signup_friction": "unknown",
+      "paid_plan_required_for_api": "unknown",
+      "admin_approval_required": "unknown",
+      "evidence_ids": [
+        "s1",
+        "s2"
+      ],
+      "notes": "The domain ipayx.io is inaccessible (403 Forbidden). No signup flow, pricing, or developer portal could be accessed. The original iPayX company was acquired by BillingTree and its products (CareView, XprsPay) are now part of BillingTree's offerings."
+    },
+    "api_surface": {
+      "public_api": "unknown",
+      "protocols": [],
+      "breadth": "unknown",
+      "summary": {
+        "value": "No public API documentation was found for ipayx.io. The website returns 403 Forbidden. The original iPayX company was acquired by BillingTree and its API, if it existed, is no longer independently accessible. A search for 'ipayx API documentation' returns results for unrelated services (i-payout.com, ipaygh.com, jackhenry.dev) but not for iPayX itself.",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ]
+      },
+      "api_docs_url": null
+    },
+    "agent_interface": {
+      "mcp": "none_found",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [],
+      "evidence_ids": [
+        "s1"
+      ],
+      "notes": "No MCP server, Composio toolkit entry, or any agent integration framework was found for iPayX. The service is not listed in any known agent toolkit catalogues."
+    },
+    "buildability": {
+      "verdict": "technically_possible_but_gated",
+      "main_blocker": "no_public_api",
+      "rationale": {
+        "value": "iPayX appears to be a defunct/acquired company (acquired by BillingTree in 2017). The domain ipayx.io returns 403 Forbidden and no public API documentation, authentication methods, or developer resources could be found. Even if the service still exists behind the 403 error, there is no publicly documented API surface that could be built into an agent toolkit today. The original company's technology is now part of BillingTree's offerings.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "The main blocker is that no public API exists or is discoverable. Without access to the website or any API documentation, integration is impossible from the public internet."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://ipayx.io",
+      "quote": "The website https://ipayx.io returns HTTP 403 Forbidden on every page attempted. No content could be retrieved.",
+      "source_type": "official_product_page",
+      "accessed_at": "2025-07-13T12:00:00Z",
+      "title": "iPayX website (inaccessible)",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://www.prnewswire.com/news-releases/billingtree-acquires-ipayx-expanding-healthcare-and-b2b-portfolio-offerings-300668217.html",
+      "quote": "BillingTree\u00ae announced it has completed the integration of additional digital payment solutions into its suite following the acquisition of Toledo-based electronic payment firm, Internet Payment Exchange (iPayX). iPayX's XprsPay and CareView payment platforms are now fully supported BillingTree offerings.",
+      "source_type": "secondary_source",
+      "accessed_at": "2025-07-13T12:00:00Z",
+      "title": "BillingTree acquires iPayX",
+      "retrieval_method": "composio_search"
+    },
+    "s3": {
+      "url": "https://www.healthcarefinancenews.com/news/ipayx-adds-payment-plan-function-electronic-billing-and-payment-portal",
+      "quote": "A developer of electronic billing and payment solutions for the healthcare industry... Internet Payment Exchange (IPayX) of Toledo, Ohio... IPayX offers a number of Software-as-a-Service (SaaS) products for healthcare providers, utility companies, municipal governments and other organizations.",
+      "source_type": "secondary_source",
+      "accessed_at": "2025-07-13T12:00:00Z",
+      "title": "IPayX adds payment plan function",
+      "retrieval_method": "composio_search"
+    }
+  },
+  "limitations": [
+    "The primary website (ipayx.io) is completely inaccessible, returning 403 Forbidden on all attempts.",
+    "No Wayback Machine snapshots could be retrieved for ipayx.io; the archive also returned 403.",
+    "The original ipayx.com domain also timed out during fetch attempts.",
+    "No current API documentation, developer portal, or authentication mechanism could be discovered for 'iPayX' as an active service.",
+    "Multiple search results are polluted by similarly named entities (IPAYX mutual fund ticker, iPay Africa, i-payout, iPay Ghana) which are unrelated."
+  ]
+}

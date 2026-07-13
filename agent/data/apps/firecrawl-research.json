@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0",
+  "app_id": "firecrawl",
+  "researched_at": "2026-07-13T12:51:45Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 10,
+    "trace_path": "logs/firecrawl-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Web Scraping & Data Extraction",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Firecrawl provides APIs to scrape, crawl, map, search, and extract structured data from websites, optimized for LLM consumption."
+      },
+      "one_liner": {
+        "value": "A web data API that turns websites into clean, LLM-ready markdown/JSON for AI agents \u2014 search, scrape, crawl, and extract at scale.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "bearer_token"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s7"
+        ],
+        "notes": "API key passed as Bearer token in Authorization header (e.g., 'Authorization: Bearer fc-123456789'). Keyless free tier also available (rate-limited, no token required)."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s4",
+        "s5",
+        "s8"
+      ],
+      "notes": "Free plan with 1,000 credits/month available with no credit card required. Sign up via email or GitHub. Keyless free tier also available (no account needed, rate-limited per IP). No paid plan required for API access."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks",
+        "sdk_only"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Comprehensive public REST API at api.firecrawl.dev with endpoints for scrape, crawl, map, search, extract (structured data via AI), interact (browser automation), agent (autonomous web research), and monitor. Official SDKs for Python and Node.js. Webhook support for async jobs. Full API reference at docs.firecrawl.dev.",
+        "evidence_ids": [
+          "s3",
+          "s6",
+          "s7"
+        ],
+        "notes": ""
+      },
+      "api_docs_url": "https://docs.firecrawl.dev/api-reference/introduction"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.firecrawl.dev/v2/mcp (keyless) or https://mcp.firecrawl.dev/{FIRECRAWL_API_KEY}/v2/mcp (with key)",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s7",
+        "s9",
+        "s10",
+        "s11"
+      ],
+      "notes": "Official MCP server at github.com/firecrawl/firecrawl-mcp-server (6903 stars, MIT license). Also available via Composio toolkit. Keyless remote MCP endpoint available. CLI tool (npx firecrawl-cli). Agent onboarding skill at firecrawl.dev/agent-onboarding/SKILL.md."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Firecrawl has a well-documented public REST API, self-serve free tier (no credit card required), official SDKs, an official MCP server, and a keyless free tier for zero-friction onboarding. All signals point to it being immediately buildable into an agent toolkit today.",
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s7",
+          "s9"
+        ],
+        "notes": ""
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.firecrawl.dev",
+      "quote": "Power AI agents with clean web data. The complete toolkit to search, scrape, and interact with the web at scale.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl Homepage",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://www.firecrawl.dev/pricing",
+      "quote": "Firecrawl is free for 1,000 pages every month (1,000 free credits per month). No credit card required.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl Pricing",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://docs.firecrawl.dev/api-reference/introduction",
+      "quote": "For authentication, it's required to include an Authorization header. The header should contain Bearer fc-123456789, where fc-123456789 represents your API Key.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl API Reference - Introduction",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://www.firecrawl.dev/pricing",
+      "quote": "Free \u2014 $0/month \u2014 A lightweight way to get started. No cost, no card, no hassle.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl Pricing",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://www.firecrawl.dev/pricing",
+      "quote": "Is Firecrawl free? Yes, Firecrawl is free for 1,000 pages every month (1,000 free credits per month).",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl Pricing FAQ",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://docs.firecrawl.dev/api-reference/endpoint/scrape",
+      "quote": "All requests contain the following base URL: https://api.firecrawl.dev. Features: Scrape, Parse, Crawl, Map, Search, Extract, Agent, Browser, Monitor.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Scrape Endpoint - Firecrawl Docs",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://docs.firecrawl.dev/mcp-server",
+      "quote": "A Model Context Protocol (MCP) server implementation that integrates Firecrawl for searching, scraping, and interacting with the web. Connect without an API key to get started on the remote keyless free tier.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl MCP Server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://www.firecrawl.dev/blog/firecrawl-keyless-launch",
+      "quote": "Firecrawl Keyless: Search, scrape, and interact without an API key. Every developer gets 1,000 free credits a month, automatically.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl Keyless Launch",
+      "retrieval_method": "composio_search"
+    },
+    "s9": {
+      "url": "https://github.com/firecrawl/firecrawl-mcp-server",
+      "quote": "Official Firecrawl MCP Server - Adds powerful web scraping and search to Cursor, Claude and any other LLM clients. License: MIT. Stars: 6903.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "firecrawl/firecrawl-mcp-server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://docs.composio.dev/toolkits/firecrawl",
+      "quote": "Firecrawl automates web crawling and data extraction. Auth: API_KEY. Tools: 30.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl - Composio Toolkit",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://www.firecrawl.dev/agent-onboarding/SKILL.md",
+      "quote": "Firecrawl helps agents search first, scrape clean content, interact with live pages... CLI tools \u2014 firecrawl search, firecrawl scrape, firecrawl interact, firecrawl ask.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Firecrawl Agent Onboarding Skill",
+      "retrieval_method": "composio_fetch"
+    }
+  },
+  "limitations": [
+    "Pricing page shows 500 one-time credits from some sources vs 1,000 monthly from the official page \u2014 the official pricing page says 1,000 credits/month free. Some third-party blogs reference older 500-credit plans.",
+    "The MCP server has a keyless free tier but it's rate-limited and only supports scrape/search/interact without a key.",
+    "Free plan has low rate limits and concurrency (2 concurrent requests)."
+  ]
+}

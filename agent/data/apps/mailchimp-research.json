@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+  "app_id": "mailchimp",
+  "researched_at": "2026-07-13T12:37:01Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 17,
+    "trace_path": "logs/mailchimp-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Email Marketing / Marketing Automation",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Mailchimp is an all-in-one marketing platform primarily used for email marketing campaigns, audience management, and marketing automation."
+      },
+      "one_liner": {
+        "value": "Email marketing and automation platform for managing audiences, campaigns, and marketing workflows",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s1",
+          "s5"
+        ],
+        "notes": "Both API keys and OAuth 2 tokens are supported. API keys are used for personal account integration; OAuth 2 is for multi-user/third-party app access. Both can be transmitted via HTTP Basic Auth or Bearer token."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s1",
+        "s3",
+        "s4"
+      ],
+      "notes": "Free accounts can generate API keys and access the Marketing API. Some advanced endpoints may be gated by plan tier, but basic API access works on the free plan. No credit card required for free signup."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Well-documented REST API (v3.0) covering campaigns, audiences/lists, members, segments, tags, templates, reports, automation flows (customer journeys), e-commerce stores, batch operations, webhooks, file manager, surveys, landing pages, verified domains, and more. Also includes a separate Export API v1.0. Official OpenAPI spec and client libraries (Node.js, PHP, Python, Ruby, Java, Go).",
+        "evidence_ids": [
+          "s2",
+          "s6"
+        ]
+      },
+      "api_docs_url": "https://mailchimp.com/developer/marketing/api/"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s7",
+        "s8",
+        "s9"
+      ],
+      "notes": "Multiple community MCP servers exist (damientilman/mailchimp-mcp-server with 227 tools, AgentX-ai/mailchimp-mcp read-only, mattcoatsworth/mailchip-mcp-server, LokiMCPUniverse/mailchimp-mcp-server). Composio provides a Mailchimp MCP toolkit. Apify also has a Mailchimp MCP server. No official MCP server from Mailchimp/Intuit found."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Mailchimp has a well-documented, broad REST API (v3.0) that is fully accessible via self-serve free accounts with API key authentication. Multiple community MCP servers already exist that demonstrate agent integration is possible today. No sales gate, no admin approval, and no paid plan required for API access (some advanced endpoints may require higher plan tiers, but the core API surface is available on free tier). The primary blocker is none \u2014 an agent toolkit can be built today.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s7",
+          "s8"
+        ],
+        "notes": "The only caveat is that some endpoints (e.g., cancel-send requires Mailchimp Pro) are gated by plan, but the vast majority of the API is available on free/essentials plans."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://mailchimp.com/developer/marketing/docs/fundamentals/",
+      "quote": "To use the Marketing API, you need a Mailchimp account. What you can do with the API depends on what level of Mailchimp plan you have. Once you have an account and are logged in, you can get an API key and begin making calls to the API. ... You can authenticate requests using either your API key or an OAuth access token",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Fundamentals Documentation | Mailchimp Developer"
+    },
+    "s2": {
+      "url": "https://mailchimp.com/developer/marketing/api/",
+      "quote": "Marketing API reference with endpoints for API Root, Account Exports, Audiences (BETA), Contacts, Authorized Apps, Automation flows, Batch Operations, Batch Webhooks, Campaign Folders, Campaigns, Conversations, Customer Journeys, E-commerce Stores, File Manager, Landing Pages, Lists, ...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Mailchimp Marketing API Reference | Mailchimp Developer"
+    },
+    "s3": {
+      "url": "https://mailchimp.com/pricing/",
+      "quote": "Under 250 contacts? It's free. ... Sign Up ... Risk-Free \u00b7 No Credit Card Required",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Mailchimp Pricing Plans | Get Started Today | Mailchimp"
+    },
+    "s4": {
+      "url": "https://unified.to/blog/how_to_get_your_mailchimp_api_key",
+      "quote": "Free accounts have API access, though some advanced endpoints are gated by plan tier.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How to Get Your Mailchimp API Key"
+    },
+    "s5": {
+      "url": "https://mailchimp.com/developer/marketing/guides/access-user-data-oauth-2/",
+      "quote": "OAuth 2 authentication provides developers with a secure way to access Mailchimp Marketing API data on behalf of other Mailchimp users. ... Simply put: Use your API key if you're writing code that tightly couples your application's data to your Mailchimp account's data. If you ever need to access someone else's Mailchimp account's data, you should be using OAuth 2.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Access Data on Behalf of Other Users with OAuth 2 Guide | Mailchimp Developer"
+    },
+    "s6": {
+      "url": "https://mailchimp.com/developer/marketing/api/lists",
+      "quote": "Lists/Audiences endpoints including Get all lists, Add member, Update member, Delete member, Batch subscribe/unsubscribe, etc.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Lists/Audiences | Mailchimp Marketing API Reference"
+    },
+    "s7": {
+      "url": "https://github.com/damientilman/mailchimp-mcp-server",
+      "quote": "The most complete Mailchimp Marketing API MCP server: 227 tools across campaigns, audiences, reports, segments, automations and full e-commerce, with multi-account support and runtime-security guardrails",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "damientilman/mailchimp-mcp-server"
+    },
+    "s8": {
+      "url": "https://github.com/AgentX-ai/mailchimp-mcp",
+      "quote": "A Model Context Protocol (MCP) server that provides read-only access to Mailchimp's Marketing API for comprehensive email marketing data retrieval.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "AgentX-ai/mailchimp-mcp"
+    },
+    "s9": {
+      "url": "https://composio.dev/toolkits/mailchimp/framework/claude-agents-sdk",
+      "quote": "The Mailchimp MCP server is an implementation of the Model Context Protocol that connects your AI agent and assistants like Claude, Cursor, etc directly to your Mailchimp account.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Mailchimp MCP Integration with Claude Agent SDK | Composio"
+    }
+  },
+  "limitations": [
+    "Could not verify exact list of plan-gated endpoints from official docs \u2014 the Fundamentals page says 'What you can do with the API depends on what level of Mailchimp plan you have' but does not enumerate which endpoints. Third-party sources confirm free accounts have API access with some advanced endpoints gated.",
+    "No official Mailchimp MCP server found; all existing MCP servers are community-maintained."
+  ]
+}

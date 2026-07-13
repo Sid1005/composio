@@ -1,0 +1,202 @@
+{
+  "schema_version": "1.0",
+  "app_id": "copper",
+  "researched_at": "2026-07-13T12:23:49Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 16,
+    "trace_path": "logs/copper-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "CRM (Customer Relationship Management)",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Copper is a Google Workspace-native CRM platform for managing customer relationships, sales pipelines, and projects."
+      },
+      "one_liner": {
+        "value": "Google Workspace-native CRM for managing contacts, sales opportunities, pipelines, and customer relationships with deep Gmail/Calendar integration.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "Two auth methods: API Keys (legacy, set X-PW-AccessToken header) and OAuth2.0 (Authorization Code Grant, Bearer token). OAuth2 is the recommended approach for partner integrations."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_paid",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s2",
+        "s6",
+        "s7"
+      ],
+      "notes": "API access requires a paid Professional ($59/user/mo) or Business ($99/user/mo) plan. Basic plan ($23/user/mo) excludes API access. A 14-day free trial is available on the Business plan. API keys can be generated self-serve by workspace admins. OAuth2 requires contacting Copper to register the application (provide name, purpose, HTTPS callback URL) to receive client_id and client_secret."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Copper provides a documented REST API (JSON over HTTPS) covering Companies, People, Leads, Opportunities, Projects, Tasks, Activities, Custom Fields, Pipelines, Tags, and Webhooks. The API supports full CRUD operations, search/filter, bulk create/update, file upload, and webhook subscriptions for real-time event notifications. Rate limited to 180 req/min general, 3 req/sec for bulk. OpenAPI/Swagger specs and Postman collections are available.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s8",
+          "s9",
+          "s10"
+        ]
+      },
+      "api_docs_url": "https://developer.copper.com"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": "https://www.mcpbundles.com/skills/copper",
+      "existing_agent_skills": [
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s11",
+        "s12"
+      ],
+      "notes": "No official MCP server from Copper. Community MCP servers exist: mcpbundles.com offers a Copper MCP Server for AI agents to review pipelines, manage contacts/deals, and projects. viaSocket also lists a Copper MCP connector. No official SDK/CLI for AI agents beyond the REST API."
+    },
+    "buildability": {
+      "verdict": "buildable_with_access",
+      "main_blocker": "paid_api_entitlement",
+      "rationale": {
+        "value": "Copper has a well-documented REST API with both API key and OAuth2 authentication. However, API access requires a paid Professional plan ($59/user/mo) or higher. An agent toolkit can be built today using the public API, but end users must have a paid Copper subscription. The OAuth2 app registration requires contacting Copper (not fully self-serve), but API key auth is self-serve for workspace admins. The API is broad enough to support most CRM agent use cases. The main blocker is the paid plan requirement, not technical limitations.",
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s6",
+          "s7",
+          "s8"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.copper.com/pricing",
+      "quote": "Copper is a Recommended for Google Workspace CRM that improves productivity and increases visibility across all your customer interactions.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing | Copper CRM"
+    },
+    "s2": {
+      "url": "https://www.copper.com/pricing",
+      "quote": "API & Embedded integration SDK",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Copper CRM Pricing"
+    },
+    "s3": {
+      "url": "https://developer.copper.com/introduction/authentication.html",
+      "quote": "There are two ways to access the Copper Developer API: API keys and OAuth2.0. API Keys are suitable for individual users, while OAuth2.0 is the preferred approach for partner integrations.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Overview \u2013 Copper Developer API"
+    },
+    "s4": {
+      "url": "https://developer.copper.com/introduction/oauth/index.html",
+      "quote": "You can now access the Copper Developer API via OAuth2.0. This authentication method is an alternative to Copper's legacy API Keys, and is particularly well-suited for third-party integrations.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication via OAuth2.0"
+    },
+    "s5": {
+      "url": "https://developer.copper.com/introduction/oauth/flow.html",
+      "quote": "Copper implements the commonly-used Authorization Code Grant flow... Once you have successfully obtained a valid access_token... you simply include the access_token in the Authorization header of your requests.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Copper OAuth2.0 Flow"
+    },
+    "s6": {
+      "url": "https://developer.copper.com/introduction/oauth/index.html",
+      "quote": "To register your application, contact us. You will need to provide the name and purpose of your application as well as a URL to an HTTPS endpoint that will handle the secure callback.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication via OAuth2.0 \u2013 Prerequisites"
+    },
+    "s7": {
+      "url": "https://saascrmreview.com/copper-crm-pricing",
+      "quote": "API and the Embedded SDK are included on Professional and Business, not Basic.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Copper CRM Pricing 2026"
+    },
+    "s8": {
+      "url": "https://developer.copper.com/introduction/requests.html",
+      "quote": "All API calls are limited to 180 requests per minute. Once this limit has been reached, calls will return an error response with status code 429. Our bulk APIs have an additional rate limit of 3 requests per second.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Requests \u2013 Copper Developer API"
+    },
+    "s9": {
+      "url": "https://developer.copper.com",
+      "quote": "The Copper Web API allows you to access and build your own applications that interact with Copper... provides a RESTful interface with JSON-formatted responses to access most Copper resources.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Getting started \u2013 Copper Developer API"
+    },
+    "s10": {
+      "url": "https://developer.copper.com/webhooks/overview.html",
+      "quote": "Webhooks allow systems integrated with Copper to receive near real-time notification of certain events so that data updates and workflows can be triggered.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Webhooks \u2013 Copper Developer API"
+    },
+    "s11": {
+      "url": "https://www.mcpbundles.com/skills/copper",
+      "quote": "Connect your account, then chat with AI to run tools. Let AI agents review Copper CRM records, clean up contacts and companies, inspect deals, manage projects and tasks.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Copper MCP Server & Skill"
+    },
+    "s12": {
+      "url": "https://viasocket.com/mcp/copper",
+      "quote": "viaSocket MCP (Model Context Protocol) lets AI connect with thousands of apps through viaSocket's platform, enabling seamless communication, data exchange, and enhanced automation.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Copper MCP | viaSocket"
+    }
+  },
+  "limitations": [
+    "The pricing page from Copper.com lists 'API & Embedded integration SDK' as available on Professional and Business plans but the exact plan-level availability was verified from secondary sources (saascrmreview) as the Copper pricing page doesn't explicitly state 'API' under Basic's excluded features in a machine-readable way.",
+    "OAuth2 app registration gate details (response time, approval criteria) could not be fully verified beyond the documented requirement to 'contact us'.",
+    "The exact list of API endpoints was not exhaustively crawled but the changelog and navigation indicate broad coverage across major CRM entities."
+  ]
+}

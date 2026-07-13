@@ -1,0 +1,226 @@
+{
+  "schema_version": "1.0",
+  "app_id": "airtable",
+  "researched_at": "2026-07-13T12:59:01Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 22,
+    "trace_path": "logs/airtable-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Low-code / no-code database platform (spreadsheet-database hybrid)",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Airtable combines a spreadsheet-like UI with a relational database backend for building collaborative business applications."
+      },
+      "one_liner": {
+        "value": "Cloud-based low-code platform for building collaborative apps that combines spreadsheet simplicity with relational database power.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "personal_access_token",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "Legacy API keys were deprecated as of February 1, 2024. Current supported methods are Personal Access Tokens (PAT) and OAuth2. PAT is passed as an Authorization: Bearer header."
+      },
+      "primary_for_agent_toolkit": "personal_access_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s1",
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Anyone can sign up for a Free plan and create Personal Access Tokens. Free plan has a 1,000 API calls/month limit enforced since Jan 2025. Team and Business plans are self-serve paid. Enterprise Scale requires contacting sales."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Airtable provides a comprehensive documented REST API covering CRUD operations on records, schema management (tables, fields, views), metadata API, webhooks, enterprise endpoints, and more. Official JavaScript client (airtable.js) and community clients for Python, Ruby, .NET exist. API reference at airtable.com/developers/web/api.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s9",
+          "s10"
+        ],
+        "notes": ""
+      },
+      "api_docs_url": "https://airtable.com/developers/web/api/introduction"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://support.airtable.com/docs/using-the-airtable-mcp-server",
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s11",
+        "s12",
+        "s13",
+        "s14"
+      ],
+      "notes": "Airtable has an official MCP server documented in their support knowledge base ('Using the Airtable MCP server'). Multiple community MCP servers also exist (domdomegg/airtable-mcp-server with 453 stars, rashidazarang/airtable-mcp, @loticdigital/airtable-mcp-server). Official JavaScript SDK (airtable.js) is available."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Airtable is fully buildable as an agent toolkit today. It has a public, well-documented REST API with broad coverage (records, schema, webhooks, metadata), supports both Personal Access Tokens (simple for single-user) and OAuth2 (for multi-user), has an official MCP server documented in their own support pages, and developers can self-serve credentials on a free plan. The only consideration is the Free plan's 1,000 API calls/month limit, which is sufficient for development/testing but may require upgrading to a paid Team or Business plan for production usage. No sales gate, admin approval, or partner restrictions apply for self-serve plans.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s4",
+          "s5",
+          "s6",
+          "s7",
+          "s8",
+          "s9",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14"
+        ],
+        "notes": ""
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://airtable.com/pricing",
+      "quote": "Airtable has multiple packages to help teams of all sizes orchestrate their work. Our Free plan is available to teams for no charge",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Airtable Pricing"
+    },
+    "s2": {
+      "url": "https://airtable.com/developers/web/api/introduction",
+      "quote": "Airtable is a low-code platform for building collaborative apps. Customize your workflow, collaborate, and achieve ambitious outcomes.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Airtable Web API Introduction"
+    },
+    "s3": {
+      "url": "https://airtable.com/developers/web/api/authentication",
+      "quote": "Airtable's API uses token-based authentication... We currently support using personal access tokens and OAuth access tokens during the authentication process.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Authentication - Airtable API"
+    },
+    "s4": {
+      "url": "https://airtable.com/developers/web/guides/oauth-integrations",
+      "quote": "OAuth integrations allow you to register with Airtable so that users may grant you the ability to access Airtable's API on their behalf via the OAuth grant flow.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "OAuth Integrations - Airtable API"
+    },
+    "s5": {
+      "url": "https://support.airtable.com/docs/creating-personal-access-tokens",
+      "quote": "Personal Access Tokens (PATs) allow users to create multiple access tokens that allow for a wide range of access to the information held in Airtable bases.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Creating Personal Access Tokens"
+    },
+    "s6": {
+      "url": "https://airtable.com/pricing",
+      "quote": "Our Free plan is available at no cost for users just getting started. For teams... Team plan is available for $20/user/month when billed annually. Business is available at $45/user/month when billed annually.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Airtable Pricing"
+    },
+    "s7": {
+      "url": "https://community.make.com/t/important-update-airtable-enforcing-free-plan-api-limits/66395",
+      "quote": "Starting January 22, 2025, Airtable will strictly enforce its API limits for users on the Free plan.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Important Update: Airtable Enforcing Free Plan API Limits"
+    },
+    "s8": {
+      "url": "https://support.airtable.com/docs/managing-api-call-limits-in-airtable",
+      "quote": "Monthly calls for Free and Team plans are also limited to 5 requests per second rate limit. If you exceed your Free plan's call limit, a 30-day grace period is initiated",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Managing API Call Limits in Airtable"
+    },
+    "s9": {
+      "url": "https://airtable.com/developers/web/api/introduction",
+      "quote": "The Airtable API can be used to integrate your data in Airtable with any external system. The API closely follows REST semantics, uses JSON to encode objects",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Airtable Web API Introduction"
+    },
+    "s10": {
+      "url": "https://airtable.com/developers/web/api/overview",
+      "quote": "Airtable Web API",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Airtable Web API Overview"
+    },
+    "s11": {
+      "url": "https://support.airtable.com/docs/using-the-airtable-mcp-server",
+      "quote": "Airtable's MCP server lets you connect AI tools directly to your Airtable bases.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Using the Airtable MCP server"
+    },
+    "s12": {
+      "url": "https://github.com/domdomegg/airtable-mcp-server",
+      "quote": "A Model Context Protocol server that provides read and write access to Airtable databases. This server enables LLMs to inspect database schemas, then read and write records.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "airtable-mcp-server (community)"
+    },
+    "s13": {
+      "url": "https://mcpservers.org/servers/loticdigital/airtable-mcp",
+      "quote": "Access and manage Airtable bases, tables, and records using the Airtable Web API. A comprehensive Model Context Protocol (MCP) server that provides full access to the Airtable Web API",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Airtable MCP Server - MCP Servers"
+    },
+    "s14": {
+      "url": "https://mcpmarket.com/server/airtable",
+      "quote": "Airtable provides a Model Context Protocol (MCP) server for interacting with the Airtable API, allowing users to search, create, and update Airtable bases, tables, fields, and records",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-17T12:00:00Z",
+      "title": "Airtable MCP - MCP Market"
+    }
+  }
+}

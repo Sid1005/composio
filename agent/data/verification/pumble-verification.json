@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "pumble",
+  "initial_research_path": "data/apps/pumble-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:34:21Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "The pricing page (pumble.com/pricing) positions Pumble as a business communication tool with channels, messages, threads, video/voice calls, file sharing, and integrations \u2014 consistent with 'Team communication and collaboration platform (Slack/Microsoft Teams alternative)'.",
+        "source_url": "https://pumble.com/pricing",
+        "screenshot_path": "data/screenshots/pumble-1.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Rendered pages confirm three methods: (1) API key auth via the API Addon (ApiKey header, shown in Swagger docs and API keys help page); (2) OAuth2 flow (SDK docs at cake-com.github.io/pumble-node-sdk/authorization.html explicitly state 'Pumble uses OAuth2' with clientId/clientSecret/code flow); (3) Bearer tokens (MCP server page shows 'token' and 'x-app-token' headers, SDK docs describe accessToken/botToken as bearer tokens).",
+        "source_url": "https://pumble.com/help/integrations/automation-workflow-integrations/api-keys-integration",
+        "screenshot_path": "data/screenshots/pumble-2.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page FREE plan includes 'Up to 3 apps & integrations'. API keys help page states 'Available on all plans'. Sign-up is self-serve (prominent Sign Up button, no paywall). Self-serve free credential generation is supported.",
+        "source_url": "https://pumble.com/pricing",
+        "screenshot_path": "data/screenshots/pumble-1.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Swagger docs (pumble-api-keys.addons.marketplace.cake.com/api-docs) show a REST API with endpoints for Channels, Messages, Scheduled Messages, Users. Incoming webhooks page documents webhook posting. MCP server page documents a separate MCP protocol. Breadth is broad \u2014 multiple API surfaces and many endpoints.",
+        "source_url": "https://pumble-api-keys.addons.marketplace.cake.com/api-docs",
+        "screenshot_path": "data/screenshots/pumble-4.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "MCP help page (pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server) documents an official MCP server at 'https://mcp.pumble.com/mcp' with 19 tools, instructions for Claude CLI, Codex CLI, Gemini CLI. Explicitly called 'Pumble MCP server'.",
+        "source_url": "https://pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server",
+        "screenshot_path": "data/screenshots/pumble-6.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "All rendered pages support the verdict: free self-serve API (API key auth, 3 apps on free plan), comprehensive REST API, official MCP server, webhooks, and SDK are all documented and available. No material blockers observed.",
+        "source_url": "https://pumble.com/help/integrations/automation-workflow-integrations/api-keys-integration",
+        "screenshot_path": "data/screenshots/pumble-2.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/pumble-1.png",
+      "data/screenshots/pumble-2.png",
+      "data/screenshots/pumble-3.png",
+      "data/screenshots/pumble-4.png",
+      "data/screenshots/pumble-5.png",
+      "data/screenshots/pumble-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

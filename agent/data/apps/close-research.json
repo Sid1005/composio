@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "app_id": "close",
+  "researched_at": "2026-07-13T12:26:59Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 19,
+    "trace_path": "logs/close-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "CRM (Customer Relationship Management)",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Close is an inside sales CRM for startups and SMBs, combining calling, email, SMS, pipeline management, and AI."
+      },
+      "one_liner": {
+        "value": "Sales CRM built for calling, emailing, texting, automation, and AI-powered sales actions.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Close is a CRM platform focused on communication-driven sales workflows."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "Two methods: API keys (via HTTP Basic Auth) for scripts/internal tools, and OAuth 2.0 for user-facing integrations."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Anyone can sign up for a 14-day free trial (no credit card) and generate API keys immediately via Settings > Developer > API Keys. API access is included on all plans including the free Solo tier."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks",
+        "event_streaming"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Comprehensive REST API covering Leads, Contacts, Opportunities, Activities (calls, emails, notes, SMS, meetings), Custom Fields, Tasks, Users, Organizations, Smart Views, Dialer, Webhooks, Event Log, Forms, Playbooks, and Custom Objects. OpenAPI spec available at https://api.close.com/api/openapi.json. Community SDKs for Python, Node.js, Ruby, PHP, Go, C#, Elixir.",
+        "evidence_ids": [
+          "s3",
+          "s9",
+          "s10",
+          "s11"
+        ],
+        "notes": "Very broad API surface with full CRUD on all major CRM objects."
+      },
+      "api_docs_url": "https://developer.close.com"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.close.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli"
+      ],
+      "evidence_ids": [
+        "s12",
+        "s13",
+        "s14"
+      ],
+      "notes": "Close maintains an official MCP server at mcp.close.com/mcp with OAuth 2.0 DCR and API key auth. A community MCP server also exists (@shiftengineering/mcp-close-server). The official MCP server supports read, write_safe, and write_destructive scopes."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Close has a fully documented public REST API, an official MCP server (endpoint: https://mcp.close.com/mcp), self-serve API key generation for any account (including free trial), OAuth 2.0 for user-facing integrations, and broad CRM object coverage. All building blocks for an AI agent toolkit are present with no material blockers.",
+        "evidence_ids": [
+          "s3",
+          "s6",
+          "s12",
+          "s13",
+          "s14"
+        ],
+        "notes": "The official MCP server, comprehensive API docs, and self-serve access make this immediately buildable."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://close.com",
+      "quote": "Close is a sales CRM built for teams that sell. It combines calling, email, SMS, pipeline management, reporting, and an AI sales agent named Chloe into a single platform.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s2": {
+      "url": "https://developer.close.com",
+      "quote": "Close Developer Platform gives everything you or your AI agents need. Full endpoint docs with schemas, examples, and an interactive API explorer. API keys for scripts or OAuth 2.0 for user-facing integrations. Model Context Protocol for AI agents.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s3": {
+      "url": "https://developer.close.com/api/overview",
+      "quote": "All API requests require authentication. Two methods are supported: API Keys \u2014 Best for scripts, internal tools, and server-side integrations. Use HTTP Basic Auth with your API key as the username and an empty password. OAuth 2.0 \u2014 Best for user-facing integrations.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s4": {
+      "url": "https://developer.close.com/api/overview/api-key-authentication",
+      "quote": "API keys use HTTP Basic client side authentication. Basic authentication is a simple authentication scheme built into the HTTP protocol.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s5": {
+      "url": "https://developer.close.com/api/overview/oauth-authentication",
+      "quote": "To implement authentication with OAuth 2.0, you need to create an OAuth app to get your Client ID and Client Secret.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s6": {
+      "url": "https://close.com/pricing",
+      "quote": "API access + event log API",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T15:00:00Z",
+      "title": "Close CRM Pricing"
+    },
+    "s7": {
+      "url": "https://close.com/api",
+      "quote": "Free trial. Free migration. Free support. No credit card needed. Start your 14-day free trial.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s8": {
+      "url": "https://help.close.com/docs/api-keys-oauth",
+      "quote": "To create a new API key, go to Settings > Developer > API Keys and click + New API Key.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s9": {
+      "url": "https://developer.close.com/api/resources/leads",
+      "quote": "Leads are the most important object in Close. They represent a company or organization and can contain contacts, tasks, opportunities, and activities.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s10": {
+      "url": "https://developer.close.com/api/resources/activities",
+      "quote": "Activities belong to Leads and can represent any type of activity that was performed on a Lead or its Contacts (e.g. Calls, Emails, Notes, etc.).",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s11": {
+      "url": "https://developer.close.com/api/overview/rate-limits",
+      "quote": "API requests are limited at a per Organization level across all users' API keys. We also enforce a lower rate limit per API key",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s12": {
+      "url": "https://developer.close.com/mcp",
+      "quote": "Close MCP Server. The MCP server URL is https://mcp.close.com/mcp and has HTTP Streamable and OAuth 2.0 Dynamic Client Registration (DCR) support.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s13": {
+      "url": "https://close.com/integrations/close-mcp",
+      "quote": "Model Context Protocol (MCP) servers provide a standardized interface that allows any compatible AI model or agent to access your Close data simply and securely.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    },
+    "s14": {
+      "url": "https://github.com/ShiftEngineering/mcp-close-server",
+      "quote": "Close.com MCP Server \u2014 An MCP (Model Context Protocol) server that connects to Close.com API, allowing AI assistants to search and retrieve lead and contact information.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T15:00:00Z"
+    }
+  },
+  "limitations": [
+    "Could not access https://developer.close.com/mcp-tools (404), so the full MCP tool list is not verified here but the MCP server endpoint and capabilities are confirmed."
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "schema_version": "1.0",
+  "app_id": "quickbooks",
+  "researched_at": "2026-07-13T13:08:02Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 16,
+    "trace_path": "logs/quickbooks-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Accounting / Financial Management",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "notes": "QuickBooks Online is a cloud-based accounting platform. The QuickBooks Online API provides programmatic access to accounting data including customers, invoices, bills, payments, accounts, and financial reports."
+      },
+      "one_liner": {
+        "value": "Cloud accounting platform providing REST APIs for managing business finances, including customers, invoices, bills, payments, accounts, and financial reports.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s2"
+        ],
+        "notes": "QuickBooks Online API uses OAuth 2.0 exclusively. The Authorization Code flow is used with client ID and client secret obtained from the Intuit Developer Portal. Access tokens expire in 1 hour; refresh tokens last 100 days. Bearer tokens are included in the Authorization header."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "plan_dependent",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Developer account is free with immediate sandbox access. Under the Intuit App Partner Program (launched July 2025), the free Builder tier includes 500,000 CorePlus (read) API calls/month; exceeding that blocks further reads. Paid tiers (Silver $300/mo, Gold $1,700/mo, Platinum $4,500/mo) offer higher limits and premium API access. Writing data (Core API) is free and unlimited. Gold/Platinum have minimum active connection requirements (500/3,000). Program available in US, UK, Australia, and Canada (excl. Quebec)."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "The QuickBooks Online Accounting API is a RESTful API covering 29+ entity types (customers, invoices, bills, payments, accounts, vendors, employees, items, journal entries, etc.) with full CRUD operations and SQL-like querying, plus 11 financial reports (Balance Sheet, P&L, Cash Flow, Trial Balance, etc.). Webhooks are supported for real-time event notifications. The API has comprehensive documentation, SDKs, and an API Explorer. An official MCP server exists (intuit/quickbooks-online-mcp-server) with 144 tools.",
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s9",
+          "s10"
+        ]
+      },
+      "api_docs_url": "https://developer.intuit.com/app/developer/qbo/docs/get-started/learn-about-quickbooks-online-api"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://github.com/intuit/quickbooks-online-mcp-server",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s2",
+        "s3",
+        "s9",
+        "s10"
+      ],
+      "notes": "Intuit maintains an official QuickBooks Online MCP server on GitHub (intuit/quickbooks-online-mcp-server) with 144 tools covering 29 entities and 11 reports. Composio has a QuickBooks toolkit. Community MCP servers also exist. Intuit provides official SDKs for several languages. The official MCP server supports Claude Code and other MCP-compatible clients."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "QuickBooks Online has a well-documented, public REST API with OAuth 2.0 authentication, broad entity coverage (29+ types), and an official MCP server from Intuit with 144 tools. Developers can sign up for a free Intuit Developer account, get sandbox access immediately, and start building. The free Builder tier supports 500K read calls/month, sufficient for development and light production. The only material limitation is the metered CorePlus (read) API pricing for high-volume production use, but this does not block building an agent toolkit \u2014 it's a scale consideration. An agent toolkit for QuickBooks is fully buildable today.",
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s4",
+          "s6",
+          "s7",
+          "s9",
+          "s10"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://dlthub.com/context/source/quickbooks-financial",
+      "quote": "QuickBooks Online is a cloud accounting platform exposing a RESTful Accounting API for accessing company data programmatically.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "QuickBooks Python API Docs"
+    },
+    "s2": {
+      "url": "https://github.com/intuit/quickbooks-online-mcp-server",
+      "quote": "This MCP server provides complete QuickBooks Online API integration for Claude Code and other MCP-compatible clients. It includes full CRUD operations for 29 entity types and 11 financial reports, giving you comprehensive access to QuickBooks Online functionality.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "intuit/quickbooks-online-mcp-server"
+    },
+    "s3": {
+      "url": "https://composio.dev/toolkits/quickbooks",
+      "quote": "The Quickbooks MCP server is an implementation of the Model Context Protocol that connects your AI agent and assistants like Claude, Cursor, etc directly to your Quickbooks account.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Quickbooks MCP Integration for AI Agents"
+    },
+    "s4": {
+      "url": "https://developer.intuit.com/app/developer/qbo/docs/develop/authentication-and-authorization",
+      "quote": "OAuth 2.0 is Intuit's standard authorization protocol.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authorization and authentication"
+    },
+    "s5": {
+      "url": "https://developer.intuit.com/app/developer/qbo/docs/develop/authentication-and-authorization/faq",
+      "quote": "Refresh tokens are only for getting new access tokens.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "QuickBooks API OAuth 2.0 and authorization FAQ"
+    },
+    "s6": {
+      "url": "https://developer.intuit.com/app/developer/qbo/docs/get-started/partner-faq",
+      "quote": "All apps are automatically enrolled in the Intuit App Partner Program at the Builder tier. ... The Builder tier is an uncharged tier. However, the Builder tier is subject to a capped limit of CorePlus API calls.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Intuit App Partner Program FAQ"
+    },
+    "s7": {
+      "url": "https://www.apideck.com/blog/quickbooks-api-pricing-and-the-intuit-app-partner-program",
+      "quote": "Builder Tier (Free) - Monthly Fee: $0 - CorePlus API Credits: 500,000 per month - Overage: API calls are blocked after exceeding the 500,000 limit",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "QuickBooks API Pricing and the Intuit App Partner Program"
+    },
+    "s8": {
+      "url": "https://truto.one/blog/how-much-does-the-quickbooks-api-cost-2026-pricing-rate-limits",
+      "quote": "A QuickBooks developer account is free. You can sign up at the Intuit Developer Portal and get immediate sandbox access.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How Much Does the QuickBooks API Cost? (2026 Pricing & Rate Limits)"
+    },
+    "s9": {
+      "url": "https://developer.intuit.com/app/developer/qbo/docs/learn/rest-api-features",
+      "quote": "The QuickBooks Online Accounting API is based on the REST framework.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Basic schema and data formats for the QuickBooks Online Accounting API"
+    },
+    "s10": {
+      "url": "https://mcpmarket.com/server/quickbooks-online",
+      "quote": "The QuickBooks Online MCP Server acts as a bridge, enabling AI agents and other Model Context Protocol (MCP) clients to seamlessly interact with QuickBooks Online accounting data.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "QuickBooks Online MCP Server for AI Accounting Data Management"
+    }
+  },
+  "limitations": [
+    "Some Intuit Developer portal pages are JavaScript-rendered and could not be fully retrieved as text; however, sufficient content was obtained from cached/search excerpts.",
+    "Pricing information for Gold/Platinum tiers cited from a third-party aggregator (Apideck) rather than directly from Intuit's page, though the official Partner FAQ confirms the tier structure.",
+    "The exact count of entity types (29) is from the official Intuit MCP GitHub repo, which is authoritative."
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "schema_version": "1.0",
+  "app_id": "jira",
+  "researched_at": "2026-07-13T12:59:08Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 14,
+    "trace_path": "logs/jira-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Project Management / Issue Tracking",
+        "evidence_ids": [
+          "s1",
+          "s10"
+        ],
+        "notes": "Jira is Atlassian's project management and issue tracking software for agile development teams."
+      },
+      "one_liner": {
+        "value": "Jira is a project management and issue tracking platform for planning, tracking, and managing software development work.",
+        "evidence_ids": [
+          "s1",
+          "s10"
+        ],
+        "notes": "Atlassian's flagship product for agile project management and bug/issue tracking."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "api_key",
+          "basic",
+          "personal_access_token"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s6"
+        ],
+        "notes": "Jira supports OAuth 2.0 (3LO - authorization code grants) as the primary method for integrations, and basic auth using API tokens for personal scripts and bots. API tokens can be created with scopes. Forge apps use built-in OAuth 2.0. Connect apps use JWT-based auth."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s3",
+        "s7",
+        "s8"
+      ],
+      "notes": "Anyone can create a free Atlassian account, generate API tokens from https://id.atlassian.com/manage-profile/security/api-tokens, and create OAuth 2.0 apps in the developer console. The Jira Free plan (up to 10 users) includes full REST API access. Rate limits vary by plan but API access itself is not gated behind payment."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Jira has a mature, well-documented REST API (v2 and v3) covering issues, projects, users, workflows, sprints, boards, attachments, comments, permissions, and more. There are hundreds of endpoints across both versions. GraphQL is also available. The API surface is extremely broad, supporting virtually every Jira operation programmatically.",
+        "evidence_ids": [
+          "s1",
+          "s9"
+        ],
+        "notes": "The REST API v3 documentation lists dozens of resource categories. Composio's toolkit exposes 102 tools for Jira."
+      },
+      "api_docs_url": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://atlassian.com/platform/rovo-mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s2",
+        "s9",
+        "s10"
+      ],
+      "notes": "Atlassian provides an official Rovo MCP Server (hosted, OAuth 2.1, Cloud-only). There are also mature community MCP servers (e.g., sooperset/mcp-atlassian) supporting Server/Data Center. Composio offers 102 Jira tools as part of their toolkit."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Jira is fully buildable as an agent toolkit today. It has a comprehensive, well-documented public REST API, multiple auth options (OAuth 2.0 recommended), self-serve free access to API credentials, an official MCP server, community MCP servers, and existing support in Composio. There are no material blockers.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s4",
+          "s5",
+          "s7",
+          "s9",
+          "s10"
+        ],
+        "notes": "The only small caveat: the official MCP server (Rovo) is Cloud-only; Server/Data Center users would need community MCP servers. Also, apps collecting API tokens or instructing customers to create individual 3LO apps must follow Atlassian's Acceptable Use Policy."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/",
+      "quote": "The Jira REST API enables you to interact with Jira programmatically. Use this API to build apps, script interactions with Jira, or develop any other type of integration.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "The Jira Cloud platform REST API"
+    },
+    "s2": {
+      "url": "https://github.com/atlassian/atlassian-mcp-server",
+      "quote": "The official Model Context Protocol (MCP) server for Atlassian: a cloud-hosted bridge that gives your AI tools secure, real-time access to Jira, Confluence, Jira Service Management, Bitbucket, and Compass.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Official remote MCP server for Atlassian"
+    },
+    "s3": {
+      "url": "https://community.atlassian.com/forums/Jira-questions/Use-REST-API-with-Jira-instance-on-Free-Plan/qaq-p/2955396",
+      "quote": "Yes, you can use the REST API in Jira's free plan. the free plan provides access to the full functionality of the Jira REST API.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Use REST API with Jira instance on Free Plan?"
+    },
+    "s4": {
+      "url": "https://developer.atlassian.com/cloud/jira/platform/security-for-other-integrations/",
+      "quote": "OAuth 2.0 authorization code grants (3LO): This is the recommended method. You should use this for most cases. Basic authentication: You should only use this method for tools like personal scripts or bots.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Security for other integrations"
+    },
+    "s5": {
+      "url": "https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/",
+      "quote": "Basic auth requires API tokens. You generate an API token for your Atlassian account and use it to authenticate anywhere where you would have used a password.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Basic auth for REST APIs"
+    },
+    "s6": {
+      "url": "https://developer.atlassian.com/cloud/jira/platform/oauth-2-3lo-apps/",
+      "quote": "OAuth 2.0 (3LO) (also known as 'three-legged OAuth' or 'authorization code grants') apps. OAuth 2.0 (3LO) allows external applications and services to access Atlassian product APIs on a user's behalf.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth 2.0 (3LO) apps"
+    },
+    "s7": {
+      "url": "https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/",
+      "quote": "You can use an API token to authenticate a script with an Atlassian cloud app. You generate the token from your Atlassian account, then copy and paste it into a script.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Manage API tokens for your Atlassian account"
+    },
+    "s8": {
+      "url": "https://www.atlassian.com/software/jira/pricing",
+      "quote": "Free forever for 10 users. ... Our Free plan lets you try Jira for up to 10 users with 2GB of storage and Community Support.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Unlock the Best Jira Pricing Plans for Your Team Today"
+    },
+    "s9": {
+      "url": "https://docs.composio.dev/toolkits/jira",
+      "quote": "A tool for bug tracking, issue tracking, and agile project management. ... Auth: OAUTH2, S2S_OAUTH2, API_KEY. ... Tools: 102",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Jira - Composio Toolkit"
+    },
+    "s10": {
+      "url": "https://atlassian.com/platform/rovo-mcp",
+      "quote": "Atlassian Rovo MCP server securely connects Jira, Confluence and more with your LLM, IDE, or agent platforms of choice. ... Free: 500 calls per hour Standard: 1000 calls per hour Premium/Enterprise: 1000 calls per hour (+ 20 additional calls per user with up to 10,000 calls per hour)",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Extend Atlassian into any AI assistant using MCP"
+    }
+  },
+  "limitations": [
+    "The official Atlassian Rovo MCP Server is Cloud-only and does not support Jira Server/Data Center (community servers exist for those).",
+    "API rate limits vary by plan; Free plan has 500 calls/hour on MCP endpoint which could be restrictive for high-volume usage.",
+    "Atlassian advises that apps collecting API tokens or instructing customers to create individual 3LO apps don't comply with their Acceptable Use Policy \u2014 agent toolkit builders should use a single OAuth 2.0 app."
+  ]
+}

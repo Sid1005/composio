@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0",
+  "app_id": "asana",
+  "researched_at": "2026-07-13T12:59:47Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 14,
+    "trace_path": "logs/asana-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "productivity & project management",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Asana is a collaborative work management / project management platform."
+      },
+      "one_liner": {
+        "value": "Project management platform for teams to organize, track, and manage their work across tasks, projects, and goals.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "personal_access_token",
+          "bearer_token"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ]
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s9",
+        "s10"
+      ],
+      "notes": "Anyone can create a free Asana account and generate a PAT to use the API. Free users have rate limits (150 req/min) and cannot use the search endpoint. Paid plans (Starter $10.99/user/mo) raise limits to 1500 req/min and unlock full search API. Service Accounts require Enterprise tier and super admin creation."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Comprehensive REST API covering tasks, projects, workspaces, teams, users, portfolios, goals, sections, tags, custom fields, attachments, webhooks, time tracking, and more. OpenAPI specification available. Official client libraries in multiple languages. Webhooks for event-driven integrations.",
+        "evidence_ids": [
+          "s1",
+          "s6",
+          "s11"
+        ]
+      },
+      "api_docs_url": "https://developers.asana.com/reference/rest-api-reference"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.asana.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s7",
+        "s8",
+        "s12"
+      ],
+      "notes": "Official Asana MCP Server is available (AWS Marketplace, also documented at developers.asana.com). Community MCP server (@roychri/mcp-server-asana on npm, 145 stars). Composio has an Asana toolkit with 153 tools and 6 triggers, supporting both MCP and direct API."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Asana has a well-documented public REST API, official OAuth2 and PAT authentication, self-serve free access, an official MCP Server, a community MCP server, and an existing Composio toolkit with 153 tools. There are no material blockers to building an agent toolkit today. Free tier limitations (rate limits, no search endpoint) exist but do not prevent building a working integration.",
+        "evidence_ids": [
+          "s1",
+          "s3",
+          "s5",
+          "s7",
+          "s8"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developers.asana.com/docs/overview",
+      "quote": "The primary feature of Asana\u2019s platform is our rest API... Learn the basics of Asana's developer platform",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s2": {
+      "url": "https://asana.com/pricing",
+      "quote": "Asana Pricing | Personal, Starter, Advanced, & Enterprise plans",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s3": {
+      "url": "https://developers.asana.com/docs/authentication",
+      "quote": "Asana\u2019s API has several options for authenticating... Personal access token... OAuth... OpenID Connect",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s4": {
+      "url": "https://developers.asana.com/docs/personal-access-token",
+      "quote": "A personal access token (PAT) contains your security credentials for the Asana platform... Personal access tokens should be used similarly to OAuth access tokens when accessing the API (i.e., passing them in the Authorization header)",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s5": {
+      "url": "https://developers.asana.com/docs/rate-limits",
+      "quote": "Domain type | Maximum requests per minute --- Free | 150 --- Paid | 1500",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s6": {
+      "url": "https://developers.asana.com/reference/rest-api-reference",
+      "quote": "This is the interface for interacting with the Asana platform... comprehensive reference for objects, schemas, and endpoints available in the API",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s7": {
+      "url": "https://developers.asana.com/docs/mcp-server",
+      "quote": "Asana offers a Model Context Protocol (MCP) server, accessible via app integration, which allows AI assistants and other applications to access the Asana Work Graph from beyond the Asana platform.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s8": {
+      "url": "https://aws.amazon.com/marketplace/pp/prodview-6f7zmapqyfwho",
+      "quote": "Asana's MCP server includes 30+ tools for project tracking, status updates, task creation, and more... The Asana MCP server is available at: https://mcp.asana.com/mcp",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s9": {
+      "url": "https://forum.asana.com/t/can-free-version-asana-connect-to-our-app/73510",
+      "quote": "Free asana users can use the API. But there are some limitations... limited to 150 api call per minute instead of 1500 for paid users",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s10": {
+      "url": "https://forum.asana.com/t/premium-vs-business-account-and-api-access/170667",
+      "quote": "Only free accounts are limited to 150 calls/minute, and they can\u2019t access the \u201csearch tasks\u201d endpoint.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s11": {
+      "url": "https://github.com/Asana/openapi",
+      "quote": "Asana's OpenAPI specifications for the REST API",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s12": {
+      "url": "https://composio.dev/toolkits/asana",
+      "quote": "Securely connect your AI agents and chatbots... with Asana MCP or direct API... Tools: 153, Triggers: 6",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    }
+  },
+  "limitations": [
+    "The exact MCP endpoint URL (https://mcp.asana.com/mcp) is from the AWS Marketplace listing; the official MCP docs page didn't load fully. Free tier limitations exist (rate limits, no search endpoint) but do not block building an agent toolkit."
+  ]
+}

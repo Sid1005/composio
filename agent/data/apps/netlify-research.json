@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0",
+  "app_id": "netlify",
+  "researched_at": "2026-07-13T12:54:30Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 12,
+    "trace_path": "logs/netlify-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Web hosting and deployment platform (Jamstack / cloud platform)",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "Netlify is a cloud platform that provides hosting, serverless functions, and deployment services for modern web projects."
+      },
+      "one_liner": {
+        "value": "Netlify is a cloud platform that provides hosting, serverless backends, and atomic deployment services for modern web applications.",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "From the OpenAPI description: 'Netlify is a hosting service for the programmable web. It understands your documents and provides an API to handle atomic deploys of websites, manage form submissions, inject JavaScript snippets, and much more.'"
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "personal_access_token"
+        ],
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Netlify supports OAuth2 for public integrations and Personal Access Tokens (PATs) for script/programmatic use. Both use Bearer token in Authorization header."
+      },
+      "primary_for_agent_toolkit": "personal_access_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s4",
+        "s5"
+      ],
+      "notes": "Netlify offers a Free plan ('100% free: Deploy with no credit card required and no fees. Ever.') where users can generate Personal Access Tokens for API access. No company email, phone verification, or waitlist required. The Free plan includes generous monthly limits for API usage."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Netlify provides a comprehensive REST API documented via OpenAPI spec at open-api.netlify.com. The API covers sites, deploys, builds, environment variables, DNS zones, SSL certificates, functions, forms, form submissions, split testing, snippets, metadata, cache purge, dev servers, webhooks, hooks, build hooks, accounts, members, audit logs, payment methods, OAuth applications, and more. There is also a Go client and JS client.",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "The OpenAPI spec lists dozens of endpoints across 20+ resource categories. The API docs also describe webhooks and build hooks."
+      },
+      "api_docs_url": "https://docs.netlify.com/api-and-cli-guides/api-guides/get-started-with-api/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://netlify-mcp.netlify.app/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Netlify has an official MCP server published as @netlify/mcp on npm (github.com/netlify/netlify-mcp) and hosted remotely at netlify-mcp.netlify.app/mcp. They also provide agent skills (netlify/context-and-tools) and CLI/SDK support. A community MCP also exists via StackOne, and composio likely has it in their catalogue."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Netlify has a well-documented public REST API with OpenAPI spec, supports self-serve free accounts with Personal Access Tokens, offers an official MCP server, and has broad API coverage. All the ingredients exist to build an AI agent toolkit integration today with no material blockers.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s4",
+          "s6",
+          "s8"
+        ],
+        "notes": "Key enablers: (1) Free self-serve API access via PAT, (2) Comprehensive OpenAPI-documented REST API, (3) Official MCP server from Netlify itself, (4) Agent skills and SDK support already available."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.netlify.com/api-and-cli-guides/api-guides/get-started-with-api/",
+      "quote": "Netlify uses OAuth2 for authentication. All requests must use HTTPS. To generate a personal access token (PAT)... Use your PAT for manual authentication in shell scripts or commands that use the Netlify API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get started with the Netlify API | Netlify Docs"
+    },
+    "s2": {
+      "url": "https://docs.netlify.com/api-and-cli-guides/api-guides/get-started-with-api/",
+      "quote": "To authenticate API requests, include the token in the authorization header: `Authorization: Bearer `",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get started with the Netlify API | Netlify Docs"
+    },
+    "s3": {
+      "url": "https://open-api.netlify.com/",
+      "quote": "Netlify is a hosting service for the programmable web. It understands your documents and provides an API to handle atomic deploys of websites, manage form submissions, inject JavaScript snippets, and much more. This is a REST-style API that uses JSON for serialization and OAuth 2 for authentication.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Netlify API documentation (OpenAPI)"
+    },
+    "s4": {
+      "url": "https://www.netlify.com/pricing/",
+      "quote": "Free$0 forever Build and deploy free forever",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing and Plans | Netlify"
+    },
+    "s5": {
+      "url": "https://www.netlify.com/blog/introducing-netlify-free-plan",
+      "quote": "100% free: Deploy with no credit card required and no fees. Ever.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introducing Netlify's Free plan"
+    },
+    "s6": {
+      "url": "https://github.com/netlify/netlify-mcp",
+      "quote": "Netlify's Official MCP server. Netlify MCP Server follows the Model Context Protocol (MCP) to enable code agents to use the Netlify API and CLI\u2014so they can create new projects, build, deploy, and manage your Netlify resources using natural language prompts.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "netlify/netlify-mcp"
+    },
+    "s7": {
+      "url": "https://docs.netlify.com/welcome/build-with-ai/netlify-mcp-server/",
+      "quote": "Netlify offers an MCP server, which you can connect to through a connector, plugin, or your agent. To start connecting to Netlify's remote MCP server by running this command and following the prompts... `npx -y add-mcp https://netlify-mcp.netlify.app/mcp`",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Agent setup overview | Netlify Docs"
+    },
+    "s8": {
+      "url": "https://www.netlify.com/press/netlify-launches-official-mcp-server-setting-the-standard-for-agent-native-development",
+      "quote": "Netlify, the cloud platform for the modern web, today launched its official Netlify Model Context Protocol (MCP) Server, making it easier for AI agents to work alongside developers to build, deploy, and manage production-ready apps on Netlify.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Netlify Launches official MCP Server"
+    }
+  },
+  "limitations": [
+    "Could not verify composio_catalogue entry for Netlify specifically, but Netlify is a well-known platform and likely available.",
+    "The pricing page mentions credit-based usage but the Free plan is sufficient for basic API access and development."
+  ]
+}

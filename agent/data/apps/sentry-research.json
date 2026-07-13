@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "app_id": "sentry",
+  "researched_at": "2026-07-13T12:57:51Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 15,
+    "trace_path": "logs/sentry-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Error Monitoring & Performance Management",
+        "evidence_ids": [
+          "s1"
+        ],
+        "notes": "Sentry is an error tracking and application performance monitoring platform that helps developers diagnose, fix, and optimize code performance in production."
+      },
+      "one_liner": {
+        "value": "Application error tracking and performance monitoring platform that captures exceptions, traces, and metrics to help developers diagnose and fix production issues.",
+        "evidence_ids": [
+          "s1"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "bearer_token",
+          "oauth2",
+          "personal_access_token"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5"
+        ],
+        "notes": "Sentry supports Auth Tokens (Bearer token via Authorization header), OAuth2 (authorization code grant), Device Authorization Flow (RFC 8628), and personal/user auth tokens. Auth tokens and personal access tokens are the simplest for programmatic agent usage."
+      },
+      "primary_for_agent_toolkit": "bearer_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s2",
+        "s4",
+        "s3"
+      ],
+      "notes": "Sentry offers a free Developer plan that includes API access. Developers can sign up for free and create auth tokens without any paid plan, phone verification, or admin approval. The free plan includes 5K errors/month, 5M spans, and full API access."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Sentry exposes a comprehensive REST API at /api/0/ covering organizations, projects, issues/events, releases, teams, members, dashboards, discover/performance, environments, crons, integration platform, mobile builds, monitors & alerts, profiling, replays, SCIM, Seer (AI debugging), snapshots, users, and more. The API is well-documented with authentication, pagination, permissions/scopes, and rate limiting.",
+        "evidence_ids": [
+          "s1",
+          "s6"
+        ]
+      },
+      "api_docs_url": "https://docs.sentry.io/api/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.sentry.dev/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api"
+      ],
+      "evidence_ids": [
+        "s7",
+        "s8"
+      ],
+      "notes": "Sentry has an OFFICIAL MCP server hosted at mcp.sentry.dev with the GitHub repository getsentry/sentry-mcp. The npm package is @sentry/mcp-server (v0.36.0). It provides 16+ tools including issue retrieval, trace details, project management, and Seer AI integration. Also supports Claude Code plugin and Cursor integration."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Sentry is fully buildable as an agent toolkit today. It has a well-documented public REST API, multiple authentication methods (Bearer token simplest for agents), a self-serve free Developer plan that requires no paid subscription or admin approval for API access, and an official MCP server (getsentry/sentry-mcp) already deployed at mcp.sentry.dev with 16+ tools. The API is broad and covers all major Sentry features.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s4",
+          "s7",
+          "s8"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.sentry.io/api/",
+      "quote": "The Sentry web API is used to access the Sentry platform programmatically. You can use the APIs to manage account-level resources, like organizations and teams, as well as manage and export data.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Reference"
+    },
+    "s2": {
+      "url": "https://sentry.io/pricing",
+      "quote": "developer - For solo devs working on small projects - Free - $0 - Limited to one user - Error Monitoring and Tracing - Alerts and notifications via email - 10 custom dashboards",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing: Free Developer Plan"
+    },
+    "s3": {
+      "url": "https://sentry.io/pricing",
+      "quote": "API - https://docs.sentry.io/api/",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing page showing API included on all plans"
+    },
+    "s4": {
+      "url": "https://docs.sentry.io/api/auth/",
+      "quote": "Authentication tokens are passed using an auth header, and are used to authenticate as a user or organization account with the API... For third-party applications that need to access Sentry on behalf of users, Sentry supports OAuth2 with the authorization code grant type.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication"
+    },
+    "s5": {
+      "url": "https://docs.sentry.io/api/permissions/",
+      "quote": "If you're building on top of Sentry's API (i.e using Auth Tokens), you'll need certain scopes to access different API endpoints.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Permissions & Scopes"
+    },
+    "s6": {
+      "url": "https://docs.sentry.io/api/ratelimits",
+      "quote": "Sentry rate limits every API request made to prevent abuse and resource overuse. The limit is applied to each unique combination of caller and endpoint.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate Limits"
+    },
+    "s7": {
+      "url": "https://github.com/getsentry/sentry-mcp",
+      "quote": "Sentry's MCP service is primarily designed for human-in-the-loop coding agents... This remote MCP server acts as middleware to the upstream Sentry API, optimized for coding assistants like Cursor, Claude Code, and similar development tools.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "getsentry/sentry-mcp"
+    },
+    "s8": {
+      "url": "https://mcp.sentry.dev",
+      "quote": "Sentry MCP plugs Sentry's API directly into your LLM, letting you ask questions about your data in natural language.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Sentry MCP"
+    }
+  },
+  "limitations": [
+    "The rate limits page URL was initially 404 (docs.sentry.io/api/rate-limits/) but found at docs.sentry.io/api/ratelimits instead.",
+    "Exact rate limit numbers (requests/second) are not publicly specified; they vary per endpoint.",
+    "Some advanced features like Seer AI require additional paid subscription, but basic API access is free."
+  ]
+}

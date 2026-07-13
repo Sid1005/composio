@@ -1,0 +1,187 @@
+{
+  "schema_version": "1.0",
+  "app_id": "woocommerce",
+  "researched_at": "2026-07-13T12:43:29Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 16,
+    "trace_path": "logs/woocommerce-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "E-commerce / Online Store Platform",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "WooCommerce is a free, open-source e-commerce plugin for WordPress. It powers online stores with products, orders, payments, and shipping."
+      },
+      "one_liner": {
+        "value": "Open-source e-commerce plugin for WordPress that transforms any site into a customizable online store with unlimited products, orders, and API access.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "basic",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ],
+        "notes": "Primary auth uses Consumer Key + Consumer Secret (API keys). Over HTTPS, HTTP Basic Auth is used (consumer_key as username, consumer_secret as password). Over HTTP, OAuth 1.0a 'one-legged' auth is required. A custom OAuth2-like flow also exists via the /wc-auth/v1/authorize endpoint for third-party apps. The auth is described as 'REST API keys' with consumer key and consumer secret."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s1",
+        "s2",
+        "s5"
+      ],
+      "notes": "WooCommerce core is 100% free and open-source (GPL). Anyone can download, install on their own WordPress site, and generate API keys via WooCommerce > Settings > Advanced > REST API with no payment or approval required. The only prerequisite is having a WordPress site with WooCommerce installed. There is no centralized cloud API service \u2014 each store owner controls their own API keys."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks",
+        "cli"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "WooCommerce has a comprehensive, well-documented REST API (v3, at /wp-json/wc/v3/) covering products, orders, customers, coupons, taxes, shipping zones/methods, payment gateways, webhooks, settings, reports, and more. CRUD operations are available for all major resources. There is also a Store API for customer-facing operations, WP-CLI, and webhooks for event-driven integrations. Official SDK libraries exist for Node.js, PHP, Python, and Ruby.",
+        "evidence_ids": [
+          "s6",
+          "s7"
+        ]
+      },
+      "api_docs_url": "https://developer.woocommerce.com/docs/apis/rest-api/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://yourstore.com/wp-json/woocommerce/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api"
+      ],
+      "evidence_ids": [
+        "s8",
+        "s9",
+        "s10"
+      ],
+      "notes": "WooCommerce has native (official) MCP support built into the core plugin since WooCommerce 10.3 (October 2025, currently in developer preview). It exposes purpose-built abilities for product and order management as MCP tools. The deprecated MCP endpoint is at /wp-json/woocommerce/mcp. Multiple third-party/community MCP servers also exist (StackOne, Improvado, Apideck, Webkul). The official MCP integration uses a local proxy (mcp-wordpress-remote) that bridges MCP protocol to HTTP requests. Official SDKs are available for Node.js, PHP, Python, and Ruby."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "WooCommerce is fully buildable as an agent toolkit today. It has a well-documented public REST API (broad coverage), free open-source core, self-serve API key generation (no paid plan or admin approval needed), official SDKs in multiple languages, native official MCP support (built into the plugin itself), and multiple community MCP servers. The main consideration for an agent toolkit is that each WooCommerce store has its own API endpoint, so configuration per-store is required. However, this does not block building a toolkit \u2014 it simply means the toolkit needs to accept a store URL and API credentials as parameters.",
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s6",
+          "s7",
+          "s8"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://woocommerce.com/pricing",
+      "quote": "WooCommerce is the free, open-source ecommerce platform for WordPress. Build a custom online store and only pay for the added features you use \u2014 no platform fees, no revenue share.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "WooCommerce Pricing Puts You In Control"
+    },
+    "s2": {
+      "url": "https://woocommerce.com/download",
+      "quote": "WooCommerce is the open-source ecommerce platform for WordPress. ... WooCommerce is free to download and free to modify any way you see fit.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Download WooCommerce"
+    },
+    "s3": {
+      "url": "https://developer.woocommerce.com/docs/apis/rest-api/authentication",
+      "quote": "WooCommerce includes two ways to authenticate with the WP REST API. ... Pre-generated keys can be used to authenticate use of the REST API endpoints. ... You may use HTTP Basic Auth by providing the REST API Consumer Key as the username and the REST API Consumer Secret as the password. ... You must use OAuth 1.0a 'one-legged' authentication to ensure REST API credentials cannot be intercepted by an attacker.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication | WooCommerce developer docs"
+    },
+    "s4": {
+      "url": "https://developer.woocommerce.com/docs/apis/rest-api/authentication",
+      "quote": "To create or manage keys for a specific WordPress user, go to WooCommerce > Settings > Advanced > REST API.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication | WooCommerce developer docs"
+    },
+    "s5": {
+      "url": "https://woocommerce.com/pricing",
+      "quote": "Core platform: WooCommerce \u2014 Free, with no monthly subscription.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "WooCommerce Pricing Puts You In Control"
+    },
+    "s6": {
+      "url": "https://developer.woocommerce.com/docs/apis/rest-api/v3",
+      "quote": "The current and recommended version of the WooCommerce REST API. Use /wp-json/wc/v3/ endpoints for all new integrations.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "REST API v3 | WooCommerce developer docs"
+    },
+    "s7": {
+      "url": "https://developer.woocommerce.com/docs/apis/rest-api/v3",
+      "quote": "The coupons API allows you to create, view, update, and delete individual, or a batch, of coupon codes. The customer API allows you to create, view, update, and delete individual, or a batch, of customers. The orders API allows you to create, view, update, and delete individual, or a batch, of orders. The products API allows you to create, view, update, and delete individual, or a batch, of products.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "REST API v3 | WooCommerce developer docs"
+    },
+    "s8": {
+      "url": "https://developer.woocommerce.com/docs/features/mcp",
+      "quote": "WooCommerce includes native support for the Model Context Protocol (MCP), enabling AI assistants and tools to interact directly with WooCommerce stores through a standardized protocol.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Model Context Protocol (MCP) Integration | WooCommerce developer docs"
+    },
+    "s9": {
+      "url": "https://developer.woocommerce.com/2025/11/03/call-for-testing-woocommerce-mcp-beta",
+      "quote": "As of WooCommerce 10.3, an early version of the WooCommerce MCP integration is in beta and ready for broader testing. This new feature enables AI assistants like Claude, Cursor, VS Code, or any other MCP-compatible client to interact directly with WooCommerce stores.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Call for Testing: WooCommerce MCP Beta"
+    },
+    "s10": {
+      "url": "https://developer.woocommerce.com/docs/features/mcp",
+      "quote": "The deprecated WooCommerce MCP endpoint is available at: https://yourstore.com/wp-json/woocommerce/mcp",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Model Context Protocol (MCP) Integration | WooCommerce developer docs"
+    }
+  },
+  "limitations": [
+    "The official MCP integration is currently in 'developer preview' status (beta) as of the latest documentation \u2014 while functional, APIs may change. However, the underlying REST API is stable and production-ready.",
+    "WooCommerce is self-hosted per-store, so an agent toolkit would need to be configured with each store's URL and API credentials \u2014 there is no centralized WooCommerce cloud API."
+  ]
+}

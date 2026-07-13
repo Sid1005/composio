@@ -1,0 +1,247 @@
+{
+  "schema_version": "1.0",
+  "app_id": "pylon",
+  "researched_at": "2026-07-13T12:29:54Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 22,
+    "trace_path": "logs/pylon-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer Support / B2B Support Platform",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Pylon is an AI-native B2B customer support platform that unifies Slack, Microsoft Teams, email, and chat into a single ticketing system."
+      },
+      "one_liner": {
+        "value": "AI-native B2B customer support platform unifying Slack, Teams, email, and chat with ticketing, knowledge base, AI agents, and account intelligence.",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "From the homepage and documentation: omnichannel support, AI agents, knowledge base, account intelligence for B2B post-sales teams."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s6"
+        ],
+        "notes": "The REST API uses Bearer token (API key) auth. The official MCP server uses OAuth 2.0 (AuthKit). For direct programmatic REST API access, API key (bearer token) is primary. For MCP, OAuth 2.0."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_paid",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "plan_or_role_dependent",
+      "evidence_ids": [
+        "s7",
+        "s8",
+        "s9",
+        "s10"
+      ],
+      "notes": "API is listed as a Professional plan feature ($89/seat/mo, 3-seat minimum). Only Admin users can generate API tokens. The website has a 'Get started' signup flow but all plans require paid subscriptions. Some blog pages mention a free one-week trial. No free tier."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Well-documented REST API at api.usepylon.com with OpenAPI 3.0 spec (https://static.usepylon.com/openapi.json). Covers ~20+ resource types including Accounts, Issues (tickets), Contacts, Messages, Knowledge Base, Custom Fields, Tags, Teams, Users, Activities, Attachments, Audit Logs, Call Recordings, Custom Objects, Feature Requests, Macros, Surveys, Tasks & Projects, Ticket Forms, Training Data, User Roles. Supports CRUD, search, pagination. Webhooks also available. API is JSON-based with Bearer token auth.",
+        "evidence_ids": [
+          "s4",
+          "s11",
+          "s12",
+          "s13"
+        ],
+        "notes": "Full API reference at https://docs.usepylon.com/pylon-docs/developer/api/api-reference"
+      },
+      "api_docs_url": "https://docs.usepylon.com/pylon-docs/developer/api"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.usepylon.com",
+      "existing_agent_skills": [
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s14",
+        "s15"
+      ],
+      "notes": "Official Pylon MCP server at https://mcp.usepylon.com (OAuth 2.0, Streamable HTTP transport, supports Claude, ChatGPT, Cursor). Community MCP server on GitHub (JustinBeckwith/pylon-mcp, 4 stars, MIT license) using API token auth. Composio has a Pylon MCP toolkit (12 tools)."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Pylon is fully buildable into an AI agent toolkit today. It has a documented, broad REST API (OpenAPI 3.0) with Bearer token auth, webhooks, and an official MCP server already in production. The primary access gate is that the API requires a paid Professional plan ($89/seat/mo), but this is self-serve (no sales call required). Only Admin users can generate API tokens. A community MCP server (JustinBeckwith/pylon-mcp) and Composio's Pylon MCP toolkit already exist, proving the buildability. The official MCP server at mcp.usepylon.com provides OAuth-based agent integration without needing API keys.",
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s6",
+          "s7",
+          "s8",
+          "s14",
+          "s15"
+        ],
+        "notes": "Main blocker would be the paid plan requirement if one wants free access, but for production agent toolkits this is standard. The API is broad and well-documented."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://usepylon.com",
+      "quote": "Pylon is AI-native B2B support, across every channel.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pylon | AI-native B2B Support",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://github.com/api-evangelist/pylon",
+      "quote": "Pylon (usepylon.com) is a B2B customer support and customer operations platform that unifies shared Slack, Microsoft Teams, email, and chat support into a single ticketing system, with a knowledge base, accounts and contacts, AI agents, and a documented public REST API.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "GitHub - api-evangelist/pylon",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://docs.usepylon.com/pylon-docs/developer/api",
+      "quote": "Pylon's API can be used to programmatically access and take action on data within Pylon.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API | Pylon",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://docs.usepylon.com/pylon-docs/developer/api/authentication",
+      "quote": "The Pylon API uses Bearer authentication. This means you'll need to pass your API token in the header of your request: Authorization: Bearer <token>",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication | Pylon",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://docs.usepylon.com/pylon-docs/integrations/pylon-mcp",
+      "quote": "The Pylon MCP Server exposes Pylon data to AI tools that support the Model Context Protocol. Auth: OAuth 2.0 (AuthKit). Server URL: https://mcp.usepylon.com",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pylon MCP | Pylon",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://github.com/JustinBeckwith/pylon-mcp",
+      "quote": "MCP (Model Context Protocol) server for Pylon customer support platform. You can generate an API token from the Pylon dashboard. Note: Only Admin users can create API tokens.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "JustinBeckwith/pylon-mcp",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://www.usepylon.com/pricing",
+      "quote": "Professional: $89 per seat/mo, Billed annually, 3 seat minimum. Every starter feature, plus... API",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing for Pylon Support Platform",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://docs.usepylon.com/pylon-docs/developer/api",
+      "quote": "Only Admin users can create API tokens. To learn more about Admins, see Roles & User Management.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API | Pylon",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://saleshive.com/vendors/pylon",
+      "quote": "Free trial: Yes, 14 days. Pricing: Starting at 59 Model Per-user. Free plan: No",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pylon Review 2026: Pricing, Features, Pros & Cons",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://www.featurebase.app/blog/pylon-pricing",
+      "quote": "No, Pylon doesn't currently offer a free trial or plan. All tiers require an annual contract, so you'll need to commit upfront before testing features.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pylon Pricing 2026: Is It Worth It?",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://docs.usepylon.com/pylon-docs/developer/api/api-reference",
+      "quote": "Accounts, Activities, Attachments, Audit Logs, Call Recordings, Contacts, Custom Fields, Custom Objects, Feature Requests, Issues, Knowledge Base, Macros, Me, Messages, Surveys, Tags, Tasks & Projects, Teams, Ticket Forms, Training Data, User roles, Users",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API reference | Pylon",
+      "retrieval_method": "composio_fetch"
+    },
+    "s12": {
+      "url": "https://static.usepylon.com/openapi.json",
+      "quote": "OpenAPI 3.0.3 specification for the Pylon API with servers at https://api.usepylon.com",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pylon OpenAPI spec",
+      "retrieval_method": "composio_fetch"
+    },
+    "s13": {
+      "url": "https://docs.usepylon.com/pylon-docs/developer/webhooks",
+      "quote": "Webhooks are user-defined HTTP callbacks that are triggered by specific events within Pylon.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Webhooks | Pylon",
+      "retrieval_method": "composio_fetch"
+    },
+    "s14": {
+      "url": "https://composio.dev/toolkits/pylon_mcp",
+      "quote": "Pylon MCP... 12 tools... Dcr Oauth authentication for Pylon MCP.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pylon MCP MCP Integration for AI Agents | Composio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s15": {
+      "url": "https://mcpservers.org/remote-mcp-servers/pylon",
+      "quote": "The Pylon remote MCP server is a hosted Model Context Protocol endpoint at https://mcp.usepylon.com so AI assistants can connect.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pylon Official Remote MCP Server \u2014 Setup Guide",
+      "retrieval_method": "composio_fetch"
+    }
+  },
+  "limitations": [
+    "There is conflicting information about whether a free trial is available - Pylon's blog mentions a 'free one-week trial' but the pricing page does not mention a free trial, and some third-party sources claim no free trial exists.",
+    "The REST API requires a paid Professional plan ($89/seat/mo minimum) - no free API access tier.",
+    "Only Admin users can create API tokens, which may require organization-level coordination.",
+    "Some API endpoints have rate limits (e.g., 10 requests/minute for issues, 20/minute for accounts)."
+  ]
+}

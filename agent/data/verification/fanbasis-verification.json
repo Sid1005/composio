@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "app_id": "fanbasis",
+  "initial_research_path": "data/apps/fanbasis-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "partially_confirmed",
+    "checked_at": "2026-07-13T12:54:59Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Rendered API docs (apidocs.fan) state: 'Everything you need to collect payments, manage subscriptions, reward customers, and automate your business with FanBasis.' Sidebar shows sections for Checkout Sessions, Customers, Subscribers, Subscription Proration, Discount Codes, Products, Transactions, Refunds, Disputes, Webhooks, Merchant of Record \u2014 consistent with a payment infrastructure & digital business platform.",
+        "source_url": "https://apidocs.fan",
+        "screenshot_path": "data/screenshots/fanbasis-1.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "inconclusive",
+        "evidence": "The rendered apidocs.fan page shows sidebar navigation including 'API Policy' and 'Quick Start' sections that likely describe authentication, but the body content of those pages was not rendered. Cannot confirm or contradict the specific auth methods from the provided rendered content.",
+        "source_url": "https://apidocs.fan",
+        "screenshot_path": "data/screenshots/fanbasis-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "inconclusive",
+        "evidence": "Main fanbasis.com, /signup, and /enterprises pages all return 403 Forbidden. No pricing plans, signup flow, or free-tier information visible in the rendered content to verify self-serve-free claim.",
+        "source_url": "https://www.fanbasis.com"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Rendered apidocs.fan shows comprehensive REST API docs with endpoints for Checkout Sessions, Customers, Subscribers, Subscription Proration, Discount Codes, Products, Transactions, Refunds, Disputes; Webhooks section with endpoints, signature validation, events reference; Rate Limits & Pagination; Error Reference; SDK sections for Hosted JS and React; API Playground tool; and separate QA environment (qa.dev-fan-basis.com). Clearly a broad, well-documented public REST API with webhooks.",
+        "source_url": "https://apidocs.fan",
+        "screenshot_path": "data/screenshots/fanbasis-1.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "inconclusive",
+        "evidence": "Rendered apidocs.fan sidebar shows 'AI AGENT > Connect AI Agent' section, which could indicate some AI agent integration capability. However, the content of that page was not rendered. No explicit MCP server mention visible. The composio page rendered is about Coinbase, not FanBasis. Cannot confirm or contradict pass-1's 'none_found' MCP claim from rendered content alone.",
+        "source_url": "https://apidocs.fan",
+        "screenshot_path": "data/screenshots/fanbasis-1.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "partially_confirmed",
+        "evidence": "Comprehensive API docs and SDK references are confirmed (supporting buildability). However, credential access (free tier, self-serve signup) and authentication details could not be independently verified due to 403 on main site and insufficient auth page content in rendered docs.",
+        "source_url": "https://apidocs.fan",
+        "screenshot_path": "data/screenshots/fanbasis-1.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/fanbasis-1.png",
+      "data/screenshots/fanbasis-2.png",
+      "data/screenshots/fanbasis-3.png",
+      "data/screenshots/fanbasis-4.png",
+      "data/screenshots/fanbasis-5.png",
+      "data/screenshots/fanbasis-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

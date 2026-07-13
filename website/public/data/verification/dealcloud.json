@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "dealcloud",
+  "initial_research_path": "data/apps/dealcloud-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T12:30:01Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "partially_confirmed",
+        "evidence": "The rendered API docs pages do not include the product homepage, but the MCP page references 'relationship and pipeline insights' and the Data page mentions 'deals, contacts, companies', which is consistent with a CRM/deal management platform for professional services. The exact category phrase is not directly visible in the rendered docs.",
+        "source_url": "https://api.docs.dealcloud.com/mcp",
+        "screenshot_path": "data/screenshots/dealcloud-6.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Authorization Token page clearly documents OAuth2 Client Credentials flow with client_id, apiKey (client_secret), scope, and token endpoint. API Keys page documents how to obtain and use an API key from the user Profile page.",
+        "source_url": "https://api.docs.dealcloud.com/docs/token",
+        "screenshot_path": "data/screenshots/dealcloud-3.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "API Keys page states: 'To enable API access, ensure the intended user is assigned to a user group with the appropriate permissions... contact your organization's admin or DealCloud Customer Success Manager (CSM) for assistance.' This confirms admin/workspace approval is required and implies enterprise customer status. No self-service signup for API access is visible.",
+        "source_url": "https://api.docs.dealcloud.com/docs/apikeys",
+        "screenshot_path": "data/screenshots/dealcloud-4.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Comprehensive REST API documented with endpoints spanning Data (Cells, Rows), Schema, User Management, Publications (real-time events), Site Backups, Relationship Intelligence, Template Reports. Rate limits page shows per-endpoint limits. SDKs for Python and C# documented. Swagger/OpenAPI spec available per site.",
+        "source_url": "https://api.docs.dealcloud.com/docs",
+        "screenshot_path": "data/screenshots/dealcloud-1.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "MCP page clearly shows 'DealCloud MCP Server' with banner 'New: DealCloud MCP Server \u2014 client preview starting July 2026'. Pages for Getting Started, Authentication, and Available Tools are documented under the MCP section.",
+        "source_url": "https://api.docs.dealcloud.com/mcp",
+        "screenshot_path": "data/screenshots/dealcloud-6.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "Rendered docs confirm: (1) comprehensive REST API with OAuth2 exists, (2) Python and C# SDKs documented, (3) official MCP server in preview, (4) API access requires admin approval and enterprise customer status (no self-service). This supports 'technically_possible_but_gated' with credential access as the blocker.",
+        "source_url": "https://api.docs.dealcloud.com/docs",
+        "screenshot_path": "data/screenshots/dealcloud-1.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/dealcloud-1.png",
+      "data/screenshots/dealcloud-2.png",
+      "data/screenshots/dealcloud-3.png",
+      "data/screenshots/dealcloud-4.png",
+      "data/screenshots/dealcloud-5.png",
+      "data/screenshots/dealcloud-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

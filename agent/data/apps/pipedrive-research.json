@@ -1,0 +1,235 @@
+{
+  "schema_version": "1.0",
+  "app_id": "pipedrive",
+  "researched_at": "2026-07-13T12:21:59Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 18,
+    "trace_path": "logs/pipedrive-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "CRM / Sales Pipeline Management",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s17"
+        ],
+        "notes": "Pipedrive is a cloud-based CRM and sales pipeline management platform."
+      },
+      "one_liner": {
+        "value": "Sales CRM and pipeline management platform for managing leads, deals, contacts, and sales workflows.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s17"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s11"
+        ],
+        "notes": "API key via x-api-token header for simple integrations; OAuth2 authorization code flow for Marketplace apps. Pipedrive does not support OAuth2 client credentials flow (machine-to-machine)."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s7",
+        "s9",
+        "s10",
+        "s13"
+      ],
+      "notes": "API access is included free with every Pipedrive plan, including free trial (Lite plan at \u20ac14/seat/month). API token can be obtained from account settings without admin approval (though permissions may restrict visibility). A sandbox account for development testing requires a paid plan per community posts, but developers can still build against a free trial account. Sandbox account signup is via a web form at developers.pipedrive.com."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Well-documented RESTful API with v1 and v2 endpoints. Covers deals, persons, organizations, products, activities, pipelines, stages, leads, notes, files, mail, projects, webhooks, search, and more. OpenAPI 3 specification available. Official Node.js and PHP client libraries. Token-based rate limits with daily budget.",
+        "evidence_ids": [
+          "s8",
+          "s11",
+          "s12",
+          "s14",
+          "s15"
+        ]
+      },
+      "api_docs_url": "https://developers.pipedrive.com/docs/api/v1"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.pipedrive.ai/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s16",
+        "s17",
+        "s18"
+      ],
+      "notes": "Pipedrive launched an official native MCP server on June 30, 2026, available at https://mcp.pipedrive.ai/mcp. Support articles document setup for Claude and ChatGPT. Community MCP servers also exist (GarethWright/PipeDrive-MCP-Server on GitHub). Composio offers a Pipedrive toolkit with 398 tools."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Pipedrive has a well-documented, broad public REST API (both v1 and v2), an official native MCP server, multiple auth methods (API key and OAuth2), free API access with any plan, and strong developer documentation. The only potential friction is that the sandbox account for testing may require a paid plan, but developers can still use a free trial account or their own paid account. There are no material blockers to building an agent toolkit today.",
+        "evidence_ids": [
+          "s1",
+          "s3",
+          "s5",
+          "s8",
+          "s11",
+          "s16",
+          "s17"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.pipedrive.com/en/features/crm-api",
+      "quote": "Every Pipedrive plan comes with an API token that gives you access to our RESTful API for free.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s2": {
+      "url": "https://www.pipedrive.com/en/pricing",
+      "quote": "Lite - \u20ac14 per seat per month, billed annually. Free 14-day trial. No credit card required.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s3": {
+      "url": "https://pipedrive.readme.io/docs/core-api-concepts-authentication",
+      "quote": "The API token must be provided in the x-api-token header for all requests",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s4": {
+      "url": "https://pipedrive.readme.io/docs/marketplace-oauth-authorization",
+      "quote": "Using OAuth 2.0 is necessary for developing apps that are available in the Pipedrive Marketplace.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s5": {
+      "url": "https://www.pipedrive.com/en/features/crm-api",
+      "quote": "Free API access with every plan. Grab your API token and unlock a world of possibilities with our RESTful Pipedrive API v1.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s6": {
+      "url": "https://developers.pipedrive.com",
+      "quote": "Sign up for a Sandbox Account today to begin experimenting and developing in a risk free environment",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s7": {
+      "url": "https://devcommunity.pipedrive.com/t/sandbox-developer-accounts/330",
+      "quote": "Hi, trying to sign up but I get the message 'In order to create a sandbox for testing you need to have a paying company'.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s8": {
+      "url": "https://developers.pipedrive.com/docs/api/v1",
+      "quote": "This reference helps you implement the RESTful Pipedrive API. This API uses a JSON format for output and is capable of handling CORS requests.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s9": {
+      "url": "https://pipedrive.readme.io/docs/developer-sandbox-account",
+      "quote": "Our developer sandbox account is essentially like a regular Pipedrive company account. These accounts provide app developers with a safe development and testing environment and are limited to 5 seats by default.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s10": {
+      "url": "https://pipedrive.readme.io/docs/core-api-concepts-authentication",
+      "quote": "Keep in mind that an API token is tied to a specific user and company, giving access to all user's data. You can only have one active API token at any time.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s11": {
+      "url": "https://pipedrive.readme.io/docs/pipedrive-api-v2",
+      "quote": "Currently the following APIs are available as v2: Activities API, Deals API, Deal Followers API, Deal Products API, Fields API, Organizations API, Persons API, Products API, Pipelines and Stages API, User Followers API, Search API",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s12": {
+      "url": "https://developers.pipedrive.com/docs/api/v1",
+      "quote": "Endpoints: Activities, Activity fields, Activity types, Billing, Call logs, Channels, Currencies, Deal fields, Deals, Files, Filters, Goals, Item search, Leads, Mailbox, Meetings, Notes, Organizations, Permission sets, Persons, Pipelines, Products, Projects, Roles, Stages, Tasks, Users, Webhooks",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s13": {
+      "url": "https://developers.pipedrive.com/changelog/post/breaking-changes-token-based-rate-limits-for-api-requests",
+      "quote": "Token-Based Rate Limits: API requests will now consume tokens from the company's daily budget, which resets every 24 hours.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s14": {
+      "url": "https://github.com/pipedrive/client-nodejs/blob/master/README.md",
+      "quote": "Pipedrive API client for NodeJS based apps. Supports both API key and OAuth2 authentication.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s15": {
+      "url": "https://developers.pipedrive.com",
+      "quote": "Kick-start your development by using one of the many API clients available on GitHub. Here are some of the most popular repositories: client-nodejs, client-php, pipedrive (PHP), python-pipedrive, pipedrive-dotnet",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s16": {
+      "url": "https://support.pipedrive.com/en/article/mcp-claude",
+      "quote": "You can connect the Pipedrive MCP server to Claude... Enter Pipedrive MCP BETA as the app name and in the Connection field, enter https://mcp.pipedrive.ai/mcp",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s17": {
+      "url": "https://www.pipedrive.com/en/newsroom/pipedrive-launches-native-mcp-server-bringing-crm-workflows-directly-into-ai-assistants",
+      "quote": "Pipedrive launches native MCP server, bringing CRM workflows directly into AI assistants... MCP is available to customers on all Pipedrive plans.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    },
+    "s18": {
+      "url": "https://composio.dev/toolkits/pipedrive",
+      "quote": "Pipedrive MCP for AI Agents. Securely connect your AI agents and chatbots (Claude, ChatGPT, Cursor, etc) with Pipedrive MCP or direct API. 398 Tools, 3 Triggers.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z"
+    }
+  },
+  "limitations": [
+    "Could not fetch the rate limits specific page due to 404, but changelog confirms token-based daily budget system.",
+    "Sandbox account signup requires a paid Pipedrive plan per community posts, though official docs say 'Fill in the form here' without explicitly stating this requirement.",
+    "No evidence of OAuth2 client credentials flow support (only authorization code flow is documented)."
+  ]
+}

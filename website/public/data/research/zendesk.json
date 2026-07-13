@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.0",
+  "app_id": "zendesk",
+  "researched_at": "2026-07-13T12:27:37Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 19,
+    "trace_path": "logs/zendesk-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer Service / Help Desk",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Zendesk is a cloud-based customer service platform for managing tickets, live chat, knowledge base, and omnichannel support."
+      },
+      "one_liner": {
+        "value": "Cloud-based customer service and support ticketing platform with AI-powered tools for managing tickets, live chat, knowledge base, and omnichannel customer engagement.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": ""
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "api_key",
+          "basic",
+          "bearer_token"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "Zendesk supports multiple auth methods: OAuth 2.0 (recommended), API token (email+token via Basic auth header), Basic auth (email+password), and Bearer token (OAuth access tokens). For the AI Agents API, custom CRM API key and organization API key are also supported."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Anyone can sign up for a free 14-day trial with no credit card. API access is available on all plans including the free trial. Paid plans start at $19/agent/month. Developer sponsored accounts are available for marketplace partners. Rate limits vary by plan (200-2500 req/min). No workspace admin or sales gating for self-serve plans, though Enterprise plans require contacting sales."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql",
+        "webhooks",
+        "event_streaming",
+        "sdk_only"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Zendesk has a comprehensive documented REST API covering Ticketing (Support), Help Center, AI Agents, Messaging, Voice (Talk), Live Chat, Sales CRM, Custom Data, Omnichannel, Web Widget, and more. APIs are well-documented with OpenAPI specs, Postman collections, and SDKs. The API reference at developer.zendesk.com covers dozens of endpoints across product capabilities.",
+        "evidence_ids": [
+          "s9",
+          "s10",
+          "s11"
+        ],
+        "notes": ""
+      },
+      "api_docs_url": "https://developer.zendesk.com/api-reference/"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s12",
+        "s13",
+        "s14",
+        "s15"
+      ],
+      "notes": "Zendesk has an MCP Client feature (announced 2025/2026) that lets Zendesk admins connect to external MCP servers. Multiple community MCP servers exist (reminia/zendesk-mcp-server, scottolsen-zendesk-mcp-server). Composio provides a Zendesk MCP toolkit with 452 tools and 2 triggers."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Zendesk has a well-documented, comprehensive REST API with OAuth 2.0 authentication, self-serve free trial access, and multiple community MCP servers already available. The API surface is broad (tickets, users, organizations, help center, chat, voice, etc.) and well-suited for AI agent integration. Rate limits are plan-dependent but reasonable for agent use cases. Composio already provides a Zendesk toolkit with 452 tools, confirming buildability.",
+        "evidence_ids": [
+          "s9",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14"
+        ],
+        "notes": ""
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.zendesk.com/pricing/",
+      "quote": "Zendesk pricing is primarily seat-based (per agent, per month) with plan tiers that include different features.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zendesk Pricing Plans",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://composio.dev/toolkits/zendesk",
+      "quote": "Zendesk is a customer support platform for managing tickets, live chats, and help articles. It streamlines support workflows and boosts customer satisfaction for businesses of any size.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zendesk MCP Integration for AI Agents | Composio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://support.zendesk.com/hc/en-us/articles/4408845965210-Using-OAuth-authentication-with-your-application",
+      "quote": "You can use OAuth 2 to authenticate all your application's API requests to Zendesk. OAuth provides a secure way for your application to access Zendesk data without having to store and use the passwords of Zendesk users.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Using OAuth authentication with your application \u2013 Zendesk help",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://support.zendesk.com/hc/en-us/articles/4408831452954-How-can-I-authenticate-API-requests",
+      "quote": "To authenticate API requests, use basic authentication with your email address and password, your email address and an API token, or an OAuth access token.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How can I authenticate API requests? \u2013 Zendesk help",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://developer.zendesk.com/api-reference/ai-agents/authentication",
+      "quote": "The AI agents API supports two types of authentication, depending on the endpoint and your setup. Custom CRM API key, Organization API key.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication | Zendesk Developer Docs",
+      "retrieval_method": "composio_search"
+    },
+    "s6": {
+      "url": "https://developer.zendesk.com/documentation/api-basics/getting-started/getting-a-trial-or-sponsored-account-for-development",
+      "quote": "You can try out the Zendesk platform with a free, 14-day trial account.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Getting a trial or sponsored account for development",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://www.zendesk.com/pricing/",
+      "quote": "Support Team: US$ 19agent/month paid yearly. Suite Team: US$ 55agent/month paid yearly. Suite Professional: US$ 115agent/month paid yearly.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zendesk Pricing Plans",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://developer.zendesk.com/api-reference/introduction/rate-limits",
+      "quote": "Support and Help Center API requests per minute: Team 200, Growth 400, Professional 400, Enterprise 700, Enterprise Plus 2500.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate limits - Zendesk Developer Docs",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://developer.zendesk.com/api-reference/",
+      "quote": "Welcome to the Zendesk API reference docs. Most of our APIs are organized by product capabilities. You'll find APIs for ticketing, help center, live chat, voice, sales CRM as well as some features that span capabilities.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Reference Home | Zendesk Developer Docs",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://developer.zendesk.com/documentation/api-basics",
+      "quote": "Supercharge your workflows using the Zendesk APIs. Getting a trial or sponsored account for development. You can try out the Zendesk platform with a free, 14-day trial account.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Basics | Zendesk Developer Docs",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://developer.zendesk.com/api-reference/introduction/introduction",
+      "quote": "This is the reference documentation for the Zendesk APIs. The topics in the introduction cover features shared by the following APIs: Ticketing, Help Center, Voice.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introduction | Zendesk Developer Docs",
+      "retrieval_method": "composio_search"
+    },
+    "s12": {
+      "url": "https://composio.dev/toolkits/zendesk",
+      "quote": "Securely connect your AI agents and chatbots (Claude, ChatGPT, Cursor, etc) with Zendesk MCP or direct API to create tickets, reply to customers, update ticket statuses, and manage knowledge base articles through natural language. 452 Tools, 2 Triggers.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zendesk MCP Integration for AI Agents | Composio",
+      "retrieval_method": "composio_fetch"
+    },
+    "s13": {
+      "url": "https://www.zendesk.com/blog/zendesk-insights/innovation/zendesk-ai-mcp-client",
+      "quote": "We're bringing Model Context Protocol (MCP) into the Zendesk Resolution Platform. MCP's open-source model offers a simple, standardized path towards integrating AI with business data.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Unlocking new possibilities: Revolutionizing service with the Zendesk AI MCP client",
+      "retrieval_method": "composio_fetch"
+    },
+    "s14": {
+      "url": "https://github.com/reminia/zendesk-mcp-server",
+      "quote": "A Model Context Protocol server for Zendesk. This server provides a comprehensive integration with Zendesk. It offers: Tools for retrieving and managing Zendesk tickets and comments, Specialized prompts for ticket analysis and response drafting, Full access to the Zendesk Help Center articles as knowledge base.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "reminia/zendesk-mcp-server",
+      "retrieval_method": "composio_search"
+    },
+    "s15": {
+      "url": "https://support.zendesk.com/hc/en-us/articles/10497779528730",
+      "quote": "The Model Context Protocol (MCP) lets admins connect Zendesk to external MCP servers, discover the tools those servers provide, and use those tools as steps in action flows.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Connecting to MCP servers and using MCP tools in action flows (EAP) \u2013 Zendesk help",
+      "retrieval_method": "composio_search"
+    }
+  },
+  "limitations": [
+    "The developer.zendesk.com URLs for security/authentication returned 404, so I used the support.zendesk.com help articles for auth details instead.",
+    "Rate limits vary significantly by plan (200 to 2500 req/min), which could be a constraint for high-volume agent use cases.",
+    "The Zendesk MCP Client feature (connecting Zendesk to external MCP servers) is in EAP (Early Access Program) as of the documentation.",
+    "Some advanced features like the AI Agents API have separate authentication methods (Custom CRM API key, Organization API key) that are not the primary OAuth flow."
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.0",
+  "app_id": "help-scout",
+  "researched_at": "2026-07-13T12:31:37Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 16,
+    "trace_path": "logs/help-scout-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer Service / Help Desk",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Help Scout is a customer support platform with a shared inbox, knowledge base, and live chat."
+      },
+      "one_liner": {
+        "value": "Help Scout is a customer support platform that provides a REST API (Inbox API v2) allowing developers to read/write conversations, customers, mailboxes, users, tags, and reports for AI agent integration.",
+        "evidence_ids": [
+          "s1",
+          "s3",
+          "s8"
+        ],
+        "notes": "The platform exposes an HTTPS-only REST API at api.helpscout.net/v2 with OAuth 2.0 authentication."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s1",
+          "s8"
+        ],
+        "notes": "API uses OAuth 2.0 with Authorization Code and Client Credentials flows. No API keys; the recommended flow for server-to-server/agent use is Client Credentials."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_paid",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s4",
+        "s2"
+      ],
+      "notes": "API access requires a paid plan (Standard, Plus, or Pro). Free plan has no API access. Standard plan ($25/user/mo) gives API with 200 calls/min but no reporting endpoints. Plus ($45/user/mo) gives 400 calls/min and full endpoints. Pro ($75/user/mo) gives 800 calls/min. Developers can sign up for a free trial (15 days, no credit card required for Standard/Plus) and then create OAuth2 apps from their profile > My Apps > Create My App. No admin approval needed to create API credentials once on a paid plan."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Help Scout provides a well-documented public REST API (Inbox API v2) covering conversations (CRUD, search, threads), customers, mailboxes, users, tags, teams, webhooks, reports, workflows, saved replies, custom fields, and more. A Docs API and Beacon JavaScript SDK are also documented. Reporting endpoints are only available on Plus/Pro plans. Rate limits vary by plan (200/400/800 calls/min).",
+        "evidence_ids": [
+          "s1",
+          "s3",
+          "s5",
+          "s8",
+          "s9"
+        ],
+        "notes": "The API surface is broad, covering most core Help Scout data objects. An official PHP SDK exists, and there are community SDKs for other languages."
+      },
+      "api_docs_url": "https://developer.helpscout.com/mailbox-api/"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s6",
+        "s7",
+        "s3"
+      ],
+      "notes": "At least two community MCP servers exist: drewburchfield/help-scout-mcp-server (45 stars, MIT, well-maintained, supports read/write tools) and samiabid/helpscout-mcp-server (newer, MIT, supports read/write tools). StackOne also offers a hosted Help Scout MCP server with 36 actions. An official PHP SDK exists. Composio likely has Help Scout in its catalog."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Help Scout has a well-documented public REST API with OAuth 2.0 authentication (Client Credentials flow ideal for agents). The API is broad, covering conversations, customers, mailboxes, users, tags, reports, and webhooks. Developers can self-serve by signing up for a paid plan (free trial available) and creating OAuth2 apps from their profile. Multiple community MCP servers already exist, making agent integration straightforward. The only minor friction is that API access requires a paid plan ($25+/user/month) and Standard plan lacks reporting endpoints, but these are not blockers for agent toolkit development.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s4",
+          "s5",
+          "s6",
+          "s7",
+          "s8",
+          "s9"
+        ],
+        "notes": "Help Scout is fully buildable as an agent toolkit today. The API is documented, auth is standardized OAuth 2.0, credentials are self-serve (with paid plan), and community MCP servers already provide the integration layer."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developer.helpscout.com/mailbox-api/overview/authentication",
+      "quote": "This is an HTTPS-only API and it uses OAuth 2.0 authorization, implementing Authorization Code and Client Credential flows. All requests have to be authenticated via the Authorization header",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication | Help Scout Developers"
+    },
+    "s2": {
+      "url": "https://docs.helpscout.com/article/1140-mailbox-api",
+      "quote": "Each paid Help Scout plan has different levels of API access. Standard: Up to 200 calls per minute, No access to reporting endpoints. Plus: Up to 400 calls per minute, All endpoints available. Pro: Up to 800 calls per minute, All endpoints available. The Free plan does not include access to the API or integrations.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Help Scout's Inbox API, Docs API, Beacon JavaScript, Apps, and Open Source Tools"
+    },
+    "s3": {
+      "url": "https://developer.helpscout.com/",
+      "quote": "Help Scout provides several tools for developers to make magic happen: Inbox API- read and write data to Help Scout inboxes, Docs API- read and write data to your Docs sites, Webhooks- get notified about activity in Help Scout",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Help Scout Developers - API Documentation"
+    },
+    "s4": {
+      "url": "https://www.helpscout.com/pricing",
+      "quote": "Standard: $25 per user/mo ... Plus: $45 per user/mo ... Pro: $75 per user/mo ... Start for Free (Standard), Try for Free (Plus), Book a Demo (Pro)",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Help Scout Pricing: Affordable Customer Support Software"
+    },
+    "s5": {
+      "url": "https://developer.helpscout.com/mailbox-api/endpoints/reports/conversations/reports-conversations-overall",
+      "quote": "Note: The reporting endpoints are only available to Plus and Pro plans.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Conversations - Overall Report | Help Scout Developers"
+    },
+    "s6": {
+      "url": "https://github.com/drewburchfield/help-scout-mcp-server",
+      "quote": "An MCP server that gives AI assistants direct access to your Help Scout inboxes, conversations, customers, organizations, and threads. Search tickets, pull customer and account context, spot patterns, and get answers without leaving your editor or chat window.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "drewburchfield/help-scout-mcp-server"
+    },
+    "s7": {
+      "url": "https://github.com/samiabid/helpscout-mcp-server",
+      "quote": "An open-source Model Context Protocol server for the Help Scout Mailbox API. It gives MCP clients such as Claude access to Help Scout inboxes, conversations, threads, users, tags, saved replies, notes, and safe draft replies.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "samiabid/helpscout-mcp-server"
+    },
+    "s8": {
+      "url": "https://developer.helpscout.com/mailbox-api/",
+      "quote": "Welcome to the second generation of our Inbox API. This is an HTTPS-only API, with OAuth 2 authentication and CORS support running at: https://api.helpscout.net/v2",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Inbox API 2.0 | Help Scout Developers"
+    },
+    "s9": {
+      "url": "https://www.stitchflow.com/user-management/help-scout/api",
+      "quote": "Help Scout exposes a REST API (v2) at api.helpscout.net authenticated via OAuth 2.0 client credentials or authorization code flow.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Help Scout User Management API Guide"
+    }
+  },
+  "limitations": [
+    "The API requires a paid subscription (Standard at $25/user/mo minimum). Free plan users cannot access the API.",
+    "Standard plan does not include access to reporting endpoints; Plus or Pro required for full API functionality.",
+    "Access tokens expire every 48 hours and must be refreshed via the Client Credentials flow (no refresh token for that flow).",
+    "No official REST API docs for some endpoints were directly fetched due to 404 on certain developer.helpscout.com URLs, but overall documentation is available at developer.helpscout.com."
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0",
+  "app_id": "vercel",
+  "researched_at": "2026-07-13T12:55:00Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 18,
+    "trace_path": "logs/vercel-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Cloud Platform / Frontend Deployment & Hosting",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Vercel is a cloud platform for deploying frontend applications and serverless functions. It provides hosting, serverless compute, edge functions, and various infrastructure services."
+      },
+      "one_liner": {
+        "value": "Frontend deployment and hosting platform with serverless compute, edge functions, and global CDN",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Vercel enables developers to deploy web applications, manage domains, environment variables, and infrastructure programmatically via its REST API."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "bearer_token",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "The primary auth for the REST API is Bearer tokens (Vercel Access Tokens). OAuth 2.0 is supported for Sign in with Vercel and third-party integrations. For a programmatic agent toolkit, the bearer token (API key) approach is most practical."
+      },
+      "primary_for_agent_toolkit": "bearer_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "Anyone can sign up for a free Hobby plan and generate Access Tokens for API usage immediately. No credit card or admin approval needed. The Hobby plan is free forever with usage limits. API tokens can be created in account settings under Tokens."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Vercel provides a comprehensive REST API with endpoints covering deployments, projects, domains, DNS, teams, environment variables, edge config, access groups, aliases, certificates, checks, billing, feature flags, integrations, logs, marketplace, sandboxes, security, webhooks, and more. The API is documented via OpenAPI spec at openapi.vercel.sh and endpoints live at api.vercel.com.",
+        "evidence_ids": [
+          "s9",
+          "s10",
+          "s11"
+        ]
+      },
+      "api_docs_url": "https://openapi.vercel.sh"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.vercel.com",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s12",
+        "s13",
+        "s14"
+      ],
+      "notes": "Vercel has an official MCP server at https://mcp.vercel.com supporting OAuth, documented at https://vercel.com/docs/agent-resources/vercel-mcp. The @vercel/sdk provides a TypeScript SDK. The Vercel CLI also provides API access. Composio offers a Vercel MCP integration."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Vercel has a well-documented public REST API (OpenAPI spec), official SDK, CLI, and an official MCP server. Developers can self-serve free API credentials with no gates. The API is comprehensive and already used in many agent toolkits (Composio, official MCP). No material blockers exist for building an agent toolkit today.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s6",
+          "s10",
+          "s12"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://vercel.com/docs/rest-api",
+      "quote": "Interact programmatically with your Vercel account using the SDK or direct HTTP requests. You can deploy new versions of web applications, manage custom domains, retrieve information about deployments, and manage secrets and environment variables for projects.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel REST API Reference",
+      "retrieval_method": "composio_search"
+    },
+    "s2": {
+      "url": "https://vercel.com/pricing",
+      "quote": "The Hobby plan is free and aimed at developers with personal projects, and small-scale applications.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel Pricing",
+      "retrieval_method": "composio_search"
+    },
+    "s3": {
+      "url": "https://vercel.com/kb/guide/how-do-i-use-a-vercel-api-access-token",
+      "quote": "Vercel Access Tokens are required to authenticate and use the Vercel API. Tokens can be created and managed inside your account settings.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How do I use a Vercel API Access Token?",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://vercel.com/docs/sign-in-with-vercel/tokens",
+      "quote": "The Access Token grants your application permission to access specific resources on Vercel on behalf of the user trying to sign in. It is used to authenticate requests to Vercel's REST API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Tokens - Sign in with Vercel",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://workos.com/docs/integrations/vercel-oauth",
+      "quote": "The Vercel OAuth integration allows your users to authenticate using their Vercel credentials. The configuration process involves creating an OAuth application in Vercel.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel OAuth - WorkOS Docs",
+      "retrieval_method": "composio_search"
+    },
+    "s6": {
+      "url": "https://vercel.com/docs/plans/hobby",
+      "quote": "The Hobby plan is free and aimed at developers with personal projects, and small-scale applications. It offers a generous set of features for individual users.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel Hobby Plan",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://vercel.com/docs/plans/pro",
+      "quote": "The Vercel Pro plan is designed for professional developers, freelancers, and businesses who need enhanced features and team collaboration.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel Pro Plan",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://vercel.com/pricing",
+      "quote": "Yes! On top of your included credit on Pro, you can pay as you go, uncapped. If you have a free Hobby account, you are limited to the usage caps and cannot purchase additional usage.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel Pricing FAQ",
+      "retrieval_method": "composio_search"
+    },
+    "s9": {
+      "url": "https://openapi.vercel.sh",
+      "quote": "Vercel combines the best developer experience with an obsessive focus on end-user performance... servers: [url: https://api.vercel.com, description: Production API]",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel API OpenAPI Spec",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://vercel.com/docs/rest-api",
+      "quote": "Access-groups11 endpoints Aliases6 endpoints Api-observability2 endpoints Artifacts7 endpoints Authentication5 endpoints Billing3 endpoints Bulk-redirects7 endpoints Certs4 endpoints Checks-v210 endpoints Connect4 endpoints Deployments10 endpoints DNS4 endpoints Domains9 endpoints Domains-registrar17 endpoints [...] Projects29 endpoints Teams16 endpoints User4 endpoints",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel REST API Reference (endpoints list)",
+      "retrieval_method": "composio_search"
+    },
+    "s11": {
+      "url": "https://vercel.com/docs/rest-api",
+      "quote": "All endpoints live under the URL https://api.vercel.com and follow the REST architecture.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel REST API Reference",
+      "retrieval_method": "composio_search"
+    },
+    "s12": {
+      "url": "https://vercel.com/docs/agent-resources/vercel-mcp",
+      "quote": "Vercel MCP is Vercel's official MCP server. It's a remote MCP with OAuth that gives AI tools secure access to your Vercel projects available at: https://mcp.vercel.com",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Use Vercel's MCP server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s13": {
+      "url": "https://vercel.com/docs/rest-api/sdk",
+      "quote": "The @vercel/sdk is a type-safe TypeScript SDK that allows you to access the resources and methods of the Vercel REST API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel SDK Reference",
+      "retrieval_method": "composio_search"
+    },
+    "s14": {
+      "url": "https://composio.dev/toolkits/vercel",
+      "quote": "Securely connect your AI agents and chatbots (Claude, ChatGPT, Cursor, etc) with Vercel MCP or direct API to deploy projects, check deployment statuses, manage team members, and fetch logs through natural language.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Vercel MCP Integration for AI Agents | Composio",
+      "retrieval_method": "composio_search"
+    }
+  },
+  "limitations": [
+    "The REST API documentation page at /docs/rest-api was not fully accessible via the fetch tool (returned 'Page Not Found' despite search snippets showing content), so endpoint list was compiled from search results. The OpenAPI spec at openapi.vercel.sh was successfully fetched."
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "paygent-connect",
+  "initial_research_path": "data/apps/paygent-connect-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T13:09:09Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Product pages (paygent.co.jp/payment_service/connect/ and /connect/linktype_asp) describe Paygent as a Japanese payment gateway supporting 10+ payment methods including credit card, ATM, convenience store, bank net, carrier billing, etc. One-liner accurately reflects the service.",
+        "source_url": "https://www.paygent.co.jp/payment_service/connect/linktype_asp",
+        "screenshot_path": "data/screenshots/paygent-connect-1.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Support site error codes (P001, P002, P016) reference Merchant ID, Connection ID, Connection Password, and client certificate. PHP SDK (Packagist) requires merchant_id, connect_id, connect_password, pem, crt. IXOPAY adapter config shows merchantId, connectionId, connectionPassword, clientCertificate.",
+        "source_url": "https://support.paygent.co.jp/faq/show/3673",
+        "screenshot_path": "data/screenshots/paygent-connect-3.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Product page details the sales-gated process: inquiry \u2192 hearing/quote \u2192 application \u2192 screening \u2192 contract \u2192 development \u2192 service start (~6 weeks). Pricing requires inquiry (\u521d\u671f\u8cbb\u7528\u30fb\u6708\u984d\u56fa\u5b9a\u8cbb\u7528\u30fb\u6c7a\u6e08\u624b\u6570\u6599). Support site requires login for certain content. No self-serve signup visible.",
+        "source_url": "https://www.paygent.co.jp/payment_service/connect/",
+        "screenshot_path": "data/screenshots/paygent-connect-2.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Product pages describe Link Type (ASP) and Module Integration Type. Support site shows error codes documenting API parameters, POST-based protocol, Shift-JIS encoding, and client certificate auth. Multiple payment methods confirm broad coverage. IXOPAY and PHP community adapters confirm a documented API exists.",
+        "source_url": "https://www.paygent.co.jp/payment_service/connect/linktype_asp",
+        "screenshot_path": "data/screenshots/paygent-connect-1.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "No MCP server found for Paygent in any rendered page. Composio docs page shows general MCP setup but no Paygent integration. No other MCP references found.",
+        "source_url": "https://docs.composio.dev/docs/single-toolkit-mcp",
+        "screenshot_path": "data/screenshots/paygent-connect-4.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "Product pages confirm sales-gated process requiring contract (~6 weeks). API exists (confirmed by support site error docs, community SDKs, IXOPAY adapter) but behind login. No self-serve trial. Community PHP/Go libraries exist but API is non-standard (POST, Shift-JIS, custom hash security).",
+        "source_url": "https://www.paygent.co.jp/payment_service/connect/",
+        "screenshot_path": "data/screenshots/paygent-connect-2.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/paygent-connect-1.png",
+      "data/screenshots/paygent-connect-2.png",
+      "data/screenshots/paygent-connect-3.png",
+      "data/screenshots/paygent-connect-4.png",
+      "data/screenshots/paygent-connect-5.png",
+      "data/screenshots/paygent-connect-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

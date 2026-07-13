@@ -1,0 +1,218 @@
+{
+  "schema_version": "1.0",
+  "app_id": "threads",
+  "researched_at": "2026-07-13T13:26:30Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 19,
+    "trace_path": "logs/threads-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Social Media / Microblogging",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s18"
+        ],
+        "notes": "Threads is Meta's text-based social platform, similar to X (Twitter). The API is for publishing content and managing a Threads presence."
+      },
+      "one_liner": {
+        "value": "Meta's social media platform for text-based conversations; the Threads API lets developers publish content, manage replies, retrieve media, and pull insights programmatically.",
+        "evidence_ids": [
+          "s2",
+          "s18"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "notes": "The official docs state authentication uses OAuth 2.0 with Threads user access tokens (short-lived 1hr, long-lived 60 days). No API key or other method is offered for the official API."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "app_review"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s3",
+        "s4",
+        "s6",
+        "s7"
+      ],
+      "notes": "Creating a Meta Developer account and a Threads API app is free and self-serve. For development/testing with your own account (or invited testers), no gate exists. However, for production use where non-tester users grant permissions, each permission scope must pass Meta App Review, a manual review process that can take weeks. The API itself has no published paid tier or per-call fee."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "moderate",
+      "summary": {
+        "value": "The Threads API is a documented public REST API built on Meta's Graph API infrastructure. It offers endpoints for: publishing (text, image, video, carousel posts), media retrieval, reply management (read, hide/unhide), user profiles, location tagging/search, insights/analytics, oEmbed, keyword search, and webhooks for reply and mention events. Rate limits include 250 posts, 1,000 replies, 100 deletions per 24h per profile. Accessible via graph.threads.net or graph.threads.com.",
+        "evidence_ids": [
+          "s2",
+          "s8",
+          "s9",
+          "s18"
+        ]
+      },
+      "api_docs_url": "https://developers.facebook.com/documentation/threads/reference"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s10",
+        "s11",
+        "s12",
+        "s13"
+      ],
+      "notes": "No official MCP server from Meta. Multiple community MCP servers exist: baguskto/threads-mcp (GitHub), tttn13/ThreadsMcpServer (.NET, GitHub), and multi-platform MCP servers from Socialync and Postproxy that include Threads. No official SDKs specifically for Threads beyond Meta's Graph API SDKs, and no Composio toolkit for Threads was found."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "The Threads API is a well-documented public REST API with OAuth 2.0 authentication, available to any developer with a free Meta Developer account. While production use requires Meta App Review (a time gate, not a technical blocker), development and testing with your own account or invited testers is immediate and free. Community MCP servers already exist, proving the integration is feasible. An agent toolkit can be built today using the official API endpoints for publishing, reading, replying, and analytics.",
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s8",
+          "s10",
+          "s18"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developers.facebook.com/documentation/threads",
+      "quote": "The Threads API enables developers to build their own unique integrations, and helps creators and brands manage their Threads presence at scale and easily share inspiring content with their communities.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Threads API - Meta for Developers"
+    },
+    "s2": {
+      "url": "https://developers.facebook.com/documentation/threads/reference",
+      "quote": "The Threads API consists of the following endpoints. Refer to each endpoint's reference document for usage requirements. The Threads API can be accessed by either graph.threads.com or graph.threads.net.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Threads API Reference"
+    },
+    "s3": {
+      "url": "https://developers.facebook.com/documentation/threads/get-started",
+      "quote": "API authentication is handled by Threads user access tokens that conform to the OAuth 2.0 protocol. Access tokens are app-scoped (unique to the app and user pair) and can be short-lived or long-lived.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get Started - Threads API"
+    },
+    "s4": {
+      "url": "https://developers.facebook.com/documentation/threads/get-started",
+      "quote": "Threads testers can grant your app these permissions at any time. In order for app users without a role on your app to be able to grant your app these permissions, each permission must first be approved through the App Review process, and your app must be published.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get Started - Threads API"
+    },
+    "s5": {
+      "url": "https://developers.facebook.com/documentation/threads/get-started",
+      "quote": "threads_basic \u2014 Required for all Threads endpoints. threads_content_publish \u2014 Required for Threads publishing endpoints only. threads_manage_replies \u2014 Required for making POST calls to reply endpoints. threads_read_replies \u2014 Required for making GET calls to reply endpoints. threads_manage_insights \u2014 Required for making GET calls to insights endpoints.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Get Started - Threads API (Permissions section)"
+    },
+    "s6": {
+      "url": "https://www.blotato.com/blog/threads-api-pricing",
+      "quote": "Meta does not publish a paid tier or a per-call fee for the Threads API in the official developer docs, which is what most people mean by 'free.' The cost is in calendar time: Meta App Review for production access.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Threads API Pricing 2026: Free, but Rate-Limited"
+    },
+    "s7": {
+      "url": "https://singhamandeep.com/threads-api-app-review-permissions",
+      "quote": "The Threads API runs on the same App Review model as Facebook and Instagram \u2014 but the permission names, the tester rules, and the token lifecycle are different enough.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Threads API App Review: Permissions & Rejections (2026)"
+    },
+    "s8": {
+      "url": "https://developers.facebook.com/documentation/threads/overview",
+      "quote": "Threads profiles are limited to 250 API-published posts within a 24-hour moving period. Carousels count as a single post.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Overview - Threads API"
+    },
+    "s9": {
+      "url": "https://developers.facebook.com/documentation/threads/overview",
+      "quote": "You may use the Threads API to enable people to create and publish content on a person's behalf on Threads, and to display those posts within your app solely to the person who created it.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Overview - Threads API (Rate Limiting & Limitations)"
+    },
+    "s10": {
+      "url": "https://github.com/baguskto/threads-mcp",
+      "quote": "Enterprise Threads MCP Server. A comprehensive MCP (Model Context Protocol) server for professional Threads management with enterprise-grade analytics, AI-powered optimization, and automation features.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "GitHub - baguskto/threads-mcp"
+    },
+    "s11": {
+      "url": "https://medium.com/@tttndev13/a-mcp-server-for-content-creation-on-threads-7cb26cc784ca",
+      "quote": "ThreadsMcpNet is a .NET server I made that operates as both a traditional MCP server (using stdio communication) and as an HTTP-based service.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "A MCP server for content creation on Threads"
+    },
+    "s12": {
+      "url": "https://www.socialync.io/blog/best-social-media-mcp-servers-2026",
+      "quote": "Socialync is the only social media scheduler with a native MCP server that posts to all 8 (TikTok, Instagram, YouTube, X, LinkedIn, Facebook, Threads, and Bluesky) from Claude, ChatGPT, or any MCP client.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Best Social Media MCP Servers in 2026"
+    },
+    "s13": {
+      "url": "https://postproxy.dev/blog/mcp-servers-for-social-media",
+      "quote": "Postproxy ships local (npm) and remote MCP servers covering X, LinkedIn, Instagram, Facebook, Threads, TikTok, and Bluesky publishing.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MCP Servers for Social Media Publishing | Postproxy"
+    },
+    "s18": {
+      "url": "https://www.socialcrawl.dev/blog/threads-api",
+      "quote": "The Threads API is Meta's official developer interface for the Threads platform. It is built on Meta's Graph API infrastructure, uses RESTful conventions with JSON responses, and authenticates with OAuth 2.0.",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Threads API in 2026: What You Can and Can't Build"
+    }
+  },
+  "limitations": [
+    "The official Meta documentation for the 'Threads Use Case' page returned a generic cookie consent page with no substantive content.",
+    "No official MCP server from Meta was found; only community-built MCP servers exist.",
+    "Some details about the exact scope of keyword search and webhooks were gathered from secondary sources rather than the official reference pages."
+  ]
+}

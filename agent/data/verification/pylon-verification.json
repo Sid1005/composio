@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "pylon",
+  "initial_research_path": "data/apps/pylon-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "partially_confirmed",
+    "checked_at": "2026-07-13T12:32:23Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Pricing page header says 'Scale B2B support without scaling complexity' and 'AI-native workflows built for B2B'. Docs sidebar lists omnichannel support, phone support, issues, SLAs, CSAT, AI agents, knowledge base, account intelligence \u2014 all consistent with 'Customer Support / B2B Support Platform'.",
+        "source_url": "https://www.usepylon.com/pricing",
+        "screenshot_path": "data/screenshots/pylon-2.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "partially_confirmed",
+        "evidence": "API auth docs clearly document Bearer token (API key) method: 'The Pylon API uses Bearer authentication\u2026 pass your API token in the header'. This confirms api_key. However, OAuth 2.0 is not mentioned on the provided rendered pages (the MCP pages where it might be described were not provided in full content).",
+        "source_url": "https://docs.usepylon.com/pylon-docs/developer/api/authentication",
+        "screenshot_path": "data/screenshots/pylon-1.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page shows Starter $59, Professional $89, Enterprise $139 per seat/mo with 'Get started' buttons (self-serve). API is explicitly listed as a Professional-tier feature ('Every starter feature, plus\u2026 API'). API docs confirm 'Only Admin users can create API tokens.' All align with self_serve_paid, paid plan required for API, and admin-role gate.",
+        "source_url": "https://www.usepylon.com/pricing",
+        "screenshot_path": "data/screenshots/pylon-2.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "API docs page states 'Pylon API can be used to programmatically access and take action on data within Pylon'. API reference lists ~21 resource types (Accounts, Issues, Contacts, Messages, Knowledge Base, Custom Fields, Tags, Teams, Users, Activities, Attachments, Audit Logs, Call Recordings, Custom Objects, Feature Requests, Macros, Surveys, Tasks & Projects, Ticket Forms, Training Data, User Roles). OpenAPI 3.0 spec at static.usepylon.com/openapi.json visible. Webhooks page shows webhook functionality. REST + webhooks + broad coverage confirmed.",
+        "source_url": "https://docs.usepylon.com/pylon-docs/developer/api/api-reference",
+        "screenshot_path": "data/screenshots/pylon-4.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "inconclusive",
+        "evidence": "The docs sidebar includes 'MCP Connections' under Platform and 'Pylon MCP' under Integrations, suggesting MCP support exists. However, the actual content of those pages was not provided in the rendered output, so I cannot confirm whether it is an official MCP server, the endpoint URL (mcp.usepylon.com), or the protocol (OAuth 2.0 / Streamable HTTP).",
+        "source_url": "https://docs.usepylon.com/pylon-docs/developer/api",
+        "screenshot_path": "data/screenshots/pylon-3.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "Rendered pages confirm a well-documented REST API with broad resource coverage, webhooks, Bearer token auth, and a self-serve paid plan (Professional $89/seat/mo). This is sufficient to build an agent toolkit. The only gate is the paid plan, which is standard and self-serve.",
+        "source_url": "https://docs.usepylon.com/pylon-docs/developer/api",
+        "screenshot_path": "data/screenshots/pylon-3.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/pylon-1.png",
+      "data/screenshots/pylon-2.png",
+      "data/screenshots/pylon-3.png",
+      "data/screenshots/pylon-4.png",
+      "data/screenshots/pylon-5.png",
+      "data/screenshots/pylon-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

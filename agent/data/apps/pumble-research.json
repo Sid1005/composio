@@ -1,0 +1,246 @@
+{
+  "schema_version": "1.0",
+  "app_id": "pumble",
+  "researched_at": "2026-07-13T12:33:20Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 18,
+    "trace_path": "logs/pumble-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Team communication and collaboration platform (Slack/Microsoft Teams alternative)",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Pumble is a free business communication tool with channels, direct messages, video conferencing, file sharing, and integrations."
+      },
+      "one_liner": {
+        "value": "Free team messaging and collaboration app with unlimited users, channels, message history, and built-in video/voice calls.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "The homepage and product page describe it as a free alternative to Slack and Microsoft Teams."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2",
+          "bearer_token"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5",
+          "s6"
+        ],
+        "notes": "Pumble supports multiple auth methods: (1) API key via the pre-built API Addon (Api-Key header), (2) OAuth2 for custom apps (clientId/clientSecret + authorization code -> access token), (3) Bearer tokens / personal access tokens for the MCP server (x-app-token and user/bot tokens). The SDK docs explicitly state: 'Pumble uses OAuth2 in order to allow your app to access the API.'"
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "workspace_admin"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s7",
+        "s8",
+        "s9",
+        "s10"
+      ],
+      "notes": "The API Addon can be installed on any Pumble workspace (free or paid). The free plan allows up to 3 apps/integrations. The API Addon is free to install and use. Custom app creation for the full SDK/API may require workspace admin privileges but is generally available. The pricing page confirms the free plan includes unlimited users and message history, and the API/integrations are available on the free plan (up to 3 apps)."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Pumble has multiple API surfaces: (1) A public REST API through the 'API Addon' with endpoints for messages, channels, reactions, users, scheduled messages \u2013 documented in Swagger at https://pumble-api-keys.addons.marketplace.cake.com/api-docs. (2) A full Pumble SDK and REST API accessible via OAuth2 custom app creation, covering the complete platform functionality. (3) Incoming webhooks for posting messages. (4) An official MCP server at https://mcp.pumble.com/mcp for AI agent integration. The Swagger UI shows endpoints across Channels (list, create, add/remove users), Messages (send, reply, DM, search, edit, delete, reactions), Scheduled Messages (CRUD), and Users (list, info, status).",
+        "evidence_ids": [
+          "s3",
+          "s4",
+          "s5",
+          "s11"
+        ]
+      },
+      "api_docs_url": "https://pumble-api-keys.addons.marketplace.cake.com/api-docs"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.pumble.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s12",
+        "s13",
+        "s14",
+        "s15"
+      ],
+      "notes": "Pumble has an official MCP server hosted at mcp.pumble.com/mcp. The homepage mentions 'MCP Server' as a feature. Detailed setup instructions exist in the help center for connecting Claude CLI, Codex CLI, and Gemini CLI. There is also a community MCP server on LobeHub, a Zapier MCP integration, and a viaSocket MCP integration. The Pumble SDK (npm package pumble-sdk) and CLI (pumble-cli) provide official tooling for building apps."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Pumble is fully buildable as an agent toolkit today. Multiple integration paths exist: (1) The API Addon with API key auth provides a straightforward REST API for core messaging operations \u2013 install the free addon on any workspace, generate an API key via slash command, and use the documented Swagger API. (2) For more advanced use cases, the official MCP server is purpose-built for connecting AI agents (Claude, Gemini, Codex) to Pumble, with 19+ tools available. (3) The full OAuth2-based Pumble SDK enables deep platform access. There are no significant blockers: the API is free on the free plan (up to 3 apps), credential generation is self-serve, documentation is comprehensive, and the company actively promotes AI agent integration.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s12",
+          "s13",
+          "s14",
+          "s15"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://pumble.com",
+      "quote": "Pumble\u2122 - FREE Business Communication Tool\n\nYour team communication hub",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pumble Homepage",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://pumble.com/pricing",
+      "quote": "Free plan: Unlimited users, Unlimited channels, Unlimited message history, 10GB total file storage, Up to 3 apps & integrations",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pumble Pricing",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://pumble.com/help/integrations/automation-workflow-integrations/api-keys-integration",
+      "quote": "Header: { Api-Key: API-KEY-VALUE } \u2013 enter the API key that you generated in the message editor and received as an ephemeral message",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Integration \u2013 Pumble Help",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://cake-com.github.io/pumble-node-sdk/authorization.html",
+      "quote": "Pumble uses OAuth2 in order to allow your app to access the API.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authorization | Pumble SDK",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://pumble-api-keys.addons.marketplace.cake.com/api-docs",
+      "quote": "Pumble API Addon documentation\n\nServers: https://pumble-api-keys.addons.marketplace.cake.com\n\nChannels, Messages, Scheduled Messages, Users \u2013 full Swagger UI",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Swagger UI \u2013 Pumble API Addon docs",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server",
+      "quote": "The x-app-token/xpat token is the App key you receive when you create an app from scratch.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How to use the Pumble MCP server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://pumble.com/pricing",
+      "quote": "Free plan: Up to 3 apps & integrations; Pro: Up to 10; Business/Enterprise: Unlimited",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pumble Pricing",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://pumble.com",
+      "quote": "Create FREE Account",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pumble Homepage",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://pumble.com/help/integrations/add-pumble-apps/guide-to-pumble-integrations",
+      "quote": "Only admins and workspace owners can install an addon.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Guide to Pumble Addons",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server",
+      "quote": "To connect your AI assistant to the Pumble MCP server, you will have to create a Pumble addon and take credentials from there.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How to use the Pumble MCP server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://pumble.com/help/integrations/add-pumble-apps/incoming-webhooks-for-pumble",
+      "quote": "With the incoming webhooks, you can easily post messages from other apps into Pumble.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Incoming Webhooks for Pumble",
+      "retrieval_method": "composio_fetch"
+    },
+    "s12": {
+      "url": "https://pumble.com/mcp",
+      "quote": "Connect your AI of choice in 4 simple steps\n\nUse developer tools (e.g., your terminal) to connect your AI agent with Pumble.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pumble AI Assistant \u2013 Connect Your Apps with Pumble",
+      "retrieval_method": "composio_fetch"
+    },
+    "s13": {
+      "url": "https://pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server",
+      "quote": "With the Pumble Model Context Protocol (MCP) server, you can connect third-party AI agents (e.g., Claude, Gemini, Codex) to Pumble",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "How to use the Pumble MCP server",
+      "retrieval_method": "composio_fetch"
+    },
+    "s14": {
+      "url": "https://github.com/CAKE-com/pumble-node-sdk",
+      "quote": "Pumble SDK \u2013 A javascript framework to quickly build Pumble apps.\n\nPumble CLI \u2013 A cli tool to generate and run Pumble apps from your local environment.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "CAKE-com/pumble-node-sdk",
+      "retrieval_method": "composio_fetch"
+    },
+    "s15": {
+      "url": "https://lobehub.com/bg/mcp/nitindermohan-pumble-mcp",
+      "quote": "pumble-mcp | MCP Servers \u00b7 LobeHub\n\nA standalone MCP server that gives AI agents complete access to the Pumble messaging platform.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "pumble-mcp on LobeHub",
+      "retrieval_method": "composio_search"
+    }
+  },
+  "limitations": [
+    "The 'Create your own addon' flow in the older help docs mentions team follow-up, but the newer MCP server setup instructions show a fully self-serve 'Create app' flow \u2013 it's unclear whether custom apps for full SDK access require human approval or not. The API Addon (simpler path) is definitely self-serve.",
+    "Rate limits for the API Addon are not explicitly documented on official pages; one third-party source mentions '1000 requests per minute per user' but this could not be verified from official Pumble documentation."
+  ]
+}

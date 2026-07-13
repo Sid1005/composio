@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "app_id": "reducto",
+  "initial_research_path": "data/apps/reducto-research.json",
+  "browser_verification": {
+    "sampled": true,
+    "result": "confirmed",
+    "checked_at": "2026-07-13T13:10:00Z",
+    "checks": [
+      {
+        "field": "classification.researched_category",
+        "result": "confirmed",
+        "evidence": "Overview page explicitly states: 'Reducto is the agentic document platform for AI teams who need production-grade document processing at enterprise scale.' Lists Classify, Parse, Extract, Split, Edit, Pipelines, and 30+ file types. One-liner describing parsing, extracting, splitting, editing, classifying matches.",
+        "source_url": "https://docs.reducto.ai/overview",
+        "screenshot_path": "data/screenshots/reducto-3.png"
+      },
+      {
+        "field": "authentication.methods",
+        "result": "confirmed",
+        "evidence": "Account page: 'API keys authenticate your requests to Reducto.' Agent Guide: 'Auth: Authorization: Bearer $REDUCTO_API_KEY'. MCP page documents OAuth device-code flow: 'uvx mcp-server-reducto --login' which 'opens an OAuth device-code flow'. Both api_key and oauth2 are documented.",
+        "source_url": "https://docs.reducto.ai/agent-guide",
+        "screenshot_path": "data/screenshots/reducto-5.png"
+      },
+      {
+        "field": "access.credential_access",
+        "result": "confirmed",
+        "evidence": "Pricing page: 'Free \u2013 Up to your first 15K credits' with a 'Get started' button. No credit card mention for free tier. Agent Guide: 'Create a free account at studio.reducto.ai'. Account page shows self-serve API key creation.",
+        "source_url": "https://reducto.ai/pricing",
+        "screenshot_path": "data/screenshots/reducto-2.png"
+      },
+      {
+        "field": "api_surface.public_api_and_breadth",
+        "result": "confirmed",
+        "evidence": "Overview page lists REST API + SDKs (Python, Node.js, Go). Agent Guide shows full endpoint table (Parse, Extract, Split, Classify, Edit, Upload, async, webhooks, /job/{id}) with base URL https://platform.reducto.ai. Quickstart provides complete code examples in multiple languages. 30+ file types documented.",
+        "source_url": "https://docs.reducto.ai/agent-guide",
+        "screenshot_path": "data/screenshots/reducto-5.png"
+      },
+      {
+        "field": "agent_interface.mcp",
+        "result": "confirmed",
+        "evidence": "Dedicated MCP Server docs page at /mcp-server. Hosted endpoint at https://mcp.reducto.ai/mcp. Local server via uvx mcp-server-reducto. Documents tools: parse_document, extract_data, split_document, classify_document, edit_document, upload_file, get_job, list_jobs, get_documentation. Also referenced in pricing FAQ: 'Do you have an MCP?'",
+        "source_url": "https://docs.reducto.ai/mcp-server",
+        "screenshot_path": "data/screenshots/reducto-6.png"
+      },
+      {
+        "field": "buildability.verdict",
+        "result": "confirmed",
+        "evidence": "Free tier (15K credits, no credit card), self-serve API key creation, comprehensive REST API + SDKs + MCP server + CLI, dedicated 'Agent Guide' page, all core endpoints (Parse, Extract, Split, Edit, Classify) available on free plan. No material blockers observed in rendered content.",
+        "source_url": "https://docs.reducto.ai/overview",
+        "screenshot_path": "data/screenshots/reducto-3.png"
+      }
+    ],
+    "screenshots": [
+      "data/screenshots/reducto-1.png",
+      "data/screenshots/reducto-2.png",
+      "data/screenshots/reducto-3.png",
+      "data/screenshots/reducto-4.png",
+      "data/screenshots/reducto-5.png",
+      "data/screenshots/reducto-6.png"
+    ]
+  },
+  "human_review": {
+    "sample_group": "not_sampled",
+    "result": "not_sampled",
+    "checks": [],
+    "reviewed_at": null
+  },
+  "corrections": []
+}

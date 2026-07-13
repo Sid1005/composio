@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0",
+  "app_id": "liveagent",
+  "researched_at": "2026-07-13T12:28:37Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 19,
+    "trace_path": "logs/liveagent-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer Service / Help Desk",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "LiveAgent is an all-in-one customer service platform with live chat, ticketing, call center, knowledge base, and AI chatbot."
+      },
+      "one_liner": {
+        "value": "Web-based help desk software with live chat, ticketing, call center, and AI-powered customer support automation.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "From the homepage and feature descriptions."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ],
+        "notes": "Primary auth is API key passed in the 'apikey' HTTP header. The API key documentation shows cURL examples using header-based auth. The Python client also mentions OAuth2 (privileges) but API key is the primary documented method for programmatic use."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "plan_dependent",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "notes": "LiveAgent offers a 30-day free trial with no credit card required. API keys are generated within the admin panel (Configuration > System > API), so you must be logged in as an admin of a LiveAgent account. The number of API keys depends on your plan: Small (1), Medium (5), Large (10), Enterprise (100). The free trial includes API access. There is no phone verification or company email gate, though they 'encourage' company email."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "LiveAgent has two documented REST API versions (v1 and v3) with a broad set of endpoints covering tickets, conversations, contacts, agents, companies, knowledge base, files, reports, departments, tags, calls, and more. API v3 includes an OpenAPI/Swagger descriptor. Rate limit is 180 requests per minute per API key on cloud accounts. The API is documented on the LiveAgent support site.",
+        "evidence_ids": [
+          "s9",
+          "s10",
+          "s11",
+          "s12"
+        ]
+      },
+      "api_docs_url": "https://support.liveagent.com/840770-Complete-API-reference"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "official_sdk"
+      ],
+      "evidence_ids": [
+        "s13",
+        "s14"
+      ],
+      "notes": "LiveAgent has a built-in MCP (Model Context Protocol) server as of version 5.63 (May 2026), allowing connection with external AI tools like Claude Desktop, Cursor, claude.ai, and FlowHunt. There is also a community-maintained Python SDK (QualityUnit/LiveAgent-api-python) auto-generated from the Swagger spec. No specific Composio toolkit was found for LiveAgent."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "LiveAgent has a well-documented, broad REST API (v1 and v3) with API key authentication, self-serve signup with a free trial, and even a built-in MCP server. A developer can sign up for a free trial, generate API keys from the admin panel, and immediately begin building agent integrations. The only minor friction is needing admin-level access to generate API keys, which is standard for help desk platforms.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s9",
+          "s13"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.liveagent.com/",
+      "quote": "LiveAgent combines an all-in-one customer service platform with AI chatbot, live chat, ticketing, and call center.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "LiveAgent - Help Desk Software & Live Chat",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://www.liveagent.com/features/api",
+      "quote": "LiveAgent's API enables seamless software communication, supporting actions like company retrieval and conversation creation.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API features | LiveAgent",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://support.liveagent.com/741982-API-key",
+      "quote": "Your API key has to be set in header of your requests: curl --location --request GET 'https://your.ladesk.com/api/v3/tickets' \\ --header 'apikey: 0865evv883j6auflvlt7zrwgqn32qo74'",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API key",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://support.liveagent.com/802463-REST-API",
+      "quote": "API key is an identity of your LiveAgent (like your username and password) which you can use to build your own custom integration solutions.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "REST API",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://www.liveagent.com/pricing",
+      "quote": "Start with a 30-day free trial. No credit card required. Upgrade, downgrade, or cancel anytime.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing | LiveAgent",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://www.liveagent.com/pricing",
+      "quote": "API keys: Use third-party applications to retrieve/push data and manage tickets. Small: 1, Medium: 5, Large: 10, Enterprise: 100",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing | LiveAgent - API keys limits",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://www.liveagent.com/trial",
+      "quote": "We encourage creating trial accounts under the company email addresses. ... Create account for FREE",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Start your free trial today | LiveAgent",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://support.liveagent.com/741982-API-key",
+      "quote": "While logged in as an admin navigate to Configuration> System> API which loads the API v3 section where you find existing API keys or add a new one.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API key - how to get my API key",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://support.liveagent.com/840770-Complete-API-reference",
+      "quote": "Complete API reference ... Agents, Application, Companies, Conversations, Customers, Files, Knowledgebase, Online status, Reports, Tags, Tickets...",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Complete API reference",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://support.liveagent.com/911737-API-v3",
+      "quote": "If you need to generate LiveAgent's API library / SDK for your preferred programming language you can use the swagger (OpenAPI) API descriptor",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API v3",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://support.liveagent.com/066804-LiveAgent-API",
+      "quote": "The API rate limit is set right now to 180 requests per minute, counted for each API key separately.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "LiveAgent API - rate limit",
+      "retrieval_method": "composio_fetch"
+    },
+    "s12": {
+      "url": "https://support.liveagent.com/911737-API-v3",
+      "quote": "Where can I find the API v3 documentation? You can find whole LiveAgent API documentation within your LiveAgent account: https://YOURDOMAIN.ladesk.com/docs/api/v3/#/",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API v3 documentation location",
+      "retrieval_method": "composio_fetch"
+    },
+    "s13": {
+      "url": "https://www.liveagent.com/blog/liveagent-may-2026-product-update",
+      "quote": "LiveAgent's built-in MCP (Model Context Protocol) server allows for easy connection with external AI tools such as Claude Desktop, Cursor, claude.ai, FlowHunt, and others.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "LiveAgent monthly product update: May edition - MCP integration",
+      "retrieval_method": "composio_fetch"
+    },
+    "s14": {
+      "url": "https://github.com/QualityUnit/LiveAgent-api-python",
+      "quote": "This page contains complete API documentation for LiveAgent software. ... This Python package is automatically generated by the Swagger Codegen project",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "QualityUnit/LiveAgent-api-python",
+      "retrieval_method": "composio_search"
+    }
+  },
+  "limitations": [
+    "Could not find a specific MCP endpoint URL for LiveAgent's built-in MCP server; the documentation mentions it exists but does not provide a public endpoint URL.",
+    "Could not verify if the API v1 and v3 Swagger descriptor are publicly accessible without a LiveAgent account; the docs reference an account-specific URL.",
+    "No Composio toolkit found specifically for LiveAgent."
+  ]
+}

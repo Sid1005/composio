@@ -1,0 +1,171 @@
+{
+  "schema_version": "1.0",
+  "app_id": "otter-ai",
+  "researched_at": "2026-07-13T13:08:51Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 12,
+    "trace_path": "logs/otter-ai-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "AI Meeting Notetaker & Transcription",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Otter.ai is an AI-powered meeting assistant that records, transcribes, summarizes, and provides searchable insights from conversations across various platforms."
+      },
+      "one_liner": {
+        "value": "AI notetaker that automatically joins meetings to record, transcribe, summarize, and provide searchable conversational knowledge.",
+        "evidence_ids": [
+          "s2"
+        ],
+        "notes": "Based on the otter.ai homepage description: 'Otter transcribes every meeting, turning it into searchable knowledge that powers your workflow.'"
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s5"
+        ],
+        "notes": "The Public REST API uses Bearer token authentication with API keys. The MCP Server uses OAuth authentication."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "sales_gated",
+      "gates": [
+        "account_signup",
+        "paid_plan",
+        "sales_contract"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s4",
+        "s6",
+        "s8"
+      ],
+      "notes": "The REST API is listed exclusively under the Enterprise plan on the pricing page. The API help article states: 'Otter's Public API is available for all Enterprise workspaces. If you do not see this feature for your workspace, contact your Otter account manager.' The MCP server, however, is available on the free Basic plan. So access depends on which interface you want to use."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "moderate",
+      "summary": {
+        "value": "Otter has a documented REST API at api.otter.ai/v1 with endpoints for channels, conversations, transcripts, audio, action items, insights, outlines, and workspace details. Supports cursor-based pagination, rate limits (10 req/s for Enterprise), and webhooks. Also has an official MCP Server at https://mcp.otter.ai/mcp providing search, fetch, and get-user-info tools.",
+        "evidence_ids": [
+          "s3",
+          "s5"
+        ],
+        "notes": "The REST API docs are comprehensive and include detailed endpoint specs. The MCP server provides a simpler agent-focused interface."
+      },
+      "api_docs_url": "https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.otter.ai/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli"
+      ],
+      "evidence_ids": [
+        "s5",
+        "s7"
+      ],
+      "notes": "Otter has an official MCP server that works with Claude (listed in Claude connectors directory), ChatGPT (in ChatGPT App Store), Cursor, Perplexity, and other MCP-compatible tools. The MCP server exposes tools: search, fetch, and get user info. It uses OAuth authentication."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Otter is buildable into an agent toolkit today primarily through its official MCP Server (https://mcp.otter.ai/mcp), which is available on all plans including the free Basic tier. The MCP server provides search, fetch (transcript retrieval), and user info tools that agents can use to query Otter data. For deeper programmatic integration, the REST API (api.otter.ai/v1) exists with broader capabilities but requires an Enterprise workspace accessed via sales contact. The MCP server path is self-serve and available immediately, while the REST API requires sales engagement.",
+        "evidence_ids": [
+          "s3",
+          "s5",
+          "s6",
+          "s7"
+        ],
+        "notes": "Two distinct integration paths exist: (1) MCP server - free/self-serve, OAuth-based, limited to search/fetch/user-info tools; (2) REST API - Enterprise-only, sales-gated, API-key-based, full CRUD access. For a general-purpose agent toolkit, the MCP server is the more accessible path today."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://otter.ai",
+      "quote": "Otter transcribes every meeting, turning it into searchable knowledge that powers your workflow.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights"
+    },
+    "s2": {
+      "url": "https://otter.ai",
+      "quote": "Your AI notetaker is now also your Conversational Knowledge Engine",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Otter Meeting Agent - AI Notetaker, Transcription, Insights"
+    },
+    "s3": {
+      "url": "https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API",
+      "quote": "All API requests require authentication using Bearer token authentication. Follow the steps below to create your API key.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Otter.ai Public API \u2013 Help Center"
+    },
+    "s4": {
+      "url": "https://help.otter.ai/hc/en-us/articles/4412365535895-Does-Otter-offer-an-open-API",
+      "quote": "Yes, Otter offers a public API for Enterprise customers. To get started, contact your Otter account manager to enable access.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Does Otter offer an open API? \u2013 Help Center"
+    },
+    "s5": {
+      "url": "https://help.otter.ai/hc/en-us/articles/35287607569687-Otter-MCP-Server",
+      "quote": "Connect AI models to Otter using Model Context Protocol (MCP).",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Otter MCP Server \u2013 Help Center"
+    },
+    "s6": {
+      "url": "https://otter.ai/pricing",
+      "quote": "Enterprise: Otter API & Webhooks",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing | Otter.ai"
+    },
+    "s7": {
+      "url": "https://help.otter.ai/hc/en-us/articles/35287607569687-Otter-MCP-Server",
+      "quote": "Otter MCP can be connected to third-party AI tools that support the Model Context Protocol (MCP) using a JSON configuration file.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Otter MCP Server \u2013 Help Center"
+    },
+    "s8": {
+      "url": "https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API",
+      "quote": "Otter's Public API is available for all Enterprise workspaces. If you do not see this feature for your workspace, contact your Otter account manager.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Otter.ai Public API \u2013 Help Center"
+    }
+  },
+  "limitations": [
+    "Could not find specific pricing for the Enterprise plan (custom/contact sales). The MCP server FAQ says there is 'no public API key' for MCP setup currently - only OAuth. The REST API documentation was fetched and appears comprehensive but may have additional endpoints not fully covered in the fetched content."
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://composio-assignment.local/schemas/app-verification.schema.json",
+  "title": "App verification review",
+  "description": "Independent checks of an initial app-research record. Browser verification and blind human review are deliberately limited to a sampled subset.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "app_id", "initial_research_path", "browser_verification", "human_review", "corrections"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "app_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "initial_research_path": { "type": "string", "minLength": 1 },
+    "browser_verification": { "$ref": "#/$defs/browserVerification" },
+    "human_review": { "$ref": "#/$defs/humanReview" },
+    "corrections": { "type": "array", "items": { "$ref": "#/$defs/correction" } }
+  },
+  "$defs": {
+    "verificationResult": { "type": "string", "enum": ["confirmed", "partially_confirmed", "contradicted", "inconclusive", "not_sampled", "not_run"] },
+    "browserVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sampled", "result", "checks", "checked_at"],
+      "properties": {
+        "sampled": { "type": "boolean" },
+        "result": { "$ref": "#/$defs/verificationResult" },
+        "checked_at": { "type": ["string", "null"], "format": "date-time" },
+        "checks": { "$ref": "#/$defs/fieldChecks" },
+        "screenshots": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "allOf": [
+        { "if": { "properties": { "sampled": { "const": false } } }, "then": { "properties": { "result": { "const": "not_sampled" }, "checks": { "maxItems": 0 }, "checked_at": { "type": "null" } } } },
+        { "if": { "properties": { "sampled": { "const": true } } }, "then": { "properties": { "result": { "not": { "const": "not_sampled" } }, "checks": { "minItems": 1 }, "checked_at": { "type": "string", "format": "date-time" } } } }
+      ]
+    },
+    "humanReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sample_group", "result", "checks", "reviewed_at"],
+      "properties": {
+        "sample_group": { "type": "string", "enum": ["development", "held_out", "not_sampled"] },
+        "result": { "$ref": "#/$defs/verificationResult" },
+        "reviewed_at": { "type": ["string", "null"], "format": "date-time" },
+        "checks": { "$ref": "#/$defs/fieldChecks" },
+        "review_method": { "type": "string", "const": "blind_first_party_docs_review" }
+      },
+      "allOf": [
+        { "if": { "properties": { "sample_group": { "const": "not_sampled" } } }, "then": { "properties": { "result": { "const": "not_sampled" }, "checks": { "maxItems": 0 }, "reviewed_at": { "type": "null" } } } },
+        { "if": { "properties": { "sample_group": { "enum": ["development", "held_out"] } } }, "then": { "required": ["review_method"], "properties": { "result": { "not": { "const": "not_sampled" } }, "checks": { "minItems": 1 }, "reviewed_at": { "type": "string", "format": "date-time" }, "review_method": { "const": "blind_first_party_docs_review" } } } }
+      ]
+    },
+    "fieldChecks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field", "result", "evidence"],
+        "properties": {
+          "field": { "type": "string", "minLength": 1 },
+          "result": { "$ref": "#/$defs/verificationResult" },
+          "evidence": { "type": "string", "minLength": 1 },
+          "source_url": { "type": "string", "format": "uri" },
+          "screenshot_path": { "type": "string" }
+        }
+      }
+    },
+    "correction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "initial_value", "final_value", "caught_by", "reason", "corrected_at"],
+      "properties": {
+        "field": { "type": "string", "minLength": 1 },
+        "initial_value": {},
+        "final_value": {},
+        "caught_by": { "type": "string", "enum": ["browser_verification", "human_review", "live_execution"] },
+        "reason": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "string", "minLength": 1 },
+        "corrected_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

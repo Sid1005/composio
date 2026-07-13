@@ -1,0 +1,211 @@
+{
+  "schema_version": "1.0",
+  "app_id": "plain",
+  "researched_at": "2026-07-13T12:28:46Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 16,
+    "trace_path": "logs/plain-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer Support / AI Support Platform",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ],
+        "notes": "Plain is an AI-first customer support infrastructure platform for B2B teams, featuring a GraphQL API, AI agents, workflows, multi-channel support, and an MCP server for AI agent connectivity."
+      },
+      "one_liner": {
+        "value": "AI support infrastructure for B2B teams with an API-first, extensible platform for managing customer conversations across Slack, email, chat and other channels.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s4",
+          "s5",
+          "s6"
+        ],
+        "notes": "The GraphQL API uses API key authentication (Bearer token via Authorization header). The MCP server uses OAuth 2.0 with PKCE. API keys are the primary auth method for programmatic agent integration via the GraphQL API."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s3",
+        "s7",
+        "s8",
+        "s9"
+      ],
+      "notes": "Free 7-day trial with no credit card required. API is available on the Foundation plan ($35/month) and all higher plans. No company email or phone verification required. For certain MCP clients (Claude Team, ChatGPT custom apps) workspace admin approval may be needed, but for API key access it is self-serve."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "graphql",
+        "webhooks",
+        "rest"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Full GraphQL API at core-api.uk.plain.com/graphql/v1 with downloadable schema. Covers customers, threads, companies, tenants, labels, messaging, notes, tasks, snippets, help center, events, discussions, attachments, and more. Also has webhooks (20+ event types, HMAC-SHA256, mTLS support), Customer Cards API, and an MCP server with 30 tools. Official TypeScript SDK (@team-plain/graphql) and community Python client available.",
+        "evidence_ids": [
+          "s2",
+          "s4",
+          "s10",
+          "s11",
+          "s12"
+        ]
+      },
+      "api_docs_url": "https://www.plain.com/docs/graphql/introduction"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.plain.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s6",
+        "s10",
+        "s11",
+        "s12"
+      ],
+      "notes": "Official MCP server at mcp.plain.com/mcp with 30 tools across threads, customers, tenants, help center, and workspace. Uses OAuth 2.0 with PKCE. Plain also offers an AI Agent Skill for coding agents. Composio has a Plain toolkit/integration."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Plain is fully buildable as an agent toolkit today. It has a public, well-documented GraphQL API with full schema access, an official MCP server with 30 tools, self-serve API key access (free trial, then $35/month Foundation plan), and official TypeScript SDK. The API covers the complete product surface with full API-UI parity. No sales gate, no admin approval needed, and no paid API entitlement barrier for programmatic use.",
+        "evidence_ids": [
+          "s2",
+          "s4",
+          "s5",
+          "s6",
+          "s7",
+          "s8",
+          "s11",
+          "s12"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://plain.com",
+      "quote": "Plain is AI support infrastructure that enables B2B teams to build anything \u2013 no-code or all-code.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Plain \u2014 The AI Support Stack Built for B2B"
+    },
+    "s2": {
+      "url": "https://www.plain.com/docs/graphql/introduction",
+      "quote": "Plain is built with this very GraphQL API we expose to you. This means that there are no limitations in what can be done via the API vs the UI.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introduction - Plain Docs"
+    },
+    "s3": {
+      "url": "https://plain.com/pricing",
+      "quote": "Foundation: $35/month. 1 seat + $35/additional seats. start Free Trial. +2,000 credits / mo. API, Webhooks, Events.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Plain Pricing \u2014 Plans from $35/seat/month | 7-Day Free Trial"
+    },
+    "s4": {
+      "url": "https://www.plain.com/docs/graphql/authentication",
+      "quote": "Authorization: Bearer plainApiKey_xxx. Machine Users can have multiple API Keys to make it easy to rotate keys. Every API key also has fine grained permissions.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - Plain Docs"
+    },
+    "s5": {
+      "url": "https://www.plain.com/docs/graphql/introduction",
+      "quote": "Required headers: Content-Type: application/json, Authorization: Bearer YOUR_TOKEN where the token is your API key.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Introduction - Plain Docs"
+    },
+    "s6": {
+      "url": "https://help.plain.com/article/mcp-server",
+      "quote": "Plain MCP uses OAuth to allow your MCP server connection to share the same context as your normal web app user. No additional managing of permissions required.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "MCP Server | Plain Help Center"
+    },
+    "s7": {
+      "url": "https://www.plain.com/get/trial",
+      "quote": "Start your 7 day free trial \u2014 no credit card required",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Start Free Trial \u2014 Try Plain's AI Support Platform for 7 Days"
+    },
+    "s8": {
+      "url": "https://help.plain.com/article/pricing",
+      "quote": "All plans are billed monthly or annually (10% saving on annual) and include a free 7\u2011day trial \u2013 no credit card required.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Plans & pricing | Plain Help Center"
+    },
+    "s9": {
+      "url": "https://plain.com/pricing",
+      "quote": "Foundation: $35/month. 1 seat + $35/additional seats. Extensibility: API, Webhooks, Events.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Plain Pricing \u2014 Plans from $35/seat/month | 7-Day Free Trial"
+    },
+    "s10": {
+      "url": "https://help.plain.com/article/api-quickstart",
+      "quote": "Your API key: This gives your system permission to talk to Plain. You can generate one from Settings \u2192 API Keys in your Plain workspace.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Quickstart | Plain Help Center"
+    },
+    "s11": {
+      "url": "https://www.plain.com/blog/mcp-customer-support-2026",
+      "quote": "Plain's MCP server uses OAuth 2.0 with PKCE. Our MCP server at mcp.plain.com/mcp gives your team 30 tools to work with support data from any AI client.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "What Is MCP for Customer Support? A Practical Guide (2026)"
+    },
+    "s12": {
+      "url": "https://www.plain.com/docs/llms.txt",
+      "quote": "Full documentation index listing all API endpoints: customers, threads, companies, tenants, labels, messaging, notes, tasks, snippets, help center, events, discussions, attachments, and more.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Llms - Plain Docs"
+    }
+  },
+  "limitations": [
+    "Could not find explicit rate limit documentation for the GraphQL API, though the API-first comparison blog post mentions 'No restrictive rate limits \u2014 build without throttling constraints' as a pro.",
+    "The exact free trial signup flow (whether company email is required) could not be fully verified from fetched pages, but no evidence of such requirements was found.",
+    "Some minor confusion between plain.com (the support platform) and plainframework.com (a different Python web framework) in search results, but relevant sources were clearly distinguished."
+  ]
+}

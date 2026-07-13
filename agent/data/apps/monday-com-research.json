@@ -1,0 +1,204 @@
+{
+  "schema_version": "1.0",
+  "app_id": "monday-com",
+  "researched_at": "2026-07-13T13:01:50Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 10,
+    "trace_path": "logs/monday-com-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Work Operating System / Project Management Platform",
+        "evidence_ids": [
+          "s1",
+          "s5"
+        ],
+        "notes": "Monday.com is a work operating system (Work OS) that powers teams to plan, track, and manage work in one centralized platform."
+      },
+      "one_liner": {
+        "value": "A work operating system for teams to plan, track, and manage projects, tasks, and workflows with customizable boards, automations, and integrations.",
+        "evidence_ids": [
+          "s1",
+          "s5"
+        ],
+        "notes": "From the official MCP repository README and the agents signup page."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s4"
+        ],
+        "notes": "Monday.com supports both personal API tokens (primary for agent/programmatic access) and OAuth2 (for app integrations). OAuth 2.1 is newly available for expiring tokens with refresh."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s8"
+      ],
+      "notes": "Monday.com offers a free forever plan (up to 2 users) with full API access (1,000 calls/day). No credit card needed at signup. No company email requirement. Any developer can sign up and get an API token immediately via the Developer Center. API access does not require a paid plan, though higher rate limits are available on paid plans."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "graphql",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Monday.com has a well-documented, public GraphQL API at api.monday.com/v2 covering boards, items, columns, groups, workspaces, docs, users, teams, updates, notifications, dashboards, forms, and more. The API also supports webhooks. There is an official hosted MCP server at mcp.monday.com/mcp exposing 60+ tools. The MCP server is backed by the same GraphQL API. API reference is comprehensive with playground for testing.",
+        "evidence_ids": [
+          "s1",
+          "7",
+          "s8",
+          "s9",
+          "s10"
+        ]
+      },
+      "api_docs_url": "https://developer.monday.com/api-reference/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.monday.com/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "official_agent_api",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s1",
+        "s5",
+        "s7",
+        "s8"
+      ],
+      "notes": "Monday.com has an official MCP server (`@mondaydotcomorg/monday-api-mcp`) maintained by the monday.com AI team. It also provides an Agent Toolkit (`@mondaydotcomorg/agent-toolkit`) supporting both OpenAI and MCP implementations. The hosted MCP endpoint is at mcp.monday.com/mcp. Composio also has Monday MCP integration. The agent-signup page provides agent skills discovery at monday.com/.well-known/agent-skills/index.json."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Monday.com is fully buildable as an AI agent toolkit today. It has a well-documented public GraphQL API, official MCP server, official agent toolkit, self-serve free tier with API access, multiple auth methods, and no significant gates. The main considerations are rate limits (1,000 API calls/day on free plan, higher on paid) and that the API is GraphQL (not REST), but both are well-documented and manageable.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s5",
+          "s7",
+          "s8",
+          "s9"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://github.com/mondaycom/mcp",
+      "quote": "Enable AI agents to work reliably - giving them secure access to structured data, tools to take action, and the context needed to make smart decisions. This repository, maintained by the monday.com AI team, provides a comprehensive set of tools for AI agent developers who want to integrate with monday.com.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "mondaycom/mcp GitHub Repository",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://developer.monday.com/api-reference/docs/authentication",
+      "quote": "The monday.com platform API utilizes personal V2 API tokens to authenticate requests and identify the user making the call. These tokens are unique to each user and have no explicit length.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication - monday.com API Reference",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://developer.monday.com/apps/docs/oauth",
+      "quote": "OAuth 2.0 is a protocol that lets your app request authorization to read or modify data in a user's monday account. At the end of the OAuth process, your app gets an access token that belongs to the user and grants access to specified permission scopes.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth and Permissions - monday.com Apps Docs",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://support.monday.com/hc/en-us/articles/360005144659-Does-monday-com-have-an-API",
+      "quote": "You can use this API token to authenticate all your requests to our API, as well as in our testing environment. The token can be regenerated at any time, but note that this will cause the old one to expire.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Does monday.com have an API? \u2013 Support",
+      "retrieval_method": "composio_search"
+    },
+    "s5": {
+      "url": "https://monday.com/agents-signup",
+      "quote": "monday.com offers a Free plan. No credit card is required at signup. You may stay on Free indefinitely; it is not an expiring trial, and upgrading is optional whenever you choose. Full API access applies on Free. Documents and file storage are included. Agents get MCP (Model Context Protocol) support on the Free plan.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "monday.com for AI Agents | Free Sign Up",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://monday.com/pricing",
+      "quote": "Free \u2014 \u20ac0 \u2014 free forever \u2014 Up to 2 seats. Basic \u2014 \u20ac9 seat/month. Standard \u2014 \u20ac12 seat/month \u2014 API calls (1,000 / day). Pro \u2014 \u20ac19 seat/month \u2014 API calls (10,000 / day). Enterprise \u2014 custom price \u2014 API calls (25,000 / day).",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "monday.com pricing and plans",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://developer.monday.com/api-reference/docs/platform-mcp-tools",
+      "quote": "The monday.com Platform MCP exposes more than 60 tools that let AI agents read and write monday.com data. Most tools map to one or more operations in the monday.com GraphQL API, so anything you do through the MCP you can also do programmatically.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Platform MCP tools - monday.com API Reference",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://developer.monday.com/api-reference/docs/rate-limits",
+      "quote": "The limit varies based on your monday.com plan: Free/Standard/Basic | 1,000 daily call limit. Pro | 10,000 (soft limit). Enterprise | 25,000 (soft limit). Calls made through the hosted Platform MCP server also count toward this daily limit, since each MCP tool call is executed as a GraphQL API request.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate limits - monday.com API Reference",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://developer.monday.com/api-reference/docs/introduction-to-graphql",
+      "quote": "The monday.com API is built with GraphQL, a flexible query language that allows you to return as much or as little data as you need.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "GraphQL overview - monday.com API Reference",
+      "retrieval_method": "composio_search"
+    },
+    "s10": {
+      "url": "https://developer.monday.com/api-reference/reference/about-the-api-reference",
+      "quote": "The monday.com platform API reference contains documentation for our GraphQL API schema. The core monday.com work management API reference for boards, items, columns, and more.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "About the API Reference - monday.com API Reference",
+      "retrieval_method": "composio_search"
+    }
+  },
+  "limitations": [
+    "The free plan limits API calls to 1,000/day (though still allows full API access).",
+    "The pricing page does not explicitly list API calls for the Free plan, but the rate limits documentation confirms Free tier has 1,000 calls/day.",
+    "OAuth 2.1 is newly available; the legacy OAuth 2.0 flow is still documented as current but migration is recommended."
+  ]
+}

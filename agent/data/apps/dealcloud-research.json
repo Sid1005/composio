@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0",
+  "app_id": "dealcloud",
+  "researched_at": "2026-07-13T12:25:23Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 19,
+    "trace_path": "logs/dealcloud-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "CRM / Deal Management / Relationship Intelligence",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "DealCloud is an AI-powered CRM and deal intelligence platform built for professional services firms (investment banking, private capital, legal, advisory). It is now part of Intapp."
+      },
+      "one_liner": {
+        "value": "AI-powered CRM and deal intelligence platform for professional services firms, managing relationships, deals, and pipeline",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "From the product page: 'Intapp DealCloud is an AI-powered CRM and deal intelligence platform, built for partner-led businesses competing on relationships and execution.'"
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "api_key"
+        ],
+        "evidence_ids": [
+          "s5",
+          "s6"
+        ],
+        "notes": "DealCloud uses the OAuth2 Client Credentials flow. The client_id and apiKey (client_secret) are obtained from the user's Profile page after API access is enabled by an admin. The token endpoint is POST {baseUrl}/api/rest/v1/oauth/token."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "sales_gated",
+      "gates": [
+        "account_signup",
+        "paid_plan",
+        "workspace_admin"
+      ],
+      "signup_friction": "company_email_required",
+      "paid_plan_required_for_api": "yes",
+      "admin_approval_required": "yes",
+      "evidence_ids": [
+        "s2",
+        "s4",
+        "s6",
+        "s7"
+      ],
+      "notes": "DealCloud is an enterprise product. Pricing is 'available on request' (sales-led). API credentials require being a DealCloud customer. Even within a customer org, API access must be enabled by an admin via User Group permissions. There is no self-service free tier or trial for API access."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Comprehensive REST API with endpoints spanning Data (CRUD on records/cells), Schema (entry types, fields), User Management, Publications (real-time event streaming/webhooks), Backups, Relationship Intelligence, eMarketing, and Template Reports. OpenAPI/Swagger spec available per site. Python and C# SDKs provided. Rate limits: 5 req/sec (most APIs), 1000 req/sec (Publications, eMarketing).",
+        "evidence_ids": [
+          "s2",
+          "s2b",
+          "s5",
+          "s8"
+        ],
+        "notes": "Well-documented REST APIs. The docs site at https://api.docs.dealcloud.com provides comprehensive API reference, guides, and SDK documentation."
+      },
+      "api_docs_url": "https://api.docs.dealcloud.com"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": null,
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli"
+      ],
+      "evidence_ids": [
+        "s9",
+        "s10"
+      ],
+      "notes": "An official DealCloud MCP Server exists, announced as 'client preview starting July 2026'. It provides AI assistants read access to DealCloud data. No public endpoint URL is available yet (still in preview). Python and C# SDKs also exist. No Composio-specific toolkit found."
+    },
+    "buildability": {
+      "verdict": "technically_possible_but_gated",
+      "main_blocker": "paid_api_entitlement",
+      "rationale": {
+        "value": "DealCloud has a well-documented, comprehensive REST API with OAuth2 authentication, SDKs, and even an official MCP server in preview. However, the platform is enterprise-only with sales-gated access. A developer cannot obtain API credentials without being a paying customer of DealCloud (pricing available only on request), and even then, API access requires workspace admin approval. The technical infrastructure for an agent toolkit exists, but credential access is the blocker.",
+        "evidence_ids": [
+          "s2",
+          "s4",
+          "s5",
+          "s7",
+          "s9"
+        ],
+        "notes": "The API exists and is well-documented. The MCP server is official. But you cannot self-serve credentials - you need a paid enterprise account."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://dealcloud.com",
+      "quote": "Intapp DealCloud is an AI-powered CRM and deal intelligence platform, built for partner-led businesses competing on relationships and execution.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "The AI-powered deal and relationship intelligence platform"
+    },
+    "s2": {
+      "url": "https://api.docs.dealcloud.com/docs",
+      "quote": "Welcome to the DealCloud API Docs! This site provides a comprehensive overview of our REST APIs, their capabilities, and available endpoints.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Docs - DealCloud API Docs"
+    },
+    "s2b": {
+      "url": "https://api.docs.dealcloud.com/docs/data",
+      "quote": "The Data APIs allow you to work with the core data within your DealCloud site, enabling you to create, retrieve, update, and delete records across various objects (or entryLists) such as deals, contacts, companies, etc.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Data APIs - DealCloud API Docs"
+    },
+    "s3": {
+      "url": "https://www.intapp.com/dealcloud",
+      "quote": "Intapp DealCloud is an AI-powered CRM and deal intelligence platform, built for partner-led businesses competing on relationships and execution.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "The AI-powered deal and relationship intelligence platform"
+    },
+    "s4": {
+      "url": "https://www.softwareadvice.com/marketing/dealcloud-profile",
+      "quote": "Pricing available upon request",
+      "source_type": "secondary_source",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "DealCloud Software Reviews, Demo & Pricing - 2026"
+    },
+    "s5": {
+      "url": "https://api.docs.dealcloud.com/docs/token",
+      "quote": "DealCloud uses the OAuth2 Client Credentials flow to generate a bearer token, which is then used in the HTTP Authentication header for API requests.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Requesting an OAuth2 Bearer Token - DealCloud API Docs"
+    },
+    "s6": {
+      "url": "https://api.docs.dealcloud.com/docs/apikeys",
+      "quote": "To enable API access, ensure the intended user is assigned to a user group with the appropriate permissions. Navigate to Admin > User Management, select the relevant user group, go to Capabilities > Site Areas, and enable 'API'.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Obtaining an API Key - DealCloud API Docs"
+    },
+    "s7": {
+      "url": "https://www.intapp.com/dealcloud/enterprise-offering",
+      "quote": "Boost security. Optimize performance. Scale quickly. ... Intapp DealCloud: Enterprise offering",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Intapp DealCloud: Enterprise offering"
+    },
+    "s8": {
+      "url": "https://api.docs.dealcloud.com/docs/limits",
+      "quote": "Rate Limits ... Data: /api/rest/v4/data - 5 per second ... Publications: /api/v1/rest/publication - 1000 per second",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Rate Limits - DealCloud API Docs"
+    },
+    "s9": {
+      "url": "https://api.docs.dealcloud.com/mcp",
+      "quote": "The DealCloud MCP Server helps teams turn their DealCloud data into faster, higher-quality outcomes... It gives AI assistants a secure, consistent surface to retrieve context from DealCloud.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "DealCloud MCP Server - DealCloud API Docs"
+    },
+    "s10": {
+      "url": "https://api.docs.dealcloud.com/releases",
+      "quote": "DealCloud now provides a Model Context Protocol (MCP) server which gives AI agents read access to your DealCloud data.",
+      "source_type": "official_changelog",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "DealCloud API Release Notes"
+    }
+  },
+  "limitations": [
+    "No free developer tier or sandbox available for API testing without being a customer",
+    "MCP server is in 'client preview starting July 2026' - not yet generally available",
+    "Pricing page does not list specific prices; requires contacting sales",
+    "Could not find a Composio-specific DealCloud toolkit in search results",
+    "No evidence of a public GraphQL endpoint (REST only)"
+  ]
+}

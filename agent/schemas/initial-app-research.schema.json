@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://composio-assignment.local/schemas/initial-app-research.schema.json",
+  "title": "Initial app research",
+  "description": "The unverified output of the research agent. It records claims and supporting sources; it deliberately contains no verification status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "app_id", "researched_at", "research_run", "findings", "sources"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "app_id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "researched_at": { "type": "string", "format": "date-time" },
+    "research_run": { "$ref": "#/$defs/researchRun" },
+    "findings": { "$ref": "#/$defs/findings" },
+    "sources": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/source" }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "evidenceIds": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "claim": {
+      "description": "A research claim. The initial agent must attach at least one source; if it cannot, it should use the literal value 'unknown' and cite its attempted official source where possible.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "evidence_ids"],
+      "properties": {
+        "value": { "type": ["string", "boolean", "array"] },
+        "evidence_ids": { "$ref": "#/$defs/evidenceIds" },
+        "notes": { "type": "string" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "quote", "source_type", "accessed_at"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "quote": { "type": "string", "minLength": 1, "maxLength": 1200 },
+        "source_type": {
+          "type": "string",
+          "enum": ["official_api_docs", "official_auth_docs", "official_pricing", "official_product_page", "official_mcp_docs", "official_changelog", "official_help_center", "official_github", "composio_catalogue", "secondary_source"]
+        },
+        "accessed_at": { "type": "string", "format": "date-time" },
+        "title": { "type": "string" },
+        "retrieval_method": { "type": "string", "enum": ["composio_fetch", "composio_search", "browser", "manual"] }
+      }
+    },
+    "findings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "authentication", "access", "api_surface", "agent_interface", "buildability"],
+      "properties": {
+        "classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["researched_category", "one_liner"],
+          "properties": {
+            "researched_category": { "$ref": "#/$defs/claim" },
+            "one_liner": { "$ref": "#/$defs/claim" }
+          }
+        },
+        "authentication": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["methods", "primary_for_agent_toolkit"],
+          "properties": {
+            "methods": {
+              "allOf": [
+                { "$ref": "#/$defs/claim" },
+                { "properties": { "value": { "type": "array", "items": { "type": "string", "enum": ["oauth2", "api_key", "basic", "bearer_token", "personal_access_token", "session_cookie", "custom", "unknown"] }, "minItems": 1, "uniqueItems": true } } }
+              ]
+            },
+            "primary_for_agent_toolkit": { "type": "string", "enum": ["oauth2", "api_key", "basic", "bearer_token", "personal_access_token", "custom", "unknown"] }
+          }
+        },
+        "access": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["credential_access", "gates", "signup_friction", "paid_plan_required_for_api", "admin_approval_required", "evidence_ids"],
+          "properties": {
+            "credential_access": { "type": "string", "enum": ["self_serve_free", "self_serve_trial", "self_serve_paid", "admin_gated", "partner_gated", "sales_gated", "region_gated", "unknown"] },
+            "gates": { "type": "array", "items": { "type": "string", "enum": ["account_signup", "company_email", "phone_verification", "workspace_admin", "paid_plan", "app_review", "partner_approval", "sales_contract", "regional_eligibility", "waitlist"] }, "uniqueItems": true },
+            "signup_friction": { "type": "string", "enum": ["none_observed", "company_email_required", "phone_verification", "waitlist", "invite_required", "regional_restriction", "unknown"] },
+            "paid_plan_required_for_api": { "type": "string", "enum": ["yes", "no", "plan_dependent", "unknown"] },
+            "admin_approval_required": { "type": "string", "enum": ["yes", "no", "plan_or_role_dependent", "unknown"] },
+            "evidence_ids": { "$ref": "#/$defs/evidenceIds" },
+            "notes": { "type": "string" }
+          }
+        },
+        "api_surface": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["public_api", "protocols", "breadth", "summary"],
+          "properties": {
+            "public_api": { "type": "string", "enum": ["yes", "no", "unknown"] },
+            "protocols": { "type": "array", "items": { "type": "string", "enum": ["rest", "graphql", "soap", "grpc", "webhooks", "event_streaming", "sdk_only", "cli", "undocumented"] }, "uniqueItems": true },
+            "breadth": { "type": "string", "enum": ["narrow", "moderate", "broad", "unknown"] },
+            "summary": { "$ref": "#/$defs/claim" },
+            "api_docs_url": { "type": ["string", "null"], "format": "uri" }
+          }
+        },
+        "agent_interface": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mcp", "existing_agent_skills", "evidence_ids"],
+          "properties": {
+            "mcp": { "type": "string", "enum": ["official", "community", "composio_only", "none_found", "unknown"] },
+            "mcp_endpoint": { "type": ["string", "null"], "format": "uri" },
+            "existing_agent_skills": { "type": "array", "items": { "type": "string", "enum": ["official_sdk", "official_cli", "official_agent_api", "composio_toolkit", "community_skill"] }, "uniqueItems": true },
+            "evidence_ids": { "$ref": "#/$defs/evidenceIds" },
+            "notes": { "type": "string" }
+          }
+        },
+        "buildability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["verdict", "main_blocker", "rationale"],
+          "properties": {
+            "verdict": { "type": "string", "enum": ["buildable_today", "buildable_with_access", "technically_possible_but_gated", "not_buildable_from_public_api", "insufficient_evidence"] },
+            "main_blocker": { "type": "string", "enum": ["none_material", "no_public_api", "paid_api_entitlement", "admin_approval", "partner_approval", "sales_contract", "restricted_api_scope", "undocumented_api", "rate_limit_or_policy", "unknown"] },
+            "rationale": { "$ref": "#/$defs/claim" }
+          }
+        }
+      }
+    },
+    "researchRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent", "model", "tools", "tool_calls", "trace_path"],
+      "properties": {
+        "agent": { "type": "string", "const": "initial_research_agent" },
+        "model": { "type": "string", "minLength": 1 },
+        "tools": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+        "tool_calls": { "type": "integer", "minimum": 0 },
+        "trace_path": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

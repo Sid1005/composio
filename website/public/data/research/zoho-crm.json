@@ -1,0 +1,199 @@
+{
+  "schema_version": "1.0",
+  "app_id": "zoho-crm",
+  "researched_at": "2026-07-13T12:23:43Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 17,
+    "trace_path": "logs/zoho-crm-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Customer Relationship Management (CRM)",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "Zoho CRM is a cloud-based CRM platform for managing sales, marketing, and customer support."
+      },
+      "one_liner": {
+        "value": "Cloud-based CRM platform for managing sales, marketing, and customer support operations with a comprehensive REST API for programmatic access.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ]
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "oauth2",
+          "api_key",
+          "custom"
+        ],
+        "evidence_ids": [
+          "s2",
+          "s3",
+          "s4"
+        ],
+        "notes": "Primary method is OAuth 2.0 (authorization code grant). Also supports Self Client (client credentials grant) for internal apps, and API Key auth for serverless functions."
+      },
+      "primary_for_agent_toolkit": "oauth2"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s2",
+        "s3",
+        "s5",
+        "s6"
+      ],
+      "notes": "Free tier exists (3 users, 5,000 API credits/day). Developer can register a client at the Zoho API Console (api-console.zoho.com) with just a free account. No paid plan required to get API credentials. Higher API limits require paid plans."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "graphql",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Zoho CRM has a well-documented V8 REST API covering Core CRUD operations on all CRM modules, Metadata APIs, Bulk asynchronous APIs, Notification webhooks, COQL query language, and a Composite API for batching requests. Also supports GraphQL. Official SDKs exist for Java, Python, PHP, Node.js, C#, Ruby, JavaScript, Android, and iOS.",
+        "evidence_ids": [
+          "s1",
+          "s7",
+          "s8"
+        ]
+      },
+      "api_docs_url": "https://www.zoho.com/crm/developer/docs/api/v8/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://www.zoho.com/crm/developer/docs/mcp/overview.html",
+      "existing_agent_skills": [
+        "official_sdk",
+        "composio_toolkit",
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s9",
+        "s10",
+        "s11"
+      ],
+      "notes": "Zoho CRM provides 4 pre-built official MCP servers (Data Insights, Data Operations, Module Customization, Workflow & Process Automation). A community MCP server also exists on GitHub (junnaisystems/zoho-crm-mcp). Composio has a Zoho CRM toolkit with managed OAuth and hosted MCP."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Zoho CRM is fully buildable as an agent toolkit today. It has a well-documented public REST API (V8), official OAuth 2.0 authentication that works for programmatic access, self-serve developer credentials available with a free account, and even provides official pre-built MCP servers. The API surface is broad (CRUD, metadata, bulk, notifications, COQL query, GraphQL) and suitable for agentic workflows. Composio already has a Zoho CRM toolkit integration. No material blockers exist.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s5",
+          "s7",
+          "s9",
+          "s10",
+          "s11"
+        ]
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://www.zoho.com/crm/developer/docs/api/v8/",
+      "quote": "Zoho CRM V8 APIs - Perform CRUD operations on CRM module entities... Metadata APIs, Core APIs, Composite API, Bulk APIs, Notification APIs, Query APIs",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zoho CRM V8 APIs"
+    },
+    "s2": {
+      "url": "https://www.zoho.com/crm/developer/docs/api/v8/oauth-overview.html",
+      "quote": "The Zoho CRM API uses the OAuth 2.0 protocol for authentication.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth 2.0 Authentication | Zoho CRM API | V8"
+    },
+    "s3": {
+      "url": "https://www.zoho.com/developer/oauth/self-client/overview.html",
+      "quote": "If you want your app to fetch data from your own Zoho account... you can use the Self Client option.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Self Client - Overview | Developer OAuth 2.0"
+    },
+    "s4": {
+      "url": "https://www.zoho.com/crm/developer/docs/functions/auth-method.html",
+      "quote": "We have provided two methods that you can use to execute the function. One is API key authentication... The other is OAuth2.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authenticate Serverless Functions | Zoho CRM"
+    },
+    "s5": {
+      "url": "https://www.zoho.com/crm/developer/docs/api/v8/api-limits.html",
+      "quote": "Free Edition: 5000 credits | 5000 credits",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Limits | Zoho CRM API | V8"
+    },
+    "s6": {
+      "url": "https://www.zoho.com/crm/pricing/",
+      "quote": "Gratis proefversie - Geen creditcard nodig",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zoho CRM Prijzen en edities - gratis voor 3 gebruikers"
+    },
+    "s7": {
+      "url": "https://www.zoho.com/crm/developer/docs/",
+      "quote": "Core APIs, Bulk APIs, Notification APIs, Query APIs, GraphQL APIs, Java SDK, Python SDK, PHP SDK, Node JS SDK, C# SDK, Ruby SDK, JavaScript SDK, Android SDK, iOS SDK",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Developer Resources | Zoho CRM"
+    },
+    "s8": {
+      "url": "https://www.zoho.com/crm/developer/docs/api/v8/scopes.html",
+      "quote": "Scopes limit the level of access given to a client for protected resources... ZohoCRM.modules.ALL",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Scopes | Zoho CRM API | V8"
+    },
+    "s9": {
+      "url": "https://www.zoho.com/crm/developer/docs/mcp/overview.html",
+      "quote": "Zoho CRM MCP servers connect your AI tools to Zoho CRM using the Model Context Protocol (MCP). They expose CRM capabilities as tools... Zoho CRM provides these as pre-built MCP servers.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zoho CRM MCP - An Overview | Developer Tools"
+    },
+    "s10": {
+      "url": "https://github.com/junnaisystems/zoho-crm-mcp",
+      "quote": "A comprehensive Model Context Protocol (MCP) server for seamless integration with Zoho CRM.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "GitHub - junnaisystems/Zoho-CRM-MCP"
+    },
+    "s11": {
+      "url": "https://composio.dev/toolkits/zoho",
+      "quote": "Zoho is a suite of cloud applications including CRM... Composio maintains and updates all toolkit integrations automatically.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Zoho MCP Integration for AI Agents | Composio"
+    }
+  },
+  "limitations": [
+    "The API credits system means the free tier is limited to 5,000 credits/day, but paid plans scale this significantly.",
+    "Some advanced features (webhooks, blueprints, custom functions) require Professional or higher paid plans."
+  ]
+}

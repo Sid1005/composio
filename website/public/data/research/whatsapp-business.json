@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "app_id": "whatsapp-business",
+  "researched_at": "2026-07-13T12:35:06Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 26,
+    "trace_path": "logs/whatsapp-business-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Business Messaging API",
+        "evidence_ids": [
+          "s1"
+        ],
+        "notes": "WhatsApp Business Platform is Meta's enterprise-grade API for programmatic messaging, calling, and business communication on WhatsApp."
+      },
+      "one_liner": {
+        "value": "Enterprise API for businesses to programmatically send/receive WhatsApp messages, manage templates, handle media, and build conversational experiences at scale.",
+        "evidence_ids": [
+          "s1",
+          "s2"
+        ],
+        "notes": "The platform covers Cloud API (messaging/calling/groups), Business Management API, and Marketing Messages API."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "bearer_token",
+          "oauth2"
+        ],
+        "evidence_ids": [
+          "s3",
+          "s4"
+        ],
+        "notes": "Primary method is System User access tokens (long-lived bearer tokens). OAuth2 (User access tokens) also supported but short-lived. Docs state 'Authentication uses OAuth (not 2.0) access tokens' but mechanism is Bearer token in Authorization header."
+      },
+      "primary_for_agent_toolkit": "bearer_token"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup",
+        "paid_plan"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "plan_dependent",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s6",
+        "s7"
+      ],
+      "notes": "Developers can self-serve sign up with a Facebook/Meta account for free. Testing with free sandbox/test numbers is free. For production messaging, business verification (documents) and a payment method for per-message charges are required. No admin/partner approval needed for direct developers using own data."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Comprehensive REST API (via graph.facebook.com) covering messaging (text, media, interactive, templates), calling, groups, media upload/download, business profile management, phone number management, template lifecycle, analytics, flows, webhooks, and more. Official documentation includes SDKs, sample apps, and OpenAPI specs.",
+        "evidence_ids": [
+          "s1",
+          "s8",
+          "s9"
+        ],
+        "notes": "Multiple sub-APIs: Cloud API, Business Management API, Marketing Messages API. Webhooks for event-driven messaging."
+      },
+      "api_docs_url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/overview"
+    },
+    "agent_interface": {
+      "mcp": "community",
+      "mcp_endpoint": "https://github.com/tkhattar14/whatsapp-business-mcp",
+      "existing_agent_skills": [
+        "community_skill"
+      ],
+      "evidence_ids": [
+        "s10",
+        "s11"
+      ],
+      "notes": "Multiple community MCP servers exist. The most notable is tkhattar14/whatsapp-business-mcp (50+ tools, uses official Meta API) and msaelices/whatsapp-mcp-server (uses GreenAPI). No official MCP server from Meta. Also available on Composio."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "WhatsApp Business Platform has a well-documented public REST API (Graph API), clear bearer-token auth via System User access tokens, self-serve free tier for testing, and multiple community MCP servers already exist. The only production requirement is business verification and payment method, but testing/development is free and accessible. An agent toolkit can be built today using the official Cloud API.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s5",
+          "s10"
+        ],
+        "notes": "Developers can sign up at developers.facebook.com, create a Meta app, generate a System User access token, and start sending test messages within minutes using the free sandbox. Per-message pricing applies for production."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/overview",
+      "quote": "WhatsApp Business Platform \u2014 Drive revenue growth, boost efficiency, and deliver exceptional customer experiences with the WhatsApp Business Platform\u2014our enterprise-grade APIs for messaging and calling.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "WhatsApp Business Platform Overview",
+      "retrieval_method": "composio_fetch"
+    },
+    "s2": {
+      "url": "https://developers.facebook.com/docs/whatsapp/cloud-api",
+      "quote": "The WhatsApp Business Platform enables businesses to communicate with customers at scale. The WhatsApp Business Platform Cloud API enables you to programmatically message and call on WhatsApp.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "About the WhatsApp Business Platform",
+      "retrieval_method": "composio_fetch"
+    },
+    "s3": {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/access-tokens",
+      "quote": "If you are a direct developer, meaning only you or your business accesses your own data, use a System User access token... When making API requests, include your token in an authorization request header, preceded by Bearer.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Access Tokens Guide",
+      "retrieval_method": "composio_fetch"
+    },
+    "s4": {
+      "url": "https://developers.facebook.com/docs/whatsapp/cloud-api",
+      "quote": "Authentication uses OAuth (not 2.0) access tokens, while permissions restrict access to specific resources.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "About the WhatsApp Business Platform",
+      "retrieval_method": "composio_fetch"
+    },
+    "s5": {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/get-started",
+      "quote": "Prerequisites: Facebook account or managed Meta account; Developer registration... Free access to test numbers, code samples, webhooks, a sandbox and more.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "WhatsApp Cloud API Get Started",
+      "retrieval_method": "composio_fetch"
+    },
+    "s6": {
+      "url": "https://whatsappbusiness.com/developers/developer-hub",
+      "quote": "Get started quickly and test for free. Free access to test numbers, code samples, webhooks, a sandbox and more.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Developer Hub",
+      "retrieval_method": "composio_fetch"
+    },
+    "s7": {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing",
+      "quote": "Effective July 1, 2025, Meta charges on a per-message basis... You are only charged when a template message is delivered.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Pricing on the WhatsApp Business Platform",
+      "retrieval_method": "composio_fetch"
+    },
+    "s8": {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/reference/whatsapp-business-account/whatsapp-business-account-api",
+      "quote": "Base URL: https://graph.facebook.com. API for managing WhatsApp Business Account details and configuration.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "WhatsApp Business Account API",
+      "retrieval_method": "composio_fetch"
+    },
+    "s9": {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/solution-providers/app-review",
+      "quote": "Business apps are automatically approved for Standard Access for all Permissions and Features... If you are using the API for yourself as a Direct Developer, you do not need Advanced access or app review.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "App Review",
+      "retrieval_method": "composio_fetch"
+    },
+    "s10": {
+      "url": "https://github.com/tkhattar14/whatsapp-business-mcp",
+      "quote": "A security-hardened Model Context Protocol (MCP) server for the official WhatsApp Business Cloud API. 50+ tools across 8 modules \u2014 messaging, templates, media, analytics, flows, webhooks, business profile, account management.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "tkhattar14/whatsapp-business-mcp",
+      "retrieval_method": "composio_fetch"
+    },
+    "s11": {
+      "url": "https://github.com/msaelices/whatsapp-mcp-server",
+      "quote": "A server that provides a Model Context Protocol (MCP) interface to interact with WhatsApp Business API using FastMCP.",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "msaelices/whatsapp-mcp-server",
+      "retrieval_method": "composio_fetch"
+    }
+  },
+  "limitations": [
+    "Could not fetch onboarding/overview page due to timeout; got cookie-wall page instead.",
+    "The official docs say 'Authentication uses OAuth (not 2.0)' which is ambiguous but the practical mechanism is Bearer token.",
+    "Some community MCP servers (e.g., msaelices/whatsapp-mcp-server) use third-party GreenAPI rather than the official Meta API directly."
+  ]
+}

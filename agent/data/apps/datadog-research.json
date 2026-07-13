@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0",
+  "app_id": "datadog",
+  "researched_at": "2026-07-13T12:58:22Z",
+  "research_run": {
+    "agent": "initial_research_agent",
+    "model": "deepseek-v4-flash",
+    "tools": [
+      "COMPOSIO_SEARCH_FETCH_URL_CONTENT",
+      "COMPOSIO_SEARCH_TAVILY",
+      "submit_app_research"
+    ],
+    "tool_calls": 11,
+    "trace_path": "logs/datadog-trace.jsonl"
+  },
+  "findings": {
+    "classification": {
+      "researched_category": {
+        "value": "Observability and Monitoring",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "Datadog is a monitoring and observability platform for cloud-scale applications, collecting and correlating metrics, logs, events, and traces."
+      },
+      "one_liner": {
+        "value": "Monitoring and observability platform that collects, visualizes, and correlates metrics, logs, events, and traces across cloud-scale infrastructure.",
+        "evidence_ids": [
+          "s1",
+          "s3"
+        ],
+        "notes": "Primary description from dltHub and Datadog's own API docs."
+      }
+    },
+    "authentication": {
+      "methods": {
+        "value": [
+          "api_key",
+          "oauth2",
+          "personal_access_token"
+        ],
+        "evidence_ids": [
+          "s2",
+          "s4",
+          "s6"
+        ],
+        "notes": "Primary method uses two separate keys: DD-API-KEY and DD-APPLICATION-KEY headers. OAuth2 bearer tokens also supported (Authorization: Bearer). Personal Access Tokens (PATs) and Service Account Tokens (SATs) are newer additions documented in the blog."
+      },
+      "primary_for_agent_toolkit": "api_key"
+    },
+    "access": {
+      "credential_access": "self_serve_free",
+      "gates": [
+        "account_signup"
+      ],
+      "signup_friction": "none_observed",
+      "paid_plan_required_for_api": "no",
+      "admin_approval_required": "no",
+      "evidence_ids": [
+        "s5",
+        "s7",
+        "s8",
+        "s9"
+      ],
+      "notes": "Free tier exists (up to 5 hosts, 1-day metric retention). 14-day free trial with unlimited features. No credit card required. API keys can be generated from a free account. Signup at https://www.datadoghq.com/free-datadog-trial is self-serve."
+    },
+    "api_surface": {
+      "public_api": "yes",
+      "protocols": [
+        "rest",
+        "webhooks"
+      ],
+      "breadth": "broad",
+      "summary": {
+        "value": "Datadog has a comprehensive, publicly documented HTTP REST API covering metrics, logs, traces, dashboards, monitors, incidents, events, SLOs, security signals, synthetics, CI visibility, and more. It uses resource-oriented URLs, returns JSON, and has official client libraries in Python, Ruby, Go, Java, JavaScript, .NET, and Rust. The API is versioned (v1 and v2).",
+        "evidence_ids": [
+          "s1",
+          "s3",
+          "s4"
+        ],
+        "notes": "The API reference at https://docs.datadoghq.com/api/latest/ lists all endpoints with interactive documentation."
+      },
+      "api_docs_url": "https://docs.datadoghq.com/api/latest/"
+    },
+    "agent_interface": {
+      "mcp": "official",
+      "mcp_endpoint": "https://mcp.datadoghq.com/api/unstable/mcp-server/mcp",
+      "existing_agent_skills": [
+        "official_sdk",
+        "official_cli",
+        "composio_toolkit"
+      ],
+      "evidence_ids": [
+        "s10",
+        "s11",
+        "s12",
+        "s13"
+      ],
+      "notes": "Datadog provides an official hosted MCP Server (datadog-labs/mcp-server on GitHub, docs at https://docs.datadoghq.com/mcp_server). Multiple community MCP servers also exist. Composio has a Datadog toolkit."
+    },
+    "buildability": {
+      "verdict": "buildable_today",
+      "main_blocker": "none_material",
+      "rationale": {
+        "value": "Datadog is fully buildable as an agent toolkit today. It has a comprehensive, publicly documented REST API, self-serve free-tier access with no credit card required, and an official Datadog-hosted MCP server. Multiple community MCP servers and a Composio toolkit already exist. Authentication via API key + application key is straightforward. The API is broad and covers all major observability domains.",
+        "evidence_ids": [
+          "s1",
+          "s2",
+          "s3",
+          "s10",
+          "s11",
+          "s12",
+          "s13"
+        ],
+        "notes": "All criteria for buildability are met: public API, self-serve credential access, official MCP server, broad API surface."
+      }
+    }
+  },
+  "sources": {
+    "s1": {
+      "url": "https://docs.datadoghq.com/api/latest/",
+      "quote": "The Datadog API is an HTTP REST API. The API uses resource-oriented URLs to call the API, uses status codes to indicate the success or failure of requests, returns JSON from all requests, and uses standard HTTP response codes.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Reference"
+    },
+    "s2": {
+      "url": "https://docs.datadoghq.com/api/latest/authentication",
+      "quote": "All requests to Datadog's API must be authenticated. Requests that write data require reporting access and require an API key. Requests that read data require full access and also require an application key.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Authentication"
+    },
+    "s3": {
+      "url": "https://docs.datadoghq.com/api/latest/",
+      "quote": "Use the Datadog API to access the Datadog platform programmatically.",
+      "source_type": "official_api_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API Reference"
+    },
+    "s4": {
+      "url": "https://docs.datadoghq.com/extend/authorization/oauth2_in_datadog",
+      "quote": "Datadog supports two primary auth mechanisms: (1) API + Application keys: include headers 'DD-API-KEY: <api_key>' and 'DD-APPLICATION-KEY: <app_key>' for most API calls; (2) OAuth2 access tokens for OAuth apps: include 'Authorization: Bearer <access_token>'.",
+      "source_type": "official_auth_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "OAuth2 in Datadog"
+    },
+    "s5": {
+      "url": "https://www.datadoghq.com/free-datadog-trial",
+      "quote": "No credit card required. By signing up, you agree to the Subscription Agreement and Privacy Policy.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Free Datadog Trial"
+    },
+    "s6": {
+      "url": "https://www.datadoghq.com/blog/datadog-api-authentication",
+      "quote": "With PATs, SATs, workload identity federation, and upcoming OAuth support, Datadog's new authentication model gives teams more granular control over identity, credential scope, and access life cycles.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Modernize Datadog API authentication with scoped tokens"
+    },
+    "s7": {
+      "url": "https://www.datadoghq.com/pricing",
+      "quote": "Datadog offers a free Infrastructure Monitoring tier that includes up to 5 hosts with 1-day metric retention and core visualization features. Most paid products offer a 14-day free trial with full functionality.",
+      "source_type": "official_pricing",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Datadog Pricing"
+    },
+    "s8": {
+      "url": "https://docs.datadoghq.com/account_management/api-app-keys/",
+      "quote": "API keys are unique to your organization. An API key is required by the Datadog Agent to submit metrics and events to Datadog.",
+      "source_type": "official_help_center",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "API and Application Keys"
+    },
+    "s9": {
+      "url": "https://www.datadoghq.com/free-datadog-trial",
+      "quote": "Monitor and analyze metrics, traces, and logs in minutes. No credit card required.",
+      "source_type": "official_product_page",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Free Datadog Trial"
+    },
+    "s10": {
+      "url": "https://docs.datadoghq.com/mcp_server",
+      "quote": "The Datadog MCP Server acts as a bridge between your observability data in Datadog and any AI agents that support the Model Context Protocol (MCP).",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Datadog MCP Server"
+    },
+    "s11": {
+      "url": "https://github.com/datadog-labs/mcp-server",
+      "quote": "Official Datadog MCP Server",
+      "source_type": "official_github",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "datadog-labs/mcp-server"
+    },
+    "s12": {
+      "url": "https://docs.datadoghq.com/mcp_server/setup",
+      "quote": "Learn how to set up and configure the Datadog MCP Server, which lets you retrieve telemetry insights and manage platform features directly from AI-powered clients.",
+      "source_type": "official_mcp_docs",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Set Up the Datadog MCP Server"
+    },
+    "s13": {
+      "url": "https://composio.dev/toolkits/datadog",
+      "quote": "Datadog MCP for AI Agents. Securely connect your AI agents and chatbots (Claude, ChatGPT, Cursor, etc) with Datadog MCP or direct API to analyze logs, trigger alerts, fetch metrics, and investigate incidents through natural language.",
+      "source_type": "composio_catalogue",
+      "accessed_at": "2026-07-13T12:00:00Z",
+      "title": "Datadog - Composio Toolkit"
+    }
+  },
+  "limitations": [
+    "The exact monthly cost of paid plans after free tier was not deeply researched, but it's not relevant since free tier provides sufficient API access for development.",
+    "GovCloud sites (app.ddog-gov.com, us2.ddog-gov.com) do not support the MCP Server product, but the standard commercial sites do."
+  ]
+}
